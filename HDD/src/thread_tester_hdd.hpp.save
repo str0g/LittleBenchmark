@@ -1,0 +1,59 @@
+#ifndef THREAD_TESTER_HDD_HPP_INCLUDED
+#define THREAD_TESTER_HDD_HPP_INCLUDED
+
+/***************************************************************
+ * Name:      <Input name>.cpp/h
+ * Purpose:   Code for Application <Name>
+ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
+ * Created:   <Input date>
+ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
+ * License:   GNU / General Public Licens
+ **************************************************************/
+///Headers
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <list>
+//boost
+#include <boost/thread/thread.hpp>
+//my
+#include "myConv.hpp"
+#include "myHash.hpp"
+#include "myTime.hpp"
+//#include "myIO.hpp"
+///Specials
+using std::string;
+using std::vector;
+using std::list;
+using std::cout;
+using std::cerr;
+using std::cin;
+using std::endl;
+///Globals Varuabels
+
+class thread_tester_hdd{
+    private:
+        string strDir; //!<Keep work directory
+        string *p_strSummary; //!< Store summary as string
+        string *p_strOutFileDataBuffer; //!< Buffor to generate specified file zi
+        unsigned int uiDataLimit;
+        vector<unsigned int> vui_Probes;
+        list<string*> list_ReadFiles;
+        list<string> it_list_RF;
+        boost::thread m_Thread;
+    public:
+        thread_tester_hdd(vector<unsigned int>,string,unsigned int);
+        ~thread_tester_hdd();
+        void setNewData(vector<unsigned int>,string);
+        void setBuffer(const unsigned int*);
+        string getSummary();
+        void start();
+        void join();
+        void Execute();
+        void read(const unsigned int*);
+        void write(const unsigned int*);
+        void VeryfiFilesInWorkFolder();
+};
+
+#endif // THREAD_TESTER_HDD_HPP_INCLUDED

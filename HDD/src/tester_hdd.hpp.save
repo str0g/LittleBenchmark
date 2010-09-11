@@ -1,0 +1,62 @@
+#ifndef TESTER_HDD_HPP_INCLUDED
+#define TESTER_HDD_HPP_INCLUDED
+
+/***************************************************************
+ * Name:      <Input name>.cpp/h
+ * Purpose:   Code for Application <Name>
+ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
+ * Created:   <Input date>
+ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
+ * License:   GNU / General Public Licens
+ **************************************************************/
+///Headers
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+//boost
+#include <boost/program_options.hpp>
+//
+#include "version.h"
+//my
+#include "myHash.hpp"
+#include "myIO.hpp"
+#include "myConv.hpp"
+#include "myTime.hpp"
+
+///Specials
+using std::string;
+using std::vector;
+using std::cout;
+using std::cerr;
+using std::cin;
+using std::endl;
+///Globals Varuabels
+
+class tester_hdd{
+    private:
+        string *p_strOutBuff;
+        string strSummaryFile; //!<File to summary will be written
+        string strDataLimit; //!<Data Limit as string beforre conversion to unsigned int
+        bool bThreadingPerDir; //!<Every dir in new thread simuisly
+        bool bDebugging; //!<Debugging Enable/Disable
+        unsigned int uiThreadsPerDir; //!<How much threads per one directory/driver
+        unsigned int uiSelfTestScenerio; //!<Which test scenerio use
+        unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
+        vector<string> vstr_WorkDirs;
+        vector<string>::iterator vitstr_WorkDirs;
+        vector<unsigned int> vui_Probes;
+    public:
+        bool bRun;
+        tester_hdd(int,char **);
+        ~tester_hdd();
+        void SetBuffer(const unsigned int&);
+        void WriteTest();
+        void ReadTest();
+        void VeryfiFilesInWorkFolder();
+        void Run();
+        void SelfTest();
+};
+
+#endif // TESTER_HDD_HPP_INCLUDED

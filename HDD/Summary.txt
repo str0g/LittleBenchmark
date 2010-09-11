@@ -1,0 +1,394 @@
+[2010/09/11 14:19:13]
+/home/lukasz/Pulpit/Little_Benchmak/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 1024 files
+Bandwidth: 25KB/s (0.04s)
+Write metod end after 0.04s
+
+Verfication 1024 taken 0.02s
+Read by char: 16.6829MB/s
+Read by char 0.06
+
+Verfication 1024 taken 0.01s
+Read by stream: 0B/s
+Read by stream 0.03
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 300KB/s (0.01s)
+Write metod end after 0.01s
+
+Verfication 341 taken 0.01s
+Read by char: 24.9837MB/s
+Read by char 0.04
+
+Verfication 341 taken 0s
+Read by stream: 0B/s
+Read by stream 0
+
+Thread execution taken: 0.22s
+
+[2010/09/11 14:22:36]
+bin/Debug/HDD
+
+Buffer was set up in 0.02s
+Hashsum of buffer has been counted in 0.17s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0.22s
+Written 1024 files
+Bandwidth: 3.44828KB/s (0.29s)
+Write metod end after 0.51s
+
+Verfication 1024 taken 0.84s
+Read by char: 476.744KB/s
+Read by char 2.16
+
+Verfication 1024 taken 0.81s
+Read by stream: 0B/s
+Read by stream 1.22
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0.01s
+Written 341 files
+Bandwidth: 37.5KB/s (0.08s)
+Write metod end after 0.1s
+
+Verfication 341 taken 0.27s
+Read by char: 769.423KB/s
+Read by char 1.34
+
+Verfication 341 taken 0.28s
+Read by stream: 0B/s
+Read by stream 0.45
+
+Thread execution taken: 6.03s
+
+[2010/09/11 14:31:05]
+/home/lukasz/Pulpit/Little_Benchmak/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 1024 files
+Bandwidth: 20KB/s (0.05s)
+Write metod end after 0.05s
+
+Verfication 1024 taken 0.01s
+Read by char: 20.0195MB/s
+Read by char 0.05
+
+Verfication 2048 taken 0.04s
+Read by stream: 0B/s
+Read by stream 0.05
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 300KB/s (0.01s)
+Write metod end after 0.01s
+
+Verfication 2389 taken 0.05s
+Read by char: 14.2764MB/s
+Read wrong number of files! [2389/341]Read by char 0.07
+
+Verfication 2730 taken 0.05s
+Read by stream: 0B/s
+Read wrong number of files! [2730/341]Read by stream 0.05
+
+Thread execution taken: 0.32s
+
+[2010/09/11 14:31:47]
+bin/Debug/HDD
+
+Buffer was set up in 0.03s
+Hashsum of buffer has been counted in 0.18s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0.23s
+Written 1024 files
+Bandwidth: 3.44828KB/s (0.29s)
+Write metod end after 0.53s
+
+Verfication 1024 taken 0.84s
+Read by char: 470.183KB/s
+Read by char 2.19
+
+Verfication 2048 taken 1.66s
+Read by stream: 0B/s
+Read by stream 2.07
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 33.3333KB/s (0.09s)
+Write metod end after 0.09s
+
+Verfication 2389 taken 1.95s
+Read by char: 336.623KB/s
+Read wrong number of files! [2389/341]Read by char 3.05
+
+Verfication 2730 taken 2.23s
+Read by stream: 0B/s
+Read wrong number of files! [2730/341]Read by stream 2.45
+
+Thread execution taken: 10.61s
+
+[2010/09/11 14:34:13]
+/home/lukasz/Pulpit/Little_Benchmak/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 1024 files
+Bandwidth: 20KB/s (0.05s)
+Write metod end after 0.05s
+
+File have wrong controle sum!
+Test has been aborded!
+Verfication 1024 taken 0s
+ 0.03
+
+File have wrong controle sum!
+Test has been aborded!
+Verfication 2048 taken 0s
+ 0.02
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 300KB/s (0.01s)
+Write metod end after 0.01s
+
+File have wrong controle sum!
+Test has been aborded!
+Verfication 2389 taken 0s
+ 0.03
+
+File have wrong controle sum!
+Test has been aborded!
+Verfication 2730 taken 0s
+ 0
+
+Thread execution taken: 0.18s
+
+[2010/09/11 14:50:33]
+/home/lukasz/Pulpit/Little_Benchmak/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 1024 files
+Bandwidth: 20KB/s (0.05s)
+Write metod end after 0.05s
+
+Verfication 1024 taken 0.02s
+Read by char: 16.6829MB/s
+Read by char 0.06
+
+Verfication 1024 taken 0.01s
+Read by stream: 0B/s
+Read by stream 0.02
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 300KB/s (0.01s)
+Write metod end after 0.01s
+
+Verfication 341 taken 0s
+Read by char: 33.3116MB/s
+Read by char 0.03
+
+Verfication 341 taken 0s
+Read by stream: 0B/s
+Read by stream 0.01
+
+Thread execution taken: 0.23s
+
+[2010/09/11 14:51:12]
+bin/Debug/HDD
+
+Buffer was set up in 0.03s
+Hashsum of buffer has been counted in 0.18s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0.23s
+Written 1024 files
+Bandwidth: 3.57143KB/s (0.28s)
+Write metod end after 0.52s
+
+Verfication 1024 taken 0.85s
+Read by char: 470.183KB/s
+Read by char 2.2
+
+Verfication 1024 taken 0.83s
+Read by stream: 0B/s
+Read by stream 1.23
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 33.3333KB/s (0.09s)
+Write metod end after 0.09s
+
+Verfication 341 taken 0.29s
+Read by char: 746.958KB/s
+Read by char 1.38
+
+Verfication 341 taken 0.27s
+Read by stream: 0B/s
+Read by stream 0.46
+
+Thread execution taken: 6.14s
+
+[2010/09/11 14:53:48]
+/home/lukasz/Pulpit/Little_Benchmak/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 1024 files
+Bandwidth: 25KB/s (0.04s)
+Write metod end after 0.04s
+
+Verfication 1024 taken 0.02s
+Read by char: 14.2997MB/s
+Read by char 0.07
+
+Verfication 1024 taken 0.02s
+Read by stream: 0B/s
+Read by stream 0.03
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 300KB/s (0.01s)
+Write metod end after 0.01s
+
+Verfication 341 taken 0s
+Read by char: 33.3116MB/s
+Read by char 0.03
+
+Verfication 341 taken 0.01s
+Read by stream: 0B/s
+Read by stream 0.02
+
+Thread execution taken: 0.23s
+
+[2010/09/11 14:54:04]
+bin/Debug/HDD
+
+Buffer was set up in 0.03s
+Hashsum of buffer has been counted in 0.18s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0.22s
+Written 1024 files
+Bandwidth: 3.44828KB/s (0.29s)
+Write metod end after 0.53s
+
+Verfication 1024 taken 0.83s
+Read by char: 476.744KB/s
+Read by char 2.17
+
+Verfication 1024 taken 0.82s
+Read by stream: 0B/s
+Read by stream 1.23
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 33.3333KB/s (0.09s)
+Write metod end after 0.09s
+
+Verfication 341 taken 0.27s
+Read by char: 763.681KB/s
+Read by char 1.35
+
+Verfication 341 taken 0.26s
+Read by stream: 0B/s
+Read by stream 0.46
+
+Thread execution taken: 6.06s
+
+[2010/09/11 14:57:54]
+/home/lukasz/Pulpit/Little_Benchmak/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 1024 files
+Bandwidth: 20KB/s (0.05s)
+Write metod end after 0.05s
+
+Verfication 1024 taken 0.02s
+Read by char: 20.0195MB/s
+Read by char 0.05
+
+Verfication 1024 taken 0.02s
+Read by stream: 0B/s
+Read by stream 0.04
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 300KB/s (0.01s)
+Write metod end after 0.01s
+
+Verfication 341 taken 0.01s
+Read by char: 24.9837MB/s
+Read by char 0.04
+
+Verfication 341 taken 0.01s
+Read by stream: 0B/s
+Read by stream 0.01
+
+Thread execution taken: 0.23s
+

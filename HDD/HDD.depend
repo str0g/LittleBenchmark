@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1284209426 source:/home/lukasz/Pulpit/Little_Benchmak/HDD/src/main.cpp
+	<cstdlib>
+	<iostream>
+	"tester_hdd.hpp"
+	<string>
+	<list>
+
+1284064518 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/tester_hdd.hpp
+	<cstdlib>
+	<iostream>
+	<string>
+	<fstream>
+	<vector>
+	<boost/program_options.hpp>
+	<boost/ptr_container/ptr_list.hpp>
+	"version.h"
+	"myHash.hpp"
+	"myIO.hpp"
+	"myConv.hpp"
+	"myTime.hpp"
+	"thread_tester_hdd.hpp"
+
+1284062003 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/myHash.hpp
+	<string>
+	<cryptopp/md5.h>
+	<cryptopp/rsa.h>
+	<cryptopp/base64.h>
+	"cryptopp/hex.h"
+
+1284142253 source:/home/lukasz/Pulpit/Little_Benchmak/HDD/src/tester_hdd.cpp
+	"tester_hdd.hpp"
+
+1284206317 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/myIO.hpp
+	<iostream>
+	<string>
+	<fstream>
+	<fcntl.h>
+	<boost/filesystem/operations.hpp>
+	<boost/filesystem/path.hpp>
+
+1284140818 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/myConv.hpp
+	<string>
+	<sstream>
+
+1284147591 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/myTime.hpp
+	<string>
+	"myConv.hpp"
+
+1284209861 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/version.h
+
+1284209622 source:/home/lukasz/Pulpit/Little_Benchmak/HDD/src/thread_tester_hdd.cpp
+	"thread_tester_hdd.hpp"
+
+1284206954 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/thread_tester_hdd.hpp
+	<cstdlib>
+	<sys/stat.h>
+	<iostream>
+	<string>
+	<vector>
+	<list>
+	<boost/thread/thread.hpp>
+	"myConv.hpp"
+	"myHash.hpp"
+	"myTime.hpp"
+	"myIO.hpp"
+
+1284138916 /home/lukasz/Pulpit/Little_Benchmak/HDD/src/multiple_sources.cpp
+	<boost/program_options.hpp>
+	<iostream>
+	<fstream>
+	<iterator>
+
+1284141896 source:/home/lukasz/Pulpit/Little_Benchmak/HDD/src/multiple_sources.cpp
+	<boost/program_options.hpp>
+	<iostream>
+	<fstream>
+	<iterator>
+
