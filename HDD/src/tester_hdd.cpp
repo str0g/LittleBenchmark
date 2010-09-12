@@ -12,17 +12,20 @@
 tester_hdd::tester_hdd(int ac,char **av):
                                         strSummaryFile("Summary.txt"),
                                         strDataLimit("300M"),
+                                        strSlash("/"),
+                                        strPath(""),
                                         bThreadingPerDir(false),
                                         bDebugging(false),
                                         uiThreadsPerDir(1),
                                         uiSelfTestScenerio(0),
                                         uiDataLimit(300 * MB),
+                                        uiMaxLoops(500),
                                         uiPermissions(0777),
                                         bRun(true){
 
-
-        //def probes
-        //
+    #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
+    strSlash = "\\";
+    #endif
     try{
         boost::program_options::options_description desc("Options");
         desc.add_options()
@@ -30,11 +33,13 @@ tester_hdd::tester_hdd(int ac,char **av):
         ("Author,a","Print info about Author and quit")
         ("data-limit,l",boost::program_options::value<string>(&strDataLimit)->default_value(strDataLimit),"small data read/write limit")
         ("dir-thread,t", boost::program_options::value<bool>(&bThreadingPerDir)->default_value(bThreadingPerDir), "Run thread for every directory.\nUseful for bandwidth test of controllers or NCQ.")
+        ("max-loops,m",boost::program_options::value<unsigned int>(&uiMaxLoops)->default_value(uiMaxLoops),"Limit number of loops per read/write files")
         ("output-file,o",boost::program_options::value<string>(&strSummaryFile)->default_value(strSummaryFile),"Output file")
         ("probe-size,x",boost::program_options::value<vector<string> >()->composing(),"Set size of probes")
         ("thread-per-dir,p",boost::program_options::value<unsigned int>(&uiThreadsPerDir)->default_value(uiThreadsPerDir),"Number of threads per directory.\nUseful for bandwidth test with NCQ.")
         ("version,v","Print version and quit")
-        ("work-dir,w",boost::program_options::value<vector<string> >()->composing(),"Run test in specified locations or drivers (default user directory)\n \"[dir] [dir] [dir]\" use-> \" or program will to crash.")
+        ("work-dir,w",boost::program_options::value<vector<string> >()->composing(),"Run test in specified locations or drivers (default user directory)\n \" \
+                                                                                    Importent do NOT  add more then 1 directory if you specified probe sizes.")
         ;
         boost::program_options::options_description developer("Developer options");
         developer.add_options()
@@ -53,6 +58,8 @@ tester_hdd::tester_hdd(int ac,char **av):
 
         boost::program_options::variables_map vm;
         boost::program_options::store(boost::program_options::command_line_parser(ac, av).options(desc).positional(pos_opt).run(), vm);
+
+        GetUserDir();
 
         std::ifstream ifs("a");// user_foler/.littlebenchmark/hdd/config.cfg
         boost::program_options::store(boost::program_options::parse_config_file(ifs, desc), vm);
@@ -84,7 +91,7 @@ tester_hdd::tester_hdd(int ac,char **av):
         if(vm.count("work-dir")){
             vstr_WorkDirs = vm["work-dir"].as<vector<string> >();
         }else{
-            vstr_WorkDirs.push_back(av[0]);
+            vstr_WorkDirs.push_back(strPath);
         }
         if (vm.count("permissions")){
             uiPermissions = vm["permissions"].as<mode_t>();
@@ -93,10 +100,12 @@ tester_hdd::tester_hdd(int ac,char **av):
             strDataLimit = vm["data-limit"].as<string>();
             uiDataLimit = myTime::FromString<unsigned int>(strDataLimit);
         }
+        if (vm.count("max-loops")){
+            uiMaxLoops = vm["max-loops"].as<unsigned int>();
+        }
         if (vm.count("probe-size")){
             vector<string> vstr = vm["probe-size"].as<std::vector<string> >();
             if (vstr.size() > 0){ vui_Probes.clear(); }
-            cout<<"P:"<<vstr.size()<<endl;
             for (vector<string>::iterator it = vstr.begin();
                 it != vstr.end();
                 ++it){
@@ -120,7 +129,9 @@ tester_hdd::tester_hdd(int ac,char **av):
             uint64_t ui64tmp;
             for(vector<unsigned int>::iterator it = vui_Probes.begin(); it != vui_Probes.end(); ++it){
                 ui64tmp = (uint64_t)*it;
-                cout << myTime::Bandwidth(1,&ui64tmp) <<endl;
+                if (bDebugging){
+                    cout <<"\t"<< myTime::Bandwidth(1,&ui64tmp) <<endl;
+                }
             }
         }
         if (vm.count("self-test")) {
@@ -151,9 +162,74 @@ tester_hdd::~tester_hdd(){
     for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
         bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
         ++bst_ptrlist_it_tester_hdd){
-            myIO::SimpleWriteToFile(&strSummaryFile, &bst_ptrlist_it_tester_hdd->getSummary() );
+            myIO::SimpleWriteToFile(&(strPath+strSummaryFile), &bst_ptrlist_it_tester_hdd->getSummary() );
         }
-        myIO::SimpleWriteToFile(&strSummaryFile, &string("\n") );
+        myIO::SimpleWriteToFile(&(strPath+strSummaryFile), &string("\n") );
+}
+
+void tester_hdd::GetUserDir(){
+    string strRet = "";
+#ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
+///
+#else
+/*MEM licking */
+    passwd *gUserdir = getpwuid(getuid());
+    if (gUserdir){
+        strRet.append(gUserdir->pw_dir);
+    }else{
+        cout<<"Error getting user folder"<<endl;
+    }
+    /* 12 lost... */
+/* fucked up example from official kernel man site! with mem licking WTF ??? *//*
+struct passwd pwd;
+           struct passwd *result;
+           char *buf;
+           size_t bufsize;
+           int s;
+
+
+
+           bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+           if (bufsize == -1)          *//* Value was indeterminate */
+  //             bufsize = 16384;        /* Should be more than enough */
+/*
+           buf = new char [bufsize];
+           if (buf == NULL) {
+               perror("malloc");
+               exit(EXIT_FAILURE);
+           }
+
+           s = getpwnam_r("lukasz", &pwd, buf, bufsize, &result);
+           if (result == NULL) {
+               if (s == 0)
+                   printf("Not found\n");
+               else {
+                   errno = s;
+                   perror("getpwnam_r");
+               }
+               exit(EXIT_FAILURE);
+           }
+
+           cout << pwd.pw_dir <<endl;
+           delete[] buf;*/
+           //free((void*)(&*result));
+
+#endif
+    if (strRet.length() > 0 ){
+        strRet.append(strSlash+".littlebenchmark");
+        myIO::createDir(&strRet);
+        strRet.append(strSlash+"hdd");
+        myIO::createDir(&strRet);
+        strPath = strRet+strSlash;
+        strRet.append(strSlash+"config.cfg");
+        myIO::touch(&strRet);
+        string strtmp = "\
+#\n\
+# Run program with -h or --help options to see which parameters you can set here\n\
+# Parameter should look like param = [value]\n\
+#"; // file tmp
+        myIO::SimpleWriteToFile(&strRet,&strtmp);
+    }
 }
 
 void tester_hdd::SelfTest(){
@@ -229,7 +305,8 @@ void tester_hdd::Run(){
         cout<<"OutFile: "<<strSummaryFile<<endl;
         cout<<"Threads per directory: "<<uiThreadsPerDir<<endl;
         cout<<"MultiThreading: "; bThreadingPerDir ? cout<<"yes"<<endl : cout<<"no"<<endl;
-        cout<<"Run some test?: "; bRun ? cout<<"yes"<<endl : cout<<"no"<<endl;
+        cout<<"Run some test?: "; bRun ? cout<<"yes"<<endl : cout<<"Only self test"<<endl;
+        cout<<"Max loops: "<<uiMaxLoops<<endl;
         cout<<"Directories: "<<endl;
         for (vitstr_WorkDirs = vstr_WorkDirs.begin();
             vitstr_WorkDirs!= vstr_WorkDirs.end();
@@ -242,7 +319,9 @@ void tester_hdd::Run(){
         ++vitstr_WorkDirs){
             bst_ptrlist_tester_hdd.push_back(new thread_tester_hdd(vui_Probes,
                                                                    *vitstr_WorkDirs,
+                                                                   strSlash,
                                                                    uiDataLimit,
+                                                                   uiMaxLoops,
                                                                    uiPermissions
                                                                    ));
     }

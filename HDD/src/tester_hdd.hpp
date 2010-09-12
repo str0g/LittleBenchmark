@@ -28,6 +28,12 @@
 #include "myTime.hpp"
 #include "thread_tester_hdd.hpp"
 
+#ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
+#include <windows.h>
+#else
+#include <pwd.h>
+#endif
+
 ///Specials
 using std::string;
 using std::vector;
@@ -41,28 +47,32 @@ class tester_hdd{
     private:
         string strSummaryFile; //!<File to summary will be written
         string strDataLimit; //!<Data Limit as string beforre conversion to unsigned int
+        string strSlash;//!<Windows compatability
+        string strPath;//!<Profile path
         bool bThreadingPerDir; //!<Every dir in new thread simuisly
         bool bDebugging; //!<Debugging Enable/Disable
         unsigned int uiThreadsPerDir; //!<How much threads per one directory/driver
         unsigned int uiSelfTestScenerio; //!<Which test scenerio use
         unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
+        unsigned int uiMaxLoops;//!<Maks loops
         mode_t uiPermissions; //!< Temporary folder premissions
         vector<string> vstr_WorkDirs; //!<Store work directories
         vector<string>::iterator vitstr_WorkDirs; //!<iterator for Stored directories
         vector<unsigned int> vui_Probes;//!<Store Probes as unsigned int
         boost::ptr_list<thread_tester_hdd> bst_ptrlist_tester_hdd; //!<Store list of working threads
         boost::ptr_list<thread_tester_hdd>::iterator bst_ptrlist_it_tester_hdd; //!<iterator
-    public:
-        bool bRun;
-        tester_hdd(int,char **);
-        ~tester_hdd();
+        void GetUserDir();
         void SetBuffer(const unsigned int&);
         void WriteTest();
         void ReadTest();
         void VeryfiFilesInWorkFolder();
-        void Run();
         void SelfTest();
         void BufferingTest();
+    public:
+        bool bRun;
+        tester_hdd(int,char **);
+        ~tester_hdd();
+        void Run();
 };
 
 #endif // TESTER_HDD_HPP_INCLUDED

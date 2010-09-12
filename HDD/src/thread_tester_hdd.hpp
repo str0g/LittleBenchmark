@@ -43,6 +43,7 @@ class thread_tester_hdd{
         string strSlash; //!<Windows compatability
         unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
         uint64_t ui64Loop;//!<
+        unsigned int uiMaxLoops; //!<Limit number of loops
         mode_t uiPermissions; //!< Temporary folder premissions
         bool bWriteFailed;//!<
         vector<unsigned int> vui_Probes; //!<Store Probes as unsigned int
@@ -50,7 +51,12 @@ class thread_tester_hdd{
         list<string> it_list_RF; //!iterator for list_ReadFiles store
         boost::thread m_Thread; //!<Thread for magic to be happening
     public:
-        thread_tester_hdd(vector<unsigned int>,string,unsigned int,mode_t);
+        thread_tester_hdd(vector<unsigned int>,
+                          string,
+                          string,
+                          unsigned int,
+                          unsigned int,
+                          mode_t);
         ~thread_tester_hdd();
         void setNewData(vector<unsigned int>,string);
         void setBuffer(const unsigned int*);

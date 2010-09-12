@@ -9,19 +9,18 @@
 ///Headers
 #include "thread_tester_hdd.hpp"
 
-thread_tester_hdd::thread_tester_hdd(vector<unsigned int> vui,string str,unsigned int limit,unsigned int prem):
+thread_tester_hdd::thread_tester_hdd(vector<unsigned int> vui,string str,string slash,unsigned int limit,unsigned int mloops,unsigned int prem):
                                     vui_Probes(vui),
                                     strDir(str),
                                     p_strSummary(new string),
                                     p_strHashSum(new string),
-                                    strSlash("/"),
+                                    strSlash(slash),
                                     uiDataLimit(limit),
+                                    ui64Loop(0),
+                                    uiMaxLoops(mloops),
                                     uiPermissions(prem),
                                     bWriteFailed(false),
                                     p_strOutFileDataBuffer(new string){
-    #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
-    strSlash = "\\";
-    #endif
     p_strHashSum->reserve(SHA512LEN);
 
     p_strSummary->append(myTime::GetLocalTime()+"\n");
@@ -140,6 +139,7 @@ void thread_tester_hdd::Write(const unsigned int *uiSize){
     setBuffer(uiSize);
     uint64_t ui64tmp = p_strOutFileDataBuffer->length();
     ui64Loop = (uint64_t)(uiDataLimit / *uiSize);
+    ui64Loop > uiMaxLoops ? ui64Loop = (uint64_t)uiMaxLoops : ui64Loop;
     //list_ReadFiles.resize(ui64Loop);
     //Write only
     double dStartt = myTime::GetTime();

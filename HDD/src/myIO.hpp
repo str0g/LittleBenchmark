@@ -67,7 +67,9 @@ namespace myIO{
         return false;
     }
     inline void createDir(const std::string *strPath){
-        std::cout<<"Created: " << boost::filesystem::create_directory(*strPath) << std::endl;
+        if (!  boost::filesystem::is_directory(*strPath) ){
+            boost::filesystem::create_directory(*strPath);
+        }
     }
     inline void delDir(const std::string *strPath){
         std::cout<<"Removed: "<< boost::filesystem::remove(*strPath) << std::endl;

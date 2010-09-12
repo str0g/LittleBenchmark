@@ -1,0 +1,10 @@
+12 wrzesień 2010
+   released version 0.7.8 of HDD
+
+     Change log:
+        -Added: Create profile for user in user directory [Memory lick in pwd.h which will be fix later]
+        -Added: File copy test
+        -Added: Read by chunk test
+        -Added: Man book
+        -Added: User documentation in pdf
+

@@ -1,0 +1,38 @@
+[2010/09/12 12:57:12]
+/home/lukasz/Pulpit/Little_Benchmark/HDD/bin/Debug/HDD
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 1024(1KB)
+setBuffer end in 0s
+Written 500 files
+Bandwidth: 50KB/s (0.02s)
+Write metod end after 0.02s
+
+Verfication 500 taken 0.01s
+Read by char: 16.2919MB/s
+Read by char 0.03
+
+Verfication 500 taken 0.01s
+Read by stream: 0B/s
+Read by stream 0.02
+
+Buffer was set up in 0s
+Hashsum of buffer has been counted in 0s
+
+Testing files of size: 3072(3KB)
+setBuffer end in 0s
+Written 341 files
+Bandwidth: 150KB/s (0.02s)
+Write metod end after 0.02s
+
+Verfication 341 taken 0.01s
+Read by char: 33.3116MB/s
+Read by char 0.03
+
+Verfication 341 taken 0.01s
+Read by stream: 0B/s
+Read by stream 0.01
+
+Thread execution taken: 0.15s

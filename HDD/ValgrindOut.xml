@@ -12,8 +12,8 @@
   <line>Command: bin/Debug/HDD -x 1K 3k -l 1M -C -D -S 1</line>
 </preamble>
 
-<pid>29992</pid>
-<ppid>3950</ppid>
+<pid>6887</pid>
+<ppid>11388</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -40,14 +40,89 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.054 </time>
+  <time>00:00:00:00.066 </time>
 </status>
 
 
 <status>
   <state>FINISHED</state>
-  <time>00:00:00:07.730 </time>
+  <time>00:00:00:05.977 </time>
 </status>
+
+<error>
+  <unique>0xf</unique>
+  <tid>1</tid>
+  <kind>Leak_DefinitelyLost</kind>
+  <xwhat>
+    <text>300 (60 direct, 240 indirect) bytes in 1 blocks are definitely lost in loss record 12 of 12</text>
+    <leakedbytes>300</leakedbytes>
+    <leakedblocks>1</leakedblocks>
+  </xwhat>
+  <stack>
+    <frame>
+      <ip>0x4C284A8</ip>
+      <obj>/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so</obj>
+      <fn>malloc</fn>
+      <dir>/build/buildd/valgrind-3.6.0~svn20100212/coregrind/m_replacemalloc</dir>
+      <file>vg_replace_malloc.c</file>
+      <line>236</line>
+    </frame>
+    <frame>
+      <ip>0x640B7EA</ip>
+      <obj>/lib/libc-2.11.1.so</obj>
+      <fn>nss_parse_service_list</fn>
+      <dir>/build/buildd/eglibc-2.11.1/nss</dir>
+      <file>nsswitch.c</file>
+      <line>622</line>
+    </frame>
+    <frame>
+      <ip>0x640C10D</ip>
+      <obj>/lib/libc-2.11.1.so</obj>
+      <fn>__nss_database_lookup</fn>
+      <dir>/build/buildd/eglibc-2.11.1/nss</dir>
+      <file>nsswitch.c</file>
+      <line>164</line>
+    </frame>
+    <frame>
+      <ip>0x70BF3CF</ip>
+    </frame>
+    <frame>
+      <ip>0x70C0184</ip>
+    </frame>
+    <frame>
+      <ip>0x63BA48C</ip>
+      <obj>/lib/libc-2.11.1.so</obj>
+      <fn>getpwnam_r@@GLIBC_2.2.5</fn>
+      <dir>/build/buildd/eglibc-2.11.1/pwd/../nss</dir>
+      <file>getXXbyYY_r.c</file>
+      <line>253</line>
+    </frame>
+    <frame>
+      <ip>0x41B134</ip>
+      <obj>/home/lukasz/Pulpit/Little_Benchmark/HDD/bin/Debug/HDD</obj>
+      <fn>tester_hdd::GetUserDir()</fn>
+      <dir>/home/lukasz/Pulpit/Little_Benchmark/HDD/src</dir>
+      <file>tester_hdd.cpp</file>
+      <line>199</line>
+    </frame>
+    <frame>
+      <ip>0x419292</ip>
+      <obj>/home/lukasz/Pulpit/Little_Benchmark/HDD/bin/Debug/HDD</obj>
+      <fn>tester_hdd::tester_hdd(int, char**)</fn>
+      <dir>/home/lukasz/Pulpit/Little_Benchmark/HDD/src</dir>
+      <file>tester_hdd.cpp</file>
+      <line>60</line>
+    </frame>
+    <frame>
+      <ip>0x4164EC</ip>
+      <obj>/home/lukasz/Pulpit/Little_Benchmark/HDD/bin/Debug/HDD</obj>
+      <fn>main</fn>
+      <dir>/home/lukasz/Pulpit/Little_Benchmark/HDD/src</dir>
+      <file>main.cpp</file>
+      <line>25</line>
+    </frame>
+  </stack>
+</error>
 
 <errorcounts>
 </errorcounts>
