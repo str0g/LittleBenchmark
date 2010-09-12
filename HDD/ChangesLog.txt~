@@ -11,5 +11,4 @@ xx September 2010
    released version 0.7.8 of HDD
 
      Change log:
-        -Added: Create user profile in user directory [Memory lick while using pwd.h, will be fix later]
-	-Added: Default work directory is Profile directory
+        -Added: Create profile for user in user directory [Memory lick while using pwd.h, will be fix later]
