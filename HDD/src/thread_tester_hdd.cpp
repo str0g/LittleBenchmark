@@ -131,7 +131,7 @@ void thread_tester_hdd::readByChar(uint16_t mode){
             *it = NULL;
         }
     list_ReadFiles.clear();
-    p_strSummary->append(strtmp+" "+myConv::ToString(myTime::TimeDiff(myTime::GetTime(),dStart))+"\n\n");
+    p_strSummary->append(strtmp+" "+myConv::ToString(myTime::TimeDiff(myTime::GetTime(),dStart))+"s\n\n");
 }
 
 void thread_tester_hdd::Write(const unsigned int *uiSize){

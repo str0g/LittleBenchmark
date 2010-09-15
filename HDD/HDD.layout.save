@@ -2,10 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="src/main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="703" topLine="9" />
-	</File>
-	<File name="src/multiple_sources.cpp" open="1" top="0" tabpos="10">
-		<Cursor position="2256" topLine="51" />
+		<Cursor position="703" topLine="0" />
 	</File>
 	<File name="src/myConv.hpp" open="1" top="0" tabpos="8">
 		<Cursor position="598" topLine="0" />
@@ -19,8 +16,8 @@
 	<File name="src/myTime.hpp" open="1" top="0" tabpos="4">
 		<Cursor position="2402" topLine="0" />
 	</File>
-	<File name="src/tester_hdd.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="943" topLine="216" />
+	<File name="src/tester_hdd.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="8293" topLine="6" />
 	</File>
 	<File name="src/tester_hdd.hpp" open="1" top="0" tabpos="3">
 		<Cursor position="465" topLine="20" />
@@ -30,8 +27,5 @@
 	</File>
 	<File name="src/thread_tester_hdd.hpp" open="1" top="0" tabpos="6">
 		<Cursor position="1809" topLine="19" />
-	</File>
-	<File name="src/version.h" open="1" top="1" tabpos="0">
-		<Cursor position="0" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

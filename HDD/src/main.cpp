@@ -7,9 +7,10 @@
  * License:   GNU / General Public Licens
  **************************************************************/
 ///Headers
-#include <cstdlib>
-#include <iostream>
-#include "tester_hdd.hpp"/*
+//#include <cstdlib>
+//#include <iostream>
+#include "tester_hdd.hpp"
+/*
 #include <string>
 #include <list>
 using std::string;
@@ -25,28 +26,6 @@ int main(int ac,char **av){
     tester_hdd hdd(ac,av);
     if (hdd.bRun)
         hdd.Run();
-
-/*
-string *s = NULL;
-list<string*> ls;
-list <string*>::iterator ils;
-for(int i=0; i<3; ++i){
-    char z = i+50;
-    const char *x =&z;
-    string *str = new string(x);
-    ls.push_back(str);
-}
-for(ils = ls.begin(); ils != ls.end(); ++ils){
-    cout << **ils <<endl;
-}
-
-for(ils = ls.begin(); ils != ls.end(); ++ils){
-    delete &(**ils);
-    *ils = NULL;
-}
-
-ls.clear();
-*/
 
     return 0;
 }

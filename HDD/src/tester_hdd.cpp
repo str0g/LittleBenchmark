@@ -6,6 +6,11 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
+ /**
+ * Important notes for Linux:
+ * * In file /etc/nsswitch.conf change passwd compat to passwd file in order to prevent memory lick
+ */
+
 ///Headers
 #include "tester_hdd.hpp"
 
@@ -170,52 +175,18 @@ tester_hdd::~tester_hdd(){
 void tester_hdd::GetUserDir(){
     string strRet = "";
 #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
-///
+//
 #else
 /*MEM licking */
-    passwd *gUserdir = getpwuid(getuid());
+    struct passwd *gUserdir = getpwuid(getuid());
     if (gUserdir){
         strRet.append(gUserdir->pw_dir);
     }else{
         cout<<"Error getting user folder"<<endl;
     }
-    /* 12 lost... */
-/* fucked up example from official kernel man site! with mem licking WTF ??? *//*
-struct passwd pwd;
-           struct passwd *result;
-           char *buf;
-           size_t bufsize;
-           int s;
-
-
-
-           bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-           if (bufsize == -1)          *//* Value was indeterminate */
-  //             bufsize = 16384;        /* Should be more than enough */
-/*
-           buf = new char [bufsize];
-           if (buf == NULL) {
-               perror("malloc");
-               exit(EXIT_FAILURE);
-           }
-
-           s = getpwnam_r("lukasz", &pwd, buf, bufsize, &result);
-           if (result == NULL) {
-               if (s == 0)
-                   printf("Not found\n");
-               else {
-                   errno = s;
-                   perror("getpwnam_r");
-               }
-               exit(EXIT_FAILURE);
-           }
-
-           cout << pwd.pw_dir <<endl;
-           delete[] buf;*/
-           //free((void*)(&*result));
 
 #endif
-    if (strRet.length() > 0 ){
+    if (strRet.length() > 0 ){///Creates program profile directory for current user
         strRet.append(strSlash+".littlebenchmark");
         myIO::createDir(&strRet);
         strRet.append(strSlash+"hdd");
@@ -316,7 +287,7 @@ void tester_hdd::Run(){
     }
     for(vitstr_WorkDirs = vstr_WorkDirs.begin();
         vitstr_WorkDirs != vstr_WorkDirs.end();
-        ++vitstr_WorkDirs){
+        ++vitstr_WorkDirs){///Create threads and insert it to list
             bst_ptrlist_tester_hdd.push_back(new thread_tester_hdd(vui_Probes,
                                                                    *vitstr_WorkDirs,
                                                                    strSlash,
@@ -327,16 +298,16 @@ void tester_hdd::Run(){
     }
     for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
         bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
-        ++bst_ptrlist_it_tester_hdd){
+        ++bst_ptrlist_it_tester_hdd){///Running threads from list
             bst_ptrlist_it_tester_hdd->start();
-            if(!bThreadingPerDir){
+            if(!bThreadingPerDir){///If multithreading is disable program will wait for thread to do its job before running next one
                 bst_ptrlist_it_tester_hdd->join();
             }
         }
     if(bThreadingPerDir){
         for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
             bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
-            ++bst_ptrlist_it_tester_hdd){
+            ++bst_ptrlist_it_tester_hdd){///With multithreading wating for all started threads to end its jobs
                 bst_ptrlist_it_tester_hdd->join();
             }
     }

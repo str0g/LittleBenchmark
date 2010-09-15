@@ -30,6 +30,9 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-march=core2" />
+			<Add option="-Weffc++" />
+			<Add option="-pedantic" />
 			<Add option="-Wall" />
 		</Compiler>
 		<Linker>
@@ -41,10 +44,6 @@
 			<Add option="-lcrypto++" />
 		</Linker>
 		<Unit filename="src/main.cpp" />
-		<Unit filename="src/multiple_sources.cpp">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="src/myConv.hpp" />
 		<Unit filename="src/myHash.hpp" />
 		<Unit filename="src/myIO.hpp" />
@@ -69,7 +68,7 @@
 			<lib_finder disable_auto="1" />
 			<debugger />
 			<AutoVersioning>
-				<Scheme minor_max="10" build_max="10" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Scheme minor_max="10" build_max="10" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="200" />
 				<Settings autoincrement="1" date_declarations="1" do_auto_increment="1" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="src/version.h" />
 				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
 				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
