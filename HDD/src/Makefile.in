@@ -46,7 +46,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_LittleBenchmarkHDD_OBJECTS = main.$(OBJEXT) tester_hdd.$(OBJEXT) \
-	thread_tester_hdd.$(OBJEXT)
+	thread_tester_hdd.$(OBJEXT) profileUpdateStore.$(OBJEXT)
 LittleBenchmarkHDD_OBJECTS = $(am_LittleBenchmarkHDD_OBJECTS)
 LittleBenchmarkHDD_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -164,7 +164,7 @@ top_srcdir = @top_srcdir@
 #LDFLAGS = -lm
 AM_CPPFLGAS = -pedantic -Wall -march=core2
 AM_LDFLAGS = -lm -lboost_thread-mt -lboost_program_options-mt -lboost_filesystem-mt -L /usr/lib/libcrypto++ -L /usr/lib64/libcrypto++ -lcrypto++
-LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp version.h
+LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp profileUpdateStore.cpp profileUpdateStore.hpp version.h
 all: all-am
 
 .SUFFIXES:
@@ -178,9 +178,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/Makefile
+	  $(AUTOMAKE) --foreign src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -247,6 +247,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/profileUpdateStore.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tester_hdd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_tester_hdd.Po@am__quote@
 

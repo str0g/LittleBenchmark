@@ -10,6 +10,7 @@
  * License:   GNU / General Public Licens
  **************************************************************/
 ///Headers
+#define CRYPTOPP_ENABLE_NAMESPACE_WEAK 0
 #include <string>
 #include <cryptopp/md5.h>
 #include <cryptopp/rsa.h>

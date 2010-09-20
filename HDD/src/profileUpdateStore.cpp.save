@@ -7,30 +7,15 @@
  * License:   GNU / General Public Licens
  **************************************************************/
 ///Headers
-//#include <cstdlib>
-//#include <iostream>
-#include "tester_hdd.hpp"/*
-#include <string>
-#include <list>
-using std::string;
-using std::cout;
-using std::endl;
-using std::list;
+#include "profileUpdateStore.hpp"
 
-*/
-///Specials
 ///Globals Varuabels
 
-int main(int ac,char **av){
-
-    tester_hdd hdd(ac,av);
-    if (hdd.bRun)
-        hdd.Run();
-
-    return 0;
+profileUpdateStore::profileUpdateStore(string strvar,string strval):strVar(new string (strvar)),\
+                                                                    strVal(new string(strval)){
 }
-/*
-
--x 1K 3k -w dasd asd dsad -l 1M -C -D -S 1
-
-*/
+profileUpdateStore::profileUpdateStore(string strvar,uint64_t strval){
+    profileUpdateStore(strvar,myConv::ToString())
+}
+profileUpdateStore::profileUpdateStore(string strvar,string strval){
+}

@@ -2,14 +2,31 @@ xx September 2010
    released version 0.x.x of HDD
 
      Change log:
-        -Added: File copy test
-        -Added: Read by chunk test
-        -Added: Man book
-        -Added: User documentation in pdf
+        -Update: File copy test
+        -Add:    Read by chunk test
+	-Update: Full Windows portable
+	-Update: Max allocation char
+	-Update: Auto config file update with important values
+	-Fix:    Memory licks in allocation test
 
-12 September 2010
+19 September 2010
+   released version 0.8.5 of HDD
+
+     Change log:
+	-Updated: Config file is usable
+	-Updated: Some Windows portability stuff
+	-Added:   Auto detection with 1MB precision for max string allocation size
+        -Added:   File copy test
+	-Fixed:   Empty string after stream read caused by flush
+	-Added:   Access times with Min/Max/Avg
+	-Added:   Configurable stream precision
+	-Added:   Scaling from second to nanosecond
+
+15 September 2010
    released version 0.7.8 of HDD
 
      Change log:
-        -Added: Create user profile in user directory [Memory lick while using pwd.h, will be fix later]
+        -Added: Create user profile in user directory [Memory lick while using pwd.h, Please read pdf doc]
 	-Added: Default work directory is Profile directory
+        -Added: Man book
+        -Added: User documentation in pdf

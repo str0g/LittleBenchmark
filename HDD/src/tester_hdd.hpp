@@ -18,6 +18,7 @@
 //boost
 #include <boost/program_options.hpp>
 #include <boost/ptr_container/ptr_list.hpp>
+#include <boost/filesystem/fstream.hpp>
 //#include <boost/thread/thread.hpp>
 //
 #include "version.h"
@@ -27,6 +28,7 @@
 #include "myConv.hpp"
 #include "myTime.hpp"
 #include "thread_tester_hdd.hpp"
+#include "profileUpdateStore.hpp"
 
 #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
 #include <windows.h>
@@ -49,25 +51,30 @@ class tester_hdd{
         string strDataLimit; //!<Data Limit as string beforre conversion to unsigned int
         string strSlash;//!<Windows compatability
         string strPath;//!<Profile path
+        boost::filesystem::path pathProfile;//!<Keeps path to config file
+        boost::filesystem::path pathConfig;//!<Keeps path to config file
+        boost::filesystem::path pathSummary;//!<Keeps path to summary file
         bool bThreadingPerDir; //!<Every dir in new thread simuisly
         bool bDebugging; //!<Debugging Enable/Disable
         unsigned int uiThreadsPerDir; //!<How much threads per one directory/driver
         unsigned int uiSelfTestScenerio; //!<Which test scenerio use
         unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
-        unsigned int uiMaxLoops;//!<Maks loops
+        unsigned int uiMaxLoops;//!<Max loops
+        uint64_t ui64MaxStringSize;//!< Limit for string size
+        uint64_t ui64MaxCharSize;//!< Limit for char size
+        uint8_t ui8Precision;//!<Precision of cout
         mode_t uiPermissions; //!< Temporary folder premissions
+        vector<profileUpdateStore*> *pus_Var;//!<Store Profiles varuables name and values
         vector<string> vstr_WorkDirs; //!<Store work directories
         vector<string>::iterator vitstr_WorkDirs; //!<iterator for Stored directories
         vector<unsigned int> vui_Probes;//!<Store Probes as unsigned int
         boost::ptr_list<thread_tester_hdd> bst_ptrlist_tester_hdd; //!<Store list of working threads
         boost::ptr_list<thread_tester_hdd>::iterator bst_ptrlist_it_tester_hdd; //!<iterator
-        void GetUserDir();
-        void SetBuffer(const unsigned int&);
-        void WriteTest();
-        void ReadTest();
-        void VeryfiFilesInWorkFolder();
-        void SelfTest();
+        //
         void BufferingTest();
+        void GetUserDir();
+        void SelfTest();
+        void UpdateProfile();
     public:
         bool bRun;
         tester_hdd(int,char **);

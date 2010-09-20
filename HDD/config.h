@@ -7,6 +7,9 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
+/* Define to 1 if you have the `m' library (-lm). */
+#define HAVE_LIBM 1
+
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
 
@@ -44,7 +47,7 @@
 #define HAVE__BOOL 1
 
 /* Name of package */
-#define PACKAGE "LittleBenchmark:HDD"
+#define PACKAGE "littlebenchmark-hdd"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "str0g.wordpress.com"
@@ -53,7 +56,7 @@
 #define PACKAGE_NAME "LittleBenchmark:HDD"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "LittleBenchmark:HDD 0.7.8"
+#define PACKAGE_STRING "LittleBenchmark:HDD 0.8.5"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "littlebenchmark-hdd"
@@ -62,18 +65,23 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.7.8"
+#define PACKAGE_VERSION "0.8.5"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "0.7.8"
+#define VERSION "0.8.5"
 
 /* Define for Solaris 2.5.1 so the uint64_t typedef from <sys/synch.h>,
    <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
    #define below would cause a syntax error. */
 /* #undef _UINT64_T */
+
+/* Define for Solaris 2.5.1 so the uint8_t typedef from <sys/synch.h>,
+   <pthread.h>, or <semaphore.h> is not used. If the typedef were allowed, the
+   #define below would cause a syntax error. */
+/* #undef _UINT8_T */
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
@@ -94,3 +102,7 @@
 /* Define to the type of an unsigned integer type of width exactly 64 bits if
    such a type exists and the standard includes do not define it. */
 /* #undef uint64_t */
+
+/* Define to the type of an unsigned integer type of width exactly 8 bits if
+   such a type exists and the standard includes do not define it. */
+/* #undef uint8_t */

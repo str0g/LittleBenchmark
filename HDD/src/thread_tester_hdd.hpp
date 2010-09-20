@@ -19,6 +19,8 @@
 #include <list>
 //boost
 #include <boost/thread/thread.hpp>
+#include <boost/filesystem/path.hpp>
+#include "boost/date_time/local_time/local_time.hpp"
 //my
 #include "myConv.hpp"
 #include "myHash.hpp"
@@ -44,18 +46,26 @@ class thread_tester_hdd{
         unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
         uint64_t ui64Loop;//!<
         unsigned int uiMaxLoops; //!<Limit number of loops
+        uint8_t ui8Precision;//!<Precision of cout
         mode_t uiPermissions; //!< Temporary folder premissions
         bool bWriteFailed;//!<
         vector<unsigned int> vui_Probes; //!<Store Probes as unsigned int
         list<string*> list_ReadFiles; //!<Stores read files to count hashsum
         list<string> it_list_RF; //!iterator for list_ReadFiles store
         boost::thread m_Thread; //!<Thread for magic to be happening
+        void CopyTest(const unsigned int *);
+        void Execute();
+        void readByChar(uint16_t);
+        void readByLine();
+        void Write(const unsigned int*);
+        bool VeryfiReadFiles();
     public:
         thread_tester_hdd(vector<unsigned int>,
                           string,
                           string,
                           unsigned int,
                           unsigned int,
+                          uint8_t,
                           mode_t);
         ~thread_tester_hdd();
         void setNewData(vector<unsigned int>,string);
@@ -63,11 +73,6 @@ class thread_tester_hdd{
         string &getSummary();
         void start();
         void join();
-        void Execute();
-        void readByChar(uint16_t);
-        void readByLine();
-        void Write(const unsigned int*);
-        bool VeryfiReadFiles();
 };
 
 #endif // THREAD_TESTER_HDD_HPP_INCLUDED

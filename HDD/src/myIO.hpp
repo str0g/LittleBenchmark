@@ -11,23 +11,47 @@
  **************************************************************/
 #include <iostream>
 #include <string>
+#include <list>
 #include <fstream>
 #include <fcntl.h>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/fstream.hpp>
+#include "boost/date_time/local_time/local_time.hpp"
+//my
+#include "myTime.hpp"
 
 namespace myIO{
     //READ OPERATIONS
-    inline bool simpleReadToStringByChar(const std::string *strFile,std::string *strBuf){
+    inline bool simpleReadToStringByChar(std::string *strFile,\
+                                         std::string *strBuf,\
+                                         std::list<double> *p_listStats = NULL){
         //std::string *str = new std::string;
         if (!strBuf){
-            std::cerr<<"[simpleReadToStringByChar]->"<<"failed to allocate memory for: "<<*strFile<<std::endl;
+            std::cerr<<"[simpleReadToStringByChar]->"<<"Memory not allocated for: "<<*strFile<<std::endl;
             return false;
         }
-        size_t filesize;
 
+        size_t filesize;
+        double eTime = 0;
+        std::list<double>::iterator it;
+        if(p_listStats){
+            it = p_listStats->begin();
+        }
+
+        boost::local_time::local_date_time *dTime = myTime::GetTime();
         std::ifstream file (strFile->c_str());
         if (file.is_open()){
+            if (p_listStats){
+                eTime = myTime::TimeDiff( dTime );
+                *it > eTime ? *it = eTime : 0;
+                ++it;
+                *it < eTime ? *it = eTime : 0;
+                ++it;
+                *it += eTime;
+                ++it;
+                //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<<"]"<<std::endl;
+            }
             filesize=file.tellg();
 
             strBuf->reserve(filesize);
@@ -36,50 +60,98 @@ namespace myIO{
             while (!file.eof()){
                 *strBuf  += file.get();
             }
+            if (p_listStats){
+                eTime = myTime::TimeDiff( dTime );
+                *it > eTime ? *it = eTime : 0;
+                ++it;
+                *it < eTime ? *it = eTime : 0;
+                ++it;
+                *it += eTime;
+                //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<<"]"<<std::endl;
+            }
+            delete dTime;
             return true;
         }
         std::cerr<<"[simpleReadToStringByChar]->"<<"failed to open file: "<<*strFile<<std::endl;
+        delete dTime;
         return false;
     }
-    inline bool simpleReadToStringByStream(const std::string *strFile, std::string *strBuf,std::ios_base::openmode mode = std::ios::in|std::ios::binary){
+    inline bool simpleReadToStringByStream(const boost::filesystem::path &pathFile, std::string *strBuf,\
+                                           std::list<double> *p_listStats = NULL,\
+                                           std::ios_base::openmode mode = std::ios::in|std::ios::binary){
         std::stringstream ss;
-
-        std::ifstream file(strFile->c_str(),mode);
-        if (file.is_open()){
-            ss << file.rdbuf();
-            strBuf = &ss.str();
-            ss.flush();
-            file.close();
-            return true;
+        double eTime = 0;
+        std::list<double>::iterator it;
+        if(p_listStats){
+            it = p_listStats->begin();
         }
 
+        boost::local_time::local_date_time *dTime = myTime::GetTime();
+        std::ifstream file(pathFile.file_string().c_str(),mode);
+        if (file.is_open()){
+            if (p_listStats){
+                eTime = myTime::TimeDiff( dTime );
+                *it > eTime ? *it = eTime : 0;      ++it;
+                *it < eTime ? *it = eTime : 0;      ++it;
+                *it += eTime;                       ++it;
+            }
+
+            ss << file.rdbuf();
+            strBuf = &ss.str();
+            file.close();
+            //if ( !file.eof() ) { std::cerr << "Read error:"<<pathFile<<std::endl; return false; }
+
+            if (p_listStats){
+                eTime = myTime::TimeDiff( dTime );
+                *it > eTime ? *it = eTime : 0;      ++it;
+                *it < eTime ? *it = eTime : 0;      ++it;
+                *it += eTime;
+            }
+            delete dTime;
+            return true;
+        }
+        delete dTime;
         return false;
     }
     //WRITE OPERATIONS
-    inline bool touch(const std::string *strFileName,int int_chmod =0644){
-        std::ofstream o(strFileName->c_str());
-        if(o){
+    inline bool touch(const boost::filesystem::path &pathTo,\
+                      mode_t mode =0644){
+        if ( boost::filesystem::is_regular_file(pathTo) ){
+            std::cerr<<pathTo<<"::Already exist nothing to be done"<<std::endl;
+            return false;
+        }
+        boost::filesystem::ofstream o (pathTo);
+        if(o.is_open()){
             o.close();
-            chmod(strFileName->c_str(),int_chmod);
+            if (chmod(pathTo.file_string().c_str(),mode)!= 0){
+                    std::cerr<<pathTo<<"::Failed to set permisions"<<std::endl;
+            }
             return true;
 
         }
+        std::cerr<<pathTo<<"::Failed to open"<<std::endl;
         return false;
     }
-    inline void createDir(const std::string *strPath){
-        if (!  boost::filesystem::is_directory(*strPath) ){
-            boost::filesystem::create_directory(*strPath);
+    inline void createDir(const boost::filesystem::path &Path){
+        if (!  boost::filesystem::is_directory(Path) ){
+            boost::filesystem::create_directory(Path);
         }
     }
     inline void delDir(const std::string *strPath){
         std::cout<<"Removed: "<< boost::filesystem::remove(*strPath) << std::endl;
     }
-    inline bool SimpleWriteToFile(const std::string *strFileName,const std::string *data,std::ios_base::openmode mode = std::ios::app|std::ios::binary){
-        std::ofstream o(strFileName->c_str(),mode);
+    inline bool SimpleWriteToFile(const boost::filesystem::path &pathTo,\
+                                  const std::string *data,\
+                                  std::ios_base::openmode mode = std::ios::app|std::ios::binary){
+        boost::filesystem::ofstream o (pathTo,mode);
+        //std::ofstream o (pathTo.file_string().c_str(),mode); std::cout<<*data<<std::endl;
         if(o){
             o << *data;
-            o.flush();
-            o.close();
+            if( o.fail()){
+                std::cerr << "Write error:"<<pathTo<<std::endl; return false;
+            }
+            //o.flush();
+            o.close();//sleep(15);
             return true;
 
         }
@@ -122,6 +194,46 @@ namespace myIO{
                 }//if dir
             }//loop
         }//if exist
+    }
+    //List
+    inline void lsFiles(const boost::filesystem::path *bfsp_dir,\
+                        std::list<boost::filesystem::path> *list_dir){
+        if( boost::filesystem::exists( *bfsp_dir ) ){
+            boost::filesystem::directory_iterator end ;
+            for( boost::filesystem::directory_iterator iter(*bfsp_dir);\
+                    iter != end; ++iter )
+                if( boost::filesystem::is_regular_file( *iter )){
+                    list_dir->push_back( iter->path() );
+                }
+        }else{
+            std::cerr<<*bfsp_dir<<" does not exist"<<std::endl;
+        }
+    }
+    //COPY
+    inline bool CopyFileByChar(const boost::filesystem::path &pathFrom,\
+                               const boost::filesystem::path &pathTo){
+        if ( boost::filesystem::is_directory(pathFrom) ){std::cerr<<pathFrom<<" is a directory file requered"<<std::endl; return false; }
+        if ( boost::filesystem::is_directory(pathTo) ){ std::cerr<<pathFrom<<" is a directory file requered"<<std::endl; return false; }
+
+        boost::filesystem::ifstream fileFrom (pathFrom);
+        boost::filesystem::ofstream fileTo (pathTo,std::ios::ate);
+        std::string strError;
+        if (fileFrom.is_open() and fileTo.is_open()){
+            char c;
+            while (fileFrom.get(c)){
+                fileTo.put(c);
+                if ( fileTo.fail() ) { std::cerr << "Write error:"<<pathFrom<<std::endl; return false; }
+            }
+            if ( !fileFrom.eof() ) { std::cerr << "Read error:"<<pathTo<<std::endl; return false; }
+            return true;
+        }
+        if (fileFrom.is_open()){ fileFrom.close(); } else { strError.append(" "+pathFrom.file_string()); }
+        if (fileTo.is_open()){ fileTo.close(); } else { strError.append(" "+pathTo.file_string()); }
+        std::cerr<<"Failed to copy files by char"<<strError<<std::endl;
+        return false;
+
+    }
+    inline bool ReadByChunk(){
     }
 }
 

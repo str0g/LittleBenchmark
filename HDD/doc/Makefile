@@ -16,10 +16,10 @@
 
 
 
-pkgdatadir = $(datadir)/LittleBenchmark:HDD
-pkgincludedir = $(includedir)/LittleBenchmark:HDD
-pkglibdir = $(libdir)/LittleBenchmark:HDD
-pkglibexecdir = $(libexecdir)/LittleBenchmark:HDD
+pkgdatadir = $(datadir)/littlebenchmark-hdd
+pkgincludedir = $(includedir)/littlebenchmark-hdd
+pkglibdir = $(libdir)/littlebenchmark-hdd
+pkglibexecdir = $(libexecdir)/littlebenchmark-hdd
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -98,23 +98,23 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = 
+LIBS = -lm 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/lukasz/Pulpit/Little_Benchmark/HDD/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-PACKAGE = LittleBenchmark:HDD
+PACKAGE = littlebenchmark-hdd
 PACKAGE_BUGREPORT = str0g.wordpress.com
 PACKAGE_NAME = LittleBenchmark:HDD
-PACKAGE_STRING = LittleBenchmark:HDD 0.7.8
+PACKAGE_STRING = LittleBenchmark:HDD 0.8.5
 PACKAGE_TARNAME = littlebenchmark-hdd
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.7.8
+PACKAGE_VERSION = 0.8.5
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 0.7.8
+VERSION = 0.8.5
 abs_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD/doc
 abs_srcdir = /home/lukasz/Pulpit/Little_Benchmark/HDD/doc
 abs_top_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD
@@ -131,7 +131,7 @@ build_alias =
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
-docdir = $(datadir)/doc/LittleBenchmark:HDD
+docdir = $(datadir)/doc/littlebenchmark-hdd
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host_alias = 
@@ -171,9 +171,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu doc/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign doc/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu doc/Makefile
+	  $(AUTOMAKE) --foreign doc/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

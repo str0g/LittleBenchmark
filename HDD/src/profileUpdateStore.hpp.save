@@ -1,0 +1,37 @@
+#ifndef PROFILEUPDATESTORE_HPP_INCLUDED
+#define PROFILEUPDATESTORE_HPP_INCLUDED
+
+/***************************************************************
+ * Name:      <Input name>.cpp/h
+ * Purpose:   Code for Application <Name>
+ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
+ * Created:   <Input date>
+ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
+ * License:   GNU / General Public Licens
+ **************************************************************/
+///Headers
+#include <cstdlib>
+#include <iostream>
+#include <string>
+
+class profileUpdateStore{
+    string *strVar;
+    string *strVal;
+    uint64_t *uint;
+    double *doub;
+    public:
+    profileUpdateStore(string,uint64_t);
+    profileUpdateStore(string,double);
+    profileUpdateStore(string,string);
+    ~profileUpdateStore();
+    GetstrVar();
+    GetstrVal();
+    Getuint();
+    GetDoub();
+    template <typename T>
+    friend ostream & operator << (T & Output, profileUpdateStore &w){
+        return Output<<"string Varubale:"<<*strVar<<;
+    }
+};
+
+#endif // PROFILEUPDATESTORE_HPP_INCLUDED
