@@ -10,7 +10,7 @@
  * License:   GNU / General Public Licens
  **************************************************************/
 ///Headers
-#define CRYPTOPP_ENABLE_NAMESPACE_WEAK 0
+#define CRYPTOPP_ENABLE_NAMESPACE_WEAK 1
 #include <string>
 #include <cryptopp/md5.h>
 #include <cryptopp/rsa.h>
@@ -29,8 +29,8 @@ namespace Hash
         inline std::string MD5(const std::string* data)
         {
                 std::string res;
-                CryptoPP::MD5 hash;
-                byte digest[CryptoPP::MD5::DIGESTSIZE];
+                CryptoPP::Weak1::MD5 hash;
+                byte digest[CryptoPP::Weak1::MD5::DIGESTSIZE];
 
                 hash.CalculateDigest(digest, (byte*)data->c_str(), data->size());
 
@@ -43,12 +43,12 @@ namespace Hash
         }
 
         //Hash data by SHA512 algorhitm
-        inline std::string SHA512(const std::string *data)
+        inline std::string SHA512(const std::string &data)
         {
                 std::string res;
                 CryptoPP::SHA512 hash;
 
-                CryptoPP::StringSource encoder(data->c_str(), true,
+                CryptoPP::StringSource encoder(data, true,
                         new CryptoPP::HashFilter(hash, new CryptoPP::HexEncoder(new CryptoPP::StringSink(res))));
 
                 return res;

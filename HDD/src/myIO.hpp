@@ -97,9 +97,8 @@ namespace myIO{
             }
 
             ss << file.rdbuf();
-            strBuf = &ss.str();
+            *strBuf = ss.str();
             file.close();
-            //if ( !file.eof() ) { std::cerr << "Read error:"<<pathFile<<std::endl; return false; }
 
             if (p_listStats){
                 eTime = myTime::TimeDiff( dTime );
@@ -141,29 +140,28 @@ namespace myIO{
         std::cout<<"Removed: "<< boost::filesystem::remove(*strPath) << std::endl;
     }
     inline bool SimpleWriteToFile(const boost::filesystem::path &pathTo,\
-                                  const std::string *data,\
+                                  const std::string &data,\
                                   std::ios_base::openmode mode = std::ios::app|std::ios::binary){
         boost::filesystem::ofstream o (pathTo,mode);
         //std::ofstream o (pathTo.file_string().c_str(),mode); std::cout<<*data<<std::endl;
         if(o){
-            o << *data;
+            o << data;
             if( o.fail()){
                 std::cerr << "Write error:"<<pathTo<<std::endl; return false;
             }
-            //o.flush();
-            o.close();//sleep(15);
+            o.close();
             return true;
 
         }
         return false;
     }
-    inline bool appToFile(const std::string *strFileName,const std::string *data,int int_chmod =0644,int int_chmodE = 0444){
-        if (chmod(strFileName->c_str(),int_chmod)==0){
+    inline bool appToFile(const std::string *strFileName,const std::string *data,mode_t pmode =0644,mode_t emode = 0444){
+        if (chmod(strFileName->c_str(),pmode)==0){
             std::ofstream o(strFileName->c_str(),std::ios::app);
             if(o){
                 o << *data;
                 o.close();
-                if (chmod(strFileName->c_str(),int_chmodE)!=0){
+                if (chmod(strFileName->c_str(),emode)!=0){
                     std::cerr<<"[appToFile]: "<<*strFileName<<" Premission error(after write)"<<std::endl;
                 }
                 return true;
@@ -234,6 +232,7 @@ namespace myIO{
 
     }
     inline bool ReadByChunk(){
+        return false;
     }
 }
 

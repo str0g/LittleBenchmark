@@ -17,18 +17,27 @@
 tester_hdd::tester_hdd(int ac,char **av):
                                         strSummaryFile("Summary.txt"),
                                         strDataLimit("300M"),
-                                        strSlash("/"),
+                                        MaxCharSize("511M"),
+                                        MaxStringSize("511M"),
                                         strPath(""),
+                                        pathProfile(""),
+                                        pathConfig(""),
+                                        pathSummary(""),
                                         bThreadingPerDir(false),
                                         bDebugging(false),
                                         uiThreadsPerDir(1),
-                                        uiSelfTestScenerio(0),
+                                        uiSelfTestScenerio(15),
                                         uiDataLimit(300 * MB),
                                         uiMaxLoops(500),
+                                        ui64MaxCharSize(500*MB),
+                                        ui64MaxStringSize(500*MB),
                                         ui8Precision(10),
                                         uiPermissions(0777),
                                         pus_Var(new vector<profileUpdateStore*> ),
-                                        bRun(true){
+                                        bSelfTest(false),
+                                        bBufferingTest(false),
+                                        bRun(true)
+                                        {
 
     #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
     strSlash = "\\";
@@ -54,10 +63,10 @@ tester_hdd::tester_hdd(int ac,char **av):
         ("check-defualt-probes,C","Check for default test probes and small files read/write data limit")
         ("debug,D","Verbose output for debugging only")
         ("max-allocation-size,M","Check and set max allocation size of string and char as buffer")
-        ("max-char_size",boost::program_options::value<uint64_t>(&ui64MaxCharSize)->default_value(ui64MaxCharSize),"Max size of allocated char")
-        ("max-string_size",boost::program_options::value<uint64_t>(&ui64MaxStringSize)->default_value(ui64MaxStringSize),"Max size of allocated string")
+        ("max-char_size",boost::program_options::value<string>(&MaxCharSize)->default_value(MaxCharSize),"Max size of allocated char")
+        ("max-string_size",boost::program_options::value<string>(&MaxStringSize)->default_value(MaxStringSize),"Max size of allocated string")
         ("permissions,P",boost::program_options::value<mode_t>(&uiPermissions)->default_value(uiPermissions),"Change temporary folder permission")
-        ("self-test,S",boost::program_options::value<unsigned int>(&uiSelfTestScenerio)->default_value(uiSelfTestScenerio), "Run self test.\nFor Development purpose only")
+        ("self-test,S",boost::program_options::value<unsigned int>(), "Run self test.\nFor Development purpose only")//DO NOT CHANGE unless you wish to self test all the time :-)
         ;
 
         desc.add(developer);
@@ -93,13 +102,13 @@ tester_hdd::tester_hdd(int ac,char **av):
             exit(0);
         }
         if((vm.count("max-char_size"))){
-            ui64MaxCharSize = vm["max-char_size"].as<uint64_t>();
+            MaxCharSize = vm["max-char_size"].as<string>();
         }
         if((vm.count("max-string_size"))){
-            ui64MaxStringSize = vm["max-string_size"].as<uint64_t>();
+            MaxStringSize = vm["max-string_size"].as<string>();
         }
         if (vm.count("max-allocation-size")){
-            BufferingTest();
+            bBufferingTest = true;
         }
         if (vm.count("debug")){
             bDebugging = true;
@@ -122,13 +131,24 @@ tester_hdd::tester_hdd(int ac,char **av):
         if (vm.count("max-loops")){
             uiMaxLoops = vm["max-loops"].as<unsigned int>();
         }
+        //Values setup
+        //
+        ui64MaxCharSize   = myTime::FromString<uint64_t>( MaxCharSize   );
+        ui64MaxStringSize = myTime::FromString<uint64_t>( MaxStringSize );
+        cout<<MaxStringSize<<" "<<myTime::FromString<uint64_t>( MaxStringSize )<<endl;
+        //
         if (vm.count("probe-size")){
             vector<string> vstr = vm["probe-size"].as<std::vector<string> >();
             if (vstr.size() > 0){ vui_Probes.clear(); }
             for (vector<string>::iterator it = vstr.begin();
                 it != vstr.end();
                 ++it){
-                    vui_Probes.push_back( myTime::FromString<unsigned int>(*it) );
+                     if ( myTime::FromString<unsigned int>(*it) <= ui64MaxStringSize){
+                         vui_Probes.push_back( myTime::FromString<unsigned int>(*it) );
+                    }else{
+                        cout<<"Probe:"<<*it<<" is to big for your system"<<endl;
+                        cout<<"Current limit is:"<<MaxStringSize+"("<<ui64MaxStringSize<<")"<<endl;
+                    }
                 }
         }else{
             vui_Probes.push_back(4 * KB);
@@ -138,8 +158,10 @@ tester_hdd::tester_hdd(int ac,char **av):
             vui_Probes.push_back(25 * MB);
             vui_Probes.push_back(100 * MB);
             vui_Probes.push_back(250 * MB);
-            vui_Probes.push_back(700 * MB);
-            vui_Probes.push_back(GB);
+            if ( ui64MaxStringSize >= 700 * MB)
+                vui_Probes.push_back(700 * MB);
+            if ( ui64MaxStringSize >= GB)
+                vui_Probes.push_back(GB);
 
         }
         if (vm.count("check-defualt-probes")){
@@ -149,14 +171,13 @@ tester_hdd::tester_hdd(int ac,char **av):
             for(vector<unsigned int>::iterator it = vui_Probes.begin(); it != vui_Probes.end(); ++it){
                 ui64tmp = (uint64_t)*it;
                 if (bDebugging){
-                    cout <<"\t"<< myTime::Bandwidth(0,&ui64tmp) <<endl;
+                    cout <<"\t"<< myTime::Bandwidth(0,ui64tmp) <<endl;
                 }
             }
         }
         if (vm.count("self-test")) {
             uiSelfTestScenerio = vm["self-test"].as<unsigned int>();
-            bRun = false;
-            SelfTest();
+            bSelfTest = true;
         }
         if (vm.count("dir-thread")) {
             bThreadingPerDir = true;
@@ -171,7 +192,7 @@ tester_hdd::tester_hdd(int ac,char **av):
         if (vm.count("output-file")){
             strSummaryFile = vm["output-file"].as<string>();
         }
-        pathSummary = pathProfile.file_string() + "/"+strSummaryFile;
+        pathSummary /= pathProfile.file_string() + "/"+strSummaryFile;
     }
     catch(std::exception& e) {
         cerr << e.what() << "\n";
@@ -183,15 +204,14 @@ tester_hdd::~tester_hdd(){
     for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
         bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
         ++bst_ptrlist_it_tester_hdd){
-            myIO::SimpleWriteToFile(pathSummary, &bst_ptrlist_it_tester_hdd->getSummary() );
+            myIO::SimpleWriteToFile(pathSummary, bst_ptrlist_it_tester_hdd->getSummary() );
         }
-        myIO::SimpleWriteToFile(pathSummary, &string("\n") );
+        myIO::SimpleWriteToFile(pathSummary, string("\n") );
 }
 
 void tester_hdd::BufferingTest(){
         uint64_t ui = 0;
         uint64_t ui64offset = 100;
-        uint64_t ui_bck = 0;
         char *c;
         string *p = new string;
         do{
@@ -201,72 +221,72 @@ void tester_hdd::BufferingTest(){
                     ui += ui64offset*MB;
                 }
             }catch(std::exception &e){
-                ui_bck = ui;
                 ui *= 0.8;
                 ui64offset /= 10;
-                cerr<<"Max string size: "<<ui <<"("+ myTime::Bandwidth(0,&ui,"")+")"<<endl;
+                delete p;
+                p = new string;
             }
         }while(ui64offset > 1);
         delete p;
         ui64MaxStringSize = ui - MB;
-        ui = 0;/*
+        MaxStringSize =  myTime::Bandwidth(0,ui64MaxStringSize,"");
+        cerr<<"Max string size: "<<ui <<"("+ MaxStringSize +")"<<endl;
+        ui = 0;
         do{
             try{
                 while (true){
                     c = new char[ui];
                     delete[] c;
+                    c = NULL;
                     ui += ui64offset*MB;
                 }
             }catch(std::exception &e){
-                cerr<<"Max char table(char*) size: "<<ui <<"("+ myTime::Bandwidth(0,&ui,"")+")"<<endl;
                 //delete[] c;
-                ui_bck = ui;
                 ui *= 0.8;
                 ui64offset /= 10;
             }
-        }while(ui64offset < 1);
-        ui64MaxCharSize = ui;
+        }while(ui64offset > 1);
+        if (c) { delete[] c; }
+        ui64MaxCharSize = ui - MB;
+        MaxCharSize = myTime::Bandwidth(0,ui64MaxCharSize,"");
+        cerr<<"Max char table(char*) size: "<<ui <<"("+ MaxCharSize +")"<<endl;
         cout<<"Do you wish to update your configs?[y/n]"<<endl;
         char ca;
         cin>>ca;
-        if(ca='y'){
-            //pus_Var->push_back(new profileUpdateStore("max-char_size =",ui64MaxCharSize));
-            //pus_Var->push_back(new profileUpdateStore("max-string_size =",ui64MaxStringSize));
+        if(ca == 'y'){
+            pus_Var->push_back(new profileUpdateStore("max-char_size =",MaxCharSize));
+            pus_Var->push_back(new profileUpdateStore("max-string_size =",MaxStringSize));
             UpdateProfile();
-        }*/
+        }
 }
 
 void tester_hdd::GetUserDir(){
-    string strRet = "";
 #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
 //
 #else
-/*MEM licking */
+/*MEM leak */
     struct passwd *gUserdir = getpwuid(getuid());
     if (gUserdir){
-        strRet.append(gUserdir->pw_dir);
+        pathProfile /= (gUserdir->pw_dir);
     }else{
         cout<<"Error getting user folder"<<endl;
     }
 
 #endif
-    if (strRet.length() > 0 ){///Creates program profile directory for current user
-        strRet.append("/.littlebenchmark");
-        pathProfile = strRet;
+    if (pathProfile.file_string().length() > 0 ){///Creates program profile directory for current user
+        pathProfile /= ".littlebenchmark";
         myIO::createDir(pathProfile);
-        strRet.append("/hdd");
-        pathProfile = strRet;
+        pathProfile /= ("hdd");
         myIO::createDir(pathProfile);
-        strPath = strRet+strSlash;
-        strRet.append("/config.cfg");
-        pathConfig = strRet;
+        strPath = pathProfile.file_string()+"/";
+        pathConfig = pathProfile.file_string()+"/config.cfg";
         if (myIO::touch(pathConfig) == true){
             string strtmp = "\
 #\n\
 # Run program with -h or --help options to see which parameters you can set here\n\
 # Parameter should look like param = [value]\n\
 #"; // file tmp
-            myIO::SimpleWriteToFile(pathConfig,&strtmp);
+            myIO::SimpleWriteToFile(pathConfig,strtmp);
         }//if touch
     }//if strRet.lenght
 }
@@ -275,14 +295,26 @@ void tester_hdd::SelfTest(){
     switch (uiSelfTestScenerio){
         case 0:
             cout <<"Running scenerio 0 - full test" <<endl;
+            uiSelfTestScenerio = 5;
+            SelfTest();
+            bSelfTest =true;
+            bRun =false;
             uiSelfTestScenerio = 1;
             SelfTest();
+            bSelfTest =true;
+            bRun =false;
             uiSelfTestScenerio = 2;
             SelfTest();
+            bSelfTest =true;
+            bRun =false;
             uiSelfTestScenerio = 3;
             SelfTest();
+            bSelfTest =true;
+            bRun =false;
             uiSelfTestScenerio = 4;
             SelfTest();
+            bSelfTest =true;
+            bRun =false;
             break;
         case 1:
             cout <<"Running scenerio 1 - 1 thread and 1 dir test" <<endl;
@@ -305,6 +337,36 @@ void tester_hdd::SelfTest(){
             bThreadingPerDir = true;
             Run();
             break;
+        case 5:
+            cout <<"Test bandwidth counter" <<endl;
+            cout<<"0.1 / MB\t["; myTime::Bandwidth(0.1,MB) == "10MB/s"    ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(0.1,MB)<<endl;
+            cout<<"0 / MB\t["; myTime::Bandwidth(0,MB) == "1MB/s"         ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(0,MB)<<endl;
+            cout<<"1 / MB\t["; myTime::Bandwidth(1,MB) == "1MB/s"         ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(1,MB)<<endl;
+            cout<<"10 / MB\t["; myTime::Bandwidth(10,MB) == "102.4KB/s"   ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(10,MB)<<endl;
+            cout<<"0.1 / GB\t["; myTime::Bandwidth(0.1,GB) == "10GB/s"    ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(0.1,GB)<<endl;
+            cout<<"0 / GB\t["; myTime::Bandwidth(0,GB) == "1GB/s"         ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(0,GB)<<endl;
+            cout<<"1 / GB\t["; myTime::Bandwidth(1,GB) == "1GB/s"         ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(1,GB)<<endl;
+            cout<<"10 / GB\t["; myTime::Bandwidth(10,GB) == "102.4MB/s"   ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::Bandwidth(10,GB)<<endl;
+            cout <<"Test scaling" <<endl;
+            cout<<"1ns\t["; myTime::TimeScale(NS) == "1ns"                ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::TimeScale(NS)<<endl;
+            cout<<"1us\t["; myTime::TimeScale(US) == "1us"                ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::TimeScale(US)<<endl;
+            cout<<"1ms\t["; myTime::TimeScale(MS) == "1ms"                ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::TimeScale(MS)<<endl;
+            cout<<"1s\t["; myTime::TimeScale(1) == "1s"                   ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<<myTime::TimeScale(1)<<endl;
+            cout<<"Size from string"<<endl;
+            cout<<"1b\t["; myTime::FromString<unsigned>("1B") == 1      ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1B") <<endl;
+            cout<<"1K\t["; myTime::FromString<unsigned>("1K") == KB     ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1K") <<endl;
+            cout<<"1M\t["; myTime::FromString<unsigned>("1M") == MB     ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1M") <<endl;
+            cout<<"1G\t["; myTime::FromString<unsigned>("1G") == GB     ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1G") <<endl;
+            cout<<"1Kb\t["; myTime::FromString<unsigned>("1Kb") == KB     ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1Kb") <<endl;
+            cout<<"1MB\t["; myTime::FromString<unsigned>("1MB") == MB     ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1MB") <<endl;
+            cout<<"1GB\t["; myTime::FromString<unsigned>("1GB") == GB     ? cout<<myColors::ConsoleColors_[2]<<OK\033[22;30m]" : cout<<"\033[22;31mFAIL\033[22;30m] "; cout<< myTime::FromString<unsigned>("1GB") <<endl;
+            bRun = false; //tmp
+            break;
+        case 6:
+            cout<<"Testing Colors"<<endl;
+            for (int i =0; i < MYCOLORS; i++){
+                cout<<myColors::ConsoleColors_[i]<<1<<"."<<endl;
+            }
         default:
             cerr <<"Test scenerio haven't been defined yet" << endl;
             break;
@@ -312,6 +374,14 @@ void tester_hdd::SelfTest(){
 }
 
 void tester_hdd::Run(){
+    if (bBufferingTest){
+        BufferingTest();
+        bBufferingTest = false;
+    }
+    if (bSelfTest){
+        bSelfTest = false;
+        SelfTest();
+    }
     if (bDebugging){//Przeniesc w miejsce pierwszego uruchomienia!
         cout<<"PathProfile:"<<pathProfile<<endl;
         cout<<"PathConfigs:"<<pathConfig<<endl;
@@ -319,7 +389,7 @@ void tester_hdd::Run(){
         cout<<"OutFile: "<<strSummaryFile<<endl;
         cout<<"Threads per directory: "<<uiThreadsPerDir<<endl;
         cout<<"MultiThreading: "; bThreadingPerDir ? cout<<"yes"<<endl : cout<<"no"<<endl;
-        cout<<"Run some test?: "; bRun ? cout<<"yes"<<endl : cout<<"Only self test"<<endl;
+        cout<<"Run some test?: "; bRun ? cout<<"yes"<<endl : cout<<"no"<<endl;
         cout<<"Max loops: "<<uiMaxLoops<<endl;
         cout<<"Directories: "<<endl;
         for (vitstr_WorkDirs = vstr_WorkDirs.begin();
@@ -327,45 +397,74 @@ void tester_hdd::Run(){
             ++vitstr_WorkDirs){
             cout << "\t" << *vitstr_WorkDirs<<endl;
         }
+        bDebugging = false;
     }
-    for(vitstr_WorkDirs = vstr_WorkDirs.begin();
-        vitstr_WorkDirs != vstr_WorkDirs.end();
-        ++vitstr_WorkDirs){///Create threads and insert it to list
-            bst_ptrlist_tester_hdd.push_back(new thread_tester_hdd(vui_Probes,
+    //second value setup...
+    ui64MaxCharSize   = myTime::FromString<uint64_t>( MaxCharSize   );
+    ui64MaxStringSize = myTime::FromString<uint64_t>( MaxStringSize );
+    //
+    if (bRun){
+        for(vitstr_WorkDirs = vstr_WorkDirs.begin();
+            vitstr_WorkDirs != vstr_WorkDirs.end();
+            ++vitstr_WorkDirs){///Create threads and insert it to list
+                bst_ptrlist_tester_hdd.push_back(new thread_tester_hdd(vui_Probes,
                                                                    *vitstr_WorkDirs,
-                                                                   strSlash,
+                                                                   string("/"),//remove later
                                                                    uiDataLimit,
                                                                    uiMaxLoops,
                                                                    ui8Precision,
                                                                    uiPermissions
                                                                    ));
-    }
-    for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
-        bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
-        ++bst_ptrlist_it_tester_hdd){///Running threads from list
-            bst_ptrlist_it_tester_hdd->start();
-            if(!bThreadingPerDir){///If multithreading is disable program will wait for thread to do its job before running next one
-                bst_ptrlist_it_tester_hdd->join();
-            }
         }
-    if(bThreadingPerDir){
         for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
             bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
-            ++bst_ptrlist_it_tester_hdd){///With multithreading wating for all started threads to end its jobs
-                bst_ptrlist_it_tester_hdd->join();
+            ++bst_ptrlist_it_tester_hdd){///Running threads from list
+                bst_ptrlist_it_tester_hdd->start();
+                if(!bThreadingPerDir){///If multithreading is disable program will wait for thread to do its job before running next one
+                    bst_ptrlist_it_tester_hdd->join();
+                }
             }
+        if(bThreadingPerDir){
+            for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
+                bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
+                ++bst_ptrlist_it_tester_hdd){///With multithreading wating for all started threads to end its jobs
+                    bst_ptrlist_it_tester_hdd->join();
+                }
+        }
+        bRun =false;
     }
 }
 
 void tester_hdd::UpdateProfile(){
-    uint64_t index = 0;/*
+    string *strBuf = new string;
+    int64_t index = 0;
+
     myIO::simpleReadToStringByStream(pathConfig,strBuf);
-    cout<<*strBuf<<endl;
-    if (index = (uint64_t)strBuf->find(strChar) > 0){
-        index += strChar.length();
-    }else{
-        myIO::appToFile(&pathConfig.file_string(),&(strChar+myConv::ToString(ui64MaxCharSize)));
+    for (vector<profileUpdateStore*>::iterator it = pus_Var->begin();\
+        it != pus_Var->end(); ++it
+        ){
+            if ( (**it).GetstrVar().length() > 3 and (**it).GetstrVal().length() > 0 ){
+                index = (int64_t)strBuf->find((**it).GetstrVar());
+                if ( index > 0){
+                    index += (int64_t)(**it).GetstrVar().length();
+                    strBuf->replace(index,\
+                                    strBuf->find("\n",index),\
+                                    " "+(**it).GetstrVal()
+                                    );
+                }else{
+                    strBuf->append((**it).GetIt());
+                }
+            }
     }
-    index = (uint64_t)strBuf->find(strStr)+strChar.length();*/
+    myIO::SimpleWriteToFile(pathConfig,*strBuf,std::ios::ate|std::ios::binary);
+    //Cleaning
+    if ( strBuf ){ delete strBuf; }
+    for (vector<profileUpdateStore*>::iterator it = pus_Var->begin();\
+        it != pus_Var->end(); ++it
+        ){
+        delete &(**it);
+        *it = NULL;
+    }
     delete pus_Var;
+    pus_Var = NULL;
 }

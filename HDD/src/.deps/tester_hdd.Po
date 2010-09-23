@@ -738,7 +738,7 @@ tester_hdd.o: tester_hdd.cpp tester_hdd.hpp /usr/include/c++/4.4/cstdlib \
  /usr/include/boost/date_time/local_time/conversion.hpp \
  /usr/include/boost/date_time/local_time/tz_database.hpp \
  /usr/include/boost/date_time/tz_db_base.hpp myTime.hpp myConv.hpp \
- thread_tester_hdd.hpp /usr/include/boost/thread/thread.hpp \
+ Globals.h thread_tester_hdd.hpp /usr/include/boost/thread/thread.hpp \
  /usr/include/boost/thread/detail/platform.hpp \
  /usr/include/boost/config/requires_threads.hpp \
  /usr/include/boost/thread/pthread/thread_data.hpp \
@@ -2492,6 +2492,8 @@ myIO.hpp:
 myTime.hpp:
 
 myConv.hpp:
+
+Globals.h:
 
 thread_tester_hdd.hpp:
 

@@ -54,7 +54,7 @@ class thread_tester_hdd{
         list<string> it_list_RF; //!iterator for list_ReadFiles store
         boost::thread m_Thread; //!<Thread for magic to be happening
         void CopyTest(const unsigned int *);
-        void Execute();
+        //void Execute();
         void readByChar(uint16_t);
         void readByLine();
         void Write(const unsigned int*);
@@ -73,6 +73,7 @@ class thread_tester_hdd{
         string &getSummary();
         void start();
         void join();
+        void Execute();
 };
 
 #endif // THREAD_TESTER_HDD_HPP_INCLUDED

@@ -22,7 +22,7 @@
 \\Home:  \href{https://str0g.wordpress.com}{https://str0g.wordpress.com}
 %\\email:\href{mailto:buskol.waw.pl@gmail.com}{buskol.waw.pl@gmail.com}
 \\Copyright \copyright 2010-2011 Łukasz Buśko\\
-\date{\today} Version.: 0.7.8}
+\date{\today} Version.: 0.9.4}
 \maketitle
 \newpage
 \tableofcontents
@@ -57,17 +57,28 @@ Windows port will be done latter.
 
 \section{Configuration}
 Configuration file is in "user home directory"/.littlebenchmark/hdd
+
+Please Run binary with -M option to set max string and char size in order to avoid memory allocation error.
+
 To get information what options can be specified run program with -h option.
 
 \newpage
 \section{Know issue}
+\begin{itemize}
+\item Strange Log Output, example: \begin{verbatim}
+Min:1e+09s
+Max:[Failed to measure: time difference to small]
+Avg:-nans
+\end{verbatim}\\
+Memory allocation failed or your hard drive for give data is immeasurable fast :-)
+\end{itemize}
 {\bf Before appalling any solution in Linux run terminal session ctrl+alt+F1 and login with root privilege, in order to avoid any sort of problems!\\
 After applying solution check if you can login in other terminal session and unlock lock screen.\\ \\
 }
-{\bf Before applying any solution on WinCrap prey and backup important data.
+{\bf Before applying any solution on WinCrap pray and backup important data.
 }
 \begin{description}
-\item [{\bf Linux}] Memory lick caused by bug in {\itshape pwd.h} library
+\item [{\bf Linux}] Memory leak caused by bug in {\itshape pwd.h} library
 \marginpar{12 records in worst case scenario can take max 8192 bytes, libc-freeres won't do the job so please apply solution}
 \begin{verbatim}
 #include <pwd.h> /*12 records lost*/

@@ -77,12 +77,13 @@
 	<fstream>
 	<iterator>
 
-1284906209 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/main.cpp
+1285228282 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/main.cpp
 	"tester_hdd.hpp"
+	"Globals.h"
 	<string>
-	<list>
+	<vector>
 
-1284971856 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.hpp
+1285166864 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.hpp
 	<cstdlib>
 	<iostream>
 	<string>
@@ -101,16 +102,16 @@
 	<windows.h>
 	<pwd.h>
 
-1284975432 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/version.h
+1285229179 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/version.h
 
-1284838642 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myHash.hpp
+1285190724 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myHash.hpp
 	<string>
 	<cryptopp/md5.h>
 	<cryptopp/rsa.h>
 	<cryptopp/base64.h>
 	"cryptopp/hex.h"
 
-1284970000 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myIO.hpp
+1285193005 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myIO.hpp
 	<iostream>
 	<string>
 	<list>
@@ -126,13 +127,14 @@
 	<string>
 	<sstream>
 
-1284911042 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myTime.hpp
+1285192655 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myTime.hpp
 	<string>
 	"boost/date_time/posix_time/posix_time.hpp"
 	"boost/date_time/local_time/local_time.hpp"
 	"myConv.hpp"
+	"Globals.h"
 
-1284906544 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.hpp
+1285176901 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.hpp
 	<cstdlib>
 	<sys/stat.h>
 	<iostream>
@@ -147,18 +149,24 @@
 	"myTime.hpp"
 	"myIO.hpp"
 
-1284919146 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.cpp
+1285228601 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.cpp
 	"thread_tester_hdd.hpp"
 
-1284975245 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.cpp
+1285228781 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.cpp
 	"tester_hdd.hpp"
 
-1284973457 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/profileUpdateStore.hpp
+1285176310 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/profileUpdateStore.hpp
 	<cstdlib>
 	<iostream>
 	<string>
 	"myConv.hpp"
 
-1284973652 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/profileUpdateStore.cpp
+1285176337 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/profileUpdateStore.cpp
 	"profileUpdateStore.hpp"
+
+1285228837 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/Globals.h
+	<string>
+
+1285228837 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/Globals.cpp
+	"Globals.h"
 

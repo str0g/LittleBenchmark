@@ -10,18 +10,19 @@
 #include "profileUpdateStore.hpp"
 
 ///Globals Varuabels
-template<typename T>
-profileUpdateStore::profileUpdateStore(string strvar,T val):strVar(new string (strvar)),\
-                                                                    strVal(new string(myConv::ToString(val))){
+/*profileUpdateStore::profileUpdateStore(const string &strvar,const string &val):strVar(strvar),\
+                                                                    strVal((myConv::ToString(val))){
+}*/
+profileUpdateStore::profileUpdateStore( string strvar, string val):strVar(strvar),\
+                                                                    strVal((myConv::ToString(val))){
 }
-profileUpdateStore::~profileUpdateStore(){
-    if ( strVar ) { delete strVar; }
-    if ( strVal ) { delete strVal; }
-}
-/*
-string profileUpdateStore::*GetstrVar(){
+profileUpdateStore::~profileUpdateStore(){}
+string profileUpdateStore::GetstrVar(){
     return strVar;
 }
-string profileUpdateStore::*GetstrVal(){
+string profileUpdateStore::GetstrVal(){
     return strVal;
-}*/
+}
+string profileUpdateStore::GetIt(){
+    return "\n"+strVar+" "+strVal;
+}

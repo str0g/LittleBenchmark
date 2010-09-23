@@ -9,23 +9,14 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-#include <string>"
+#include <string>
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/local_time/local_time.hpp"
 
 #include "myConv.hpp"
+#include "Globals.h"
 
 namespace myTime{
-    #define BUFFER 1024
-    #define KB 1024
-    #define MB 1048576
-    #define GB 1073741824
-    #define MS 0.001
-    #define US 0.000001
-    #define NS 0.000000001
-    #define m_MS 1000
-    #define m_US 1000000
-    #define m_NS 1000000000
     //std::string strTimeFormatter = "[%Y/%m/%d %H:%M:%S]";
     inline boost::local_time::local_date_time *GetTime(const std::string &tzone = "MST-07"){
         ///Return struct with time date in specified format
@@ -50,18 +41,22 @@ namespace myTime{
         ///Pobiera czas wedlug zdefinowanego formatowania
         time_t rawtime; //!< pobranie czasu
         struct tm * timeinfo; //!< struktura czasu, dzieki ktorej dziala formatowanie
-        char buffer2 [BUFFER]; //!< buffor do ktorego zostanie wpisany string
+        char buffer2 [KB]; //!< buffor do ktorego zostanie wpisany string
 
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );
-        strftime (buffer2,BUFFER,strTimeFormatter.c_str(),timeinfo);
+        strftime (buffer2,KB,strTimeFormatter.c_str(),timeinfo);
 
         return buffer2;
     }
     template <typename T>
-    inline std::string Bandwidth(double dTime ,const T *ui64Counter,std::string strAppEnd = "/s"){
+    inline std::string Bandwidth(double dTime ,const T &ui64Counter,const std::string &strAppEnd = "/s"){
         dTime == 0 ? dTime = 1 : dTime;// /= 1000000;
-        double dRet = *ui64Counter / dTime ;
+        double dRet = 0;
+        if ( ui64Counter == 0){
+            std::cerr<<"\033[22;31mCan not count bandwidth from counter = 0 \033[22;30m]"<<std::endl;
+            std::cerr<<"dTime:"<<dTime<<" Exp end sqc["<<strAppEnd<<"]"<<std::endl;
+        }else{ dRet = ui64Counter / dTime ;}
         if (dRet < KB ){ //B
             return myConv::ToString(dRet)+"B"+strAppEnd;
         }
@@ -75,7 +70,11 @@ namespace myTime{
     }
     template <typename T>
     inline T FromString(std::string str){
-        for (int it = str.length()-1; -1 < it; --it){
+        for (int it = str.length()-2; it < str.length(); it++){ //std::cout<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;
+                if(str.at(it) == 'B' or str.at(it) == 'b'){
+                    str.erase(it);
+                    return myConv::FromString<T>(str);
+                }
                 if(str.at(it) == 'K' or str.at(it) == 'k'){
                     str.erase(it);
                     return myConv::FromString<T>(str) * KB;
@@ -89,9 +88,9 @@ namespace myTime{
                     return myConv::FromString<T>(str) * GB;
                 }
         }
-        return 1;
+        return 0;
     }
-    inline std::string TimeScale(double dTime){
+    inline std::string TimeScale(const double &dTime){
         if ( dTime <= 0){
             return "[Failed to measure: time diffrence to small]";
         }

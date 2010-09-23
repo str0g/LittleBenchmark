@@ -1,13 +1,23 @@
 xx September 2010
    released version 0.x.x of HDD
 
+     Change log:        
+	-Update:  File copy test
+        -Add:     Read by chunk test
+	-Fix:     Memory leaks in allocation test
+
+
+22 September 2010
+   released version 0.10.9 of HDD
+
      Change log:
-        -Update: File copy test
-        -Add:    Read by chunk test
-	-Update: Full Windows portable
-	-Update: Max allocation char
-	-Update: Auto config file update with important values
-	-Fix:    Memory licks in allocation test
+	-Updated: Readability
+	-Updated: Error detection / prevention
+	-Cleaned: Some code clean ups
+	-Updated: Max allocation char
+	-Updated: Configuration file can be updated with important values
+	-Updated: Read by stream
+	-Fixed:	  Wrong time measure in reading method
 
 19 September 2010
    released version 0.8.5 of HDD
@@ -26,7 +36,7 @@ xx September 2010
    released version 0.7.8 of HDD
 
      Change log:
-        -Added: Create user profile in user directory [Memory lick while using pwd.h, Please read pdf doc]
+        -Added: Create user profile in user directory [Memory leak while using pwd.h, Please read pdf doc]
 	-Added: Default work directory is Profile directory
         -Added: Man book
         -Added: User documentation in pdf

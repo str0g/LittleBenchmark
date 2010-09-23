@@ -9,14 +9,19 @@
 ///Headers
 //#include <cstdlib>
 //#include <iostream>
-#include "tester_hdd.hpp"/*
+#include "tester_hdd.hpp"
+#include "Globals.h"
+//export ConsoleColors[];
+//extern string ConsoleColors[];
+
 #include <string>
-#include <list>
+/*#include <list>
+#include <vector>
 using std::string;
+using std::vector;
 using std::cout;
 using std::endl;
 using std::list;
-
 */
 ///Specials
 ///Globals Varuabels
@@ -24,8 +29,7 @@ using std::list;
 int main(int ac,char **av){
 
     tester_hdd hdd(ac,av);
-    if (hdd.bRun)
-        hdd.Run();
+    hdd.Run();
 
     return 0;
 }

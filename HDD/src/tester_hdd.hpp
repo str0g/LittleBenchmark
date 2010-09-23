@@ -49,19 +49,22 @@ class tester_hdd{
     private:
         string strSummaryFile; //!<File to summary will be written
         string strDataLimit; //!<Data Limit as string beforre conversion to unsigned int
-        string strSlash;//!<Windows compatability
+        string MaxCharSize; //!<Limit for char size
+        string MaxStringSize; //!< Limit for string size
         string strPath;//!<Profile path
         boost::filesystem::path pathProfile;//!<Keeps path to config file
         boost::filesystem::path pathConfig;//!<Keeps path to config file
         boost::filesystem::path pathSummary;//!<Keeps path to summary file
         bool bThreadingPerDir; //!<Every dir in new thread simuisly
         bool bDebugging; //!<Debugging Enable/Disable
+        bool bSelfTest;//!<Run selftest
+        bool bBufferingTest;//!<Run Max alloc test
         unsigned int uiThreadsPerDir; //!<How much threads per one directory/driver
         unsigned int uiSelfTestScenerio; //!<Which test scenerio use
         unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
         unsigned int uiMaxLoops;//!<Max loops
-        uint64_t ui64MaxStringSize;//!< Limit for string size
         uint64_t ui64MaxCharSize;//!< Limit for char size
+        uint64_t ui64MaxStringSize;//!< Limit for string size
         uint8_t ui8Precision;//!<Precision of cout
         mode_t uiPermissions; //!< Temporary folder premissions
         vector<profileUpdateStore*> *pus_Var;//!<Store Profiles varuables name and values

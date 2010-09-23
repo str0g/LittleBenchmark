@@ -23,14 +23,15 @@ using std::endl;
 
 class profileUpdateStore{
     private:
-        string *strVar;
-        string *strVal;
+        string strVar;
+        string strVal;
     public:
-        template <typename T>
-        profileUpdateStore(string,T ="");
+        //profileUpdateStore(const string&,const string& ="");
+        profileUpdateStore( string, string ="");
         ~profileUpdateStore();
-        string *GetstrVar();
-        string *GetstrVal();
+        string GetstrVar();
+        string GetstrVal();
+        string GetIt();
         template <typename T>
         friend std::ostream & operator << (T & Output, profileUpdateStore &w){
             return Output<<"string Varubale: "<<w.strVar<<"\nstring Value: "<<w.strVal<<"\n";

@@ -9,34 +9,38 @@
 ///Headers
 //#include <cstdlib>
 //#include <iostream>
-#include "tester_hdd.hpp/*
+#include "tester_hdd.hpp"
 #include <string>
 #include <list>
+#include <vector>
 using std::string;
+using std::vector;
 using std::cout;
 using std::endl;
 using std::list;
 
-*/
 ///Specials
 ///Globals Varuabels
-
-int main(int ac,char **av){/*
+class dupa{
+    public:
+        string sdupa;
+        dupa(string abc,string dca):sdupa(abc){}
+        template <typename T>
+        friend std::ostream & operator << (T & Output, dupa &w){
+            return Output<<"string sdupa: "<<w.sdupa<<"\n";
+        }
+};
+int main(int ac,char **av){
+/*
     tester_hdd hdd(ac,av);
     if (hdd.bRun)
         hdd.Run();*/
 
-    //std::cout<<ldt;
-
-    for(int i=0;i<700001; ++i){}
-
-//    boost::local_time::time_zone_ptr zone(new boost::local_time::posix_time_zone("MST-07"));
-    boost::local_time::local_date_time ldt2 = boost::local_time::local_microsec_clock::local_time(zone);
-
-
-        std::cout<<(double)xd.total_nanoseconds()<<endl;
-    //boost::posix_time::posix_time_system_config p;
-    //zone.~shared_ptr();
+vector<dupa*> *d = new vector<dupa*>;
+d->push_back(new dupa("asd","dsa"));
+cout<<**d->begin()<<endl;
+delete &(**d->begin());
+delete d;
     return 0;
 }
 /*
