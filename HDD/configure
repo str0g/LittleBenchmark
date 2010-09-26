@@ -4819,7 +4819,7 @@ fi
 done
 
 
-ac_config_files="$ac_config_files Makefile doc/Makefile man/Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile doc/Makefile doc/readme/Makefile doc/tech/latex/Makefile man/Makefile src/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5539,6 +5539,8 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
+    "doc/readme/Makefile") CONFIG_FILES="$CONFIG_FILES doc/readme/Makefile" ;;
+    "doc/tech/latex/Makefile") CONFIG_FILES="$CONFIG_FILES doc/tech/latex/Makefile" ;;
     "man/Makefile") CONFIG_FILES="$CONFIG_FILES man/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
 

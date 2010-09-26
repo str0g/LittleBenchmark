@@ -23,16 +23,16 @@
 
 namespace myIO{
     //READ OPERATIONS
-    inline bool simpleReadToStringByChar(std::string *strFile,\
+    inline bool simpleReadToStringByChar(const boost::filesystem::path &strFile,\
                                          std::string *strBuf,\
                                          std::list<double> *p_listStats = NULL){
         //std::string *str = new std::string;
         if (!strBuf){
-            std::cerr<<"[simpleReadToStringByChar]->"<<"Memory not allocated for: "<<*strFile<<std::endl;
+            std::cerr<<"[simpleReadToStringByChar]->"<<"Memory not allocated for: "<<strFile<<std::endl;
             return false;
         }
 
-        size_t filesize;
+//        size_t filesize;
         double eTime = 0;
         std::list<double>::iterator it;
         if(p_listStats){
@@ -40,7 +40,7 @@ namespace myIO{
         }
 
         boost::local_time::local_date_time *dTime = myTime::GetTime();
-        std::ifstream file (strFile->c_str());
+        std::ifstream file (strFile.file_string().c_str());
         if (file.is_open()){
             if (p_listStats){
                 eTime = myTime::TimeDiff( dTime );
@@ -52,14 +52,30 @@ namespace myIO{
                 ++it;
                 //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<<"]"<<std::endl;
             }
+            /*file.seekg(std::ios::end);
             filesize=file.tellg();
 
             strBuf->reserve(filesize);
 
-            file.seekg(0);
-            while (!file.eof()){
+            file.seekg(std::ios::beg);*/
+            unsigned i = 0;
+            while (!file.eof()){///Bug from unknow reason read 1 character more, maybe its fault of special characters. seekp(std::ios::end) returns bad file legnth probably special characters...
                 *strBuf  += file.get();
+                if (file.fail()){/*
+                    std::cerr<<"[simpleReadToStringByChar]->Lost intergrity of the stream for file: "<<strFile<<std::endl;
+                    std::cerr<<"Trying to fix situation..."<<std::endl;
+                    std::cerr<<"Length of Buff: "<<strBuf->length()
+                    <<"Position: "<<file.tellg()<<"Backup counter:"<<i
+                    //<<"FileSize:"<<filesize
+                    <<std::endl;*/
+                    strBuf->erase(i);
+                    break;
+                }
+                if (file.bad()){ std::cerr<<"[simpleReadToStringByChar]->Input error for file: "<<strFile<<std::endl; break;}
+                i++;
             }
+            //if (!file.eof()){ std::cerr<<"[simpleReadToStringByChar]->Read error: "<<strFile.file_string()<<std::endl; }
+            file.close();
             if (p_listStats){
                 eTime = myTime::TimeDiff( dTime );
                 *it > eTime ? *it = eTime : 0;
@@ -72,7 +88,7 @@ namespace myIO{
             delete dTime;
             return true;
         }
-        std::cerr<<"[simpleReadToStringByChar]->"<<"failed to open file: "<<*strFile<<std::endl;
+        std::cerr<<"[simpleReadToStringByChar]->"<<"failed to open file: "<<strFile<<std::endl;
         delete dTime;
         return false;
     }
@@ -97,6 +113,8 @@ namespace myIO{
             }
 
             ss << file.rdbuf();
+                if (ss.fail()){ std::cerr<<"[simpleReadToStringByStream]->Lost intergrity of the stream"<<std::endl; }
+                if (ss.bad()){ std::cerr<<"[simpleReadToStringByStream]->Input error"<<std::endl; }
             *strBuf = ss.str();
             file.close();
 
@@ -194,17 +212,17 @@ namespace myIO{
         }//if exist
     }
     //List
-    inline void lsFiles(const boost::filesystem::path *bfsp_dir,\
+    inline void lsFiles(const boost::filesystem::path &bfsp_dir,\
                         std::list<boost::filesystem::path> *list_dir){
-        if( boost::filesystem::exists( *bfsp_dir ) ){
+        if( boost::filesystem::exists( bfsp_dir ) ){
             boost::filesystem::directory_iterator end ;
-            for( boost::filesystem::directory_iterator iter(*bfsp_dir);\
+            for( boost::filesystem::directory_iterator iter(bfsp_dir);\
                     iter != end; ++iter )
                 if( boost::filesystem::is_regular_file( *iter )){
                     list_dir->push_back( iter->path() );
                 }
         }else{
-            std::cerr<<*bfsp_dir<<" does not exist"<<std::endl;
+            std::cerr<<bfsp_dir<<" does not exist"<<std::endl;
         }
     }
     //COPY

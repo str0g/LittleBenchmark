@@ -26,6 +26,7 @@
 #include "myHash.hpp"
 #include "myTime.hpp"
 #include "myIO.hpp"
+#include "myThreadTemplates.hpp"
 ///Specials
 using std::string;
 using std::vector;
@@ -36,7 +37,7 @@ using std::cin;
 using std::endl;
 ///Globals Varuabels
 
-class thread_tester_hdd{
+class thread_tester_hdd: public myThreadTemplates::thread_1<thread_tester_hdd>{
     private:
         string strDir; //!<Keep work directory
         string *p_strSummary; //!<Store summary as string
@@ -66,13 +67,14 @@ class thread_tester_hdd{
                           unsigned int,
                           unsigned int,
                           uint8_t,
-                          mode_t);
+                          mode_t,
+                          bool);
         ~thread_tester_hdd();
         void setNewData(vector<unsigned int>,string);
         void setBuffer(const unsigned int*);
-        string &getSummary();
+        string &getSummary();/*
         void start();
-        void join();
+        void join();*/
         void Execute();
 };
 

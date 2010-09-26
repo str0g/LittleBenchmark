@@ -165,7 +165,7 @@ top_srcdir = @top_srcdir@
 #LDFLAGS = -lm
 AM_CPPFLGAS = -pedantic -Wall -march=core2
 AM_LDFLAGS = -lm -lboost_thread-mt -lboost_program_options-mt -lboost_filesystem-mt -L /usr/lib/libcrypto++ -L /usr/lib64/libcrypto++ -lcrypto++
-LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp profileUpdateStore.cpp profileUpdateStore.hpp Globals.h Globals.cpp version.h
+LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp myThreadTemplates.hpp profileUpdateStore.cpp profileUpdateStore.hpp Globals.h Globals.cpp version.h
 all: all-am
 
 .SUFFIXES:

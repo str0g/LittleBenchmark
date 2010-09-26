@@ -1,0 +1,292 @@
+\hypertarget{myIO_8hpp_source}{
+\section{myIO.hpp}
+}
+
+
+\begin{footnotesize}\begin{alltt}
+00001 \textcolor{preprocessor}{#ifndef MYIO\_HPP\_INCLUDED}
+00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define MYIO\_HPP\_INCLUDED}
+00003 \textcolor{preprocessor}{}
+00004 \textcolor{comment}{/***************************************************************}
+00005 \textcolor{comment}{ * Name:      <Input name>.cpp/h}
+00006 \textcolor{comment}{ * Purpose:   Code for Application <Name>}
+00007 \textcolor{comment}{ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)}
+00008 \textcolor{comment}{ * Created:   <Input date>}
+00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)}
+00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
+00011 \textcolor{comment}{ **************************************************************/}
+00012 \textcolor{preprocessor}{#include <iostream>}
+00013 \textcolor{preprocessor}{#include <string>}
+00014 \textcolor{preprocessor}{#include <list>}
+00015 \textcolor{preprocessor}{#include <fstream>}
+00016 \textcolor{preprocessor}{#include <fcntl.h>}
+00017 \textcolor{preprocessor}{#include <boost/filesystem/operations.hpp>}
+00018 \textcolor{preprocessor}{#include <boost/filesystem/path.hpp>}
+00019 \textcolor{preprocessor}{#include <boost/filesystem/fstream.hpp>}
+00020 \textcolor{preprocessor}{#include "boost/date\_time/local\_time/local\_time.hpp"}
+00021 \textcolor{comment}{//my}
+00022 \textcolor{preprocessor}{#include "myTime.hpp"}
+00023 
+00024 \textcolor{keyword}{namespace }myIO\{
+00025     \textcolor{comment}{//READ OPERATIONS}
+00026     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} simpleReadToStringByChar(\textcolor{keyword}{const} boost::filesystem::path &strFile,\(\backslash\)
+      
+00027                                          std::string *strBuf,\(\backslash\)
+00028                                          std::list<double> *p\_listStats = NULL)\{
+00029         \textcolor{comment}{//std::string *str = new std::string;}
+00030         \textcolor{keywordflow}{if} (!strBuf)\{
+00031             std::cerr<<\textcolor{stringliteral}{"[simpleReadToStringByChar]->"}<<\textcolor{stringliteral}{"Memory not allocated for:
+       "}<<strFile<<std::endl;
+00032             \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00033         \}
+00034 
+00035 \textcolor{comment}{//        size\_t filesize;}
+00036         \textcolor{keywordtype}{double} eTime = 0;
+00037         std::list<double>::iterator it;
+00038         \textcolor{keywordflow}{if}(p\_listStats)\{
+00039             it = p\_listStats->begin();
+00040         \}
+00041 
+00042         boost::local\_time::local\_date\_time *dTime = myTime::GetTime();
+00043         std::ifstream file (strFile.file\_string().c\_str());
+00044         \textcolor{keywordflow}{if} (file.is\_open())\{
+00045             \textcolor{keywordflow}{if} (p\_listStats)\{
+00046                 eTime = myTime::TimeDiff( dTime );
+00047                 *it > eTime ? *it = eTime : 0;
+00048                 ++it;
+00049                 *it < eTime ? *it = eTime : 0;
+00050                 ++it;
+00051                 *it += eTime;
+00052                 ++it;
+00053                 \textcolor{comment}{//std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<
+      <"]"<<std::endl;}
+00054             \}
+00055             \textcolor{comment}{/*file.seekg(std::ios::end);}
+00056 \textcolor{comment}{            filesize=file.tellg();}
+00057 \textcolor{comment}{}
+00058 \textcolor{comment}{            strBuf->reserve(filesize);}
+00059 \textcolor{comment}{}
+00060 \textcolor{comment}{            file.seekg(std::ios::beg);*/}
+00061             \textcolor{keywordtype}{unsigned} i = 0;
+00062             \textcolor{keywordflow}{while} (!file.eof())\{
+00063                 *strBuf  += file.get();
+00064                 \textcolor{keywordflow}{if} (file.fail())\{\textcolor{comment}{/*}
+00065 \textcolor{comment}{                    std::cerr<<"[simpleReadToStringByChar]->Lost intergrity of th
+      e stream for file: "<<strFile<<std::endl;}
+00066 \textcolor{comment}{                    std::cerr<<"Trying to fix situation..."<<std::endl;}
+00067 \textcolor{comment}{                    std::cerr<<"Length of Buff: "<<strBuf->length()}
+00068 \textcolor{comment}{                    <<"Position: "<<file.tellg()<<"Backup counter:"<<i}
+00069 \textcolor{comment}{                    //<<"FileSize:"<<filesize}
+00070 \textcolor{comment}{                    <<std::endl;*/}
+00071                     strBuf->erase(i);
+00072                     \textcolor{keywordflow}{break};
+00073                 \}
+00074                 \textcolor{keywordflow}{if} (file.bad())\{ std::cerr<<\textcolor{stringliteral}{"[simpleReadToStringByChar]->Input er
+      ror for file: "}<<strFile<<std::endl; \textcolor{keywordflow}{break};\}
+00075                 i++;
+00076             \}
+00077             \textcolor{comment}{//if (!file.eof())\{ std::cerr<<"[simpleReadToStringByChar]->Read erro
+      r: "<<strFile.file\_string()<<std::endl; \}}
+00078             file.close();
+00079             \textcolor{keywordflow}{if} (p\_listStats)\{
+00080                 eTime = myTime::TimeDiff( dTime );
+00081                 *it > eTime ? *it = eTime : 0;
+00082                 ++it;
+00083                 *it < eTime ? *it = eTime : 0;
+00084                 ++it;
+00085                 *it += eTime;
+00086                 \textcolor{comment}{//std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<
+      <"]"<<std::endl;}
+00087             \}
+00088             \textcolor{keyword}{delete} dTime;
+00089             \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00090         \}
+00091         std::cerr<<\textcolor{stringliteral}{"[simpleReadToStringByChar]->"}<<\textcolor{stringliteral}{"failed to open file: "}<<strFi
+      le<<std::endl;
+00092         \textcolor{keyword}{delete} dTime;
+00093         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00094     \}
+00095     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} simpleReadToStringByStream(\textcolor{keyword}{const} boost::filesystem::path &pathFil
+      e, std::string *strBuf,\(\backslash\)
+00096                                            std::list<double> *p\_listStats = NULL,
+      \(\backslash\)
+00097                                            std::ios\_base::openmode mode = std::io
+      s::in|std::ios::binary)\{
+00098         std::stringstream ss;
+00099         \textcolor{keywordtype}{double} eTime = 0;
+00100         std::list<double>::iterator it;
+00101         \textcolor{keywordflow}{if}(p\_listStats)\{
+00102             it = p\_listStats->begin();
+00103         \}
+00104 
+00105         boost::local\_time::local\_date\_time *dTime = myTime::GetTime();
+00106         std::ifstream file(pathFile.file\_string().c\_str(),mode);
+00107         \textcolor{keywordflow}{if} (file.is\_open())\{
+00108             \textcolor{keywordflow}{if} (p\_listStats)\{
+00109                 eTime = myTime::TimeDiff( dTime );
+00110                 *it > eTime ? *it = eTime : 0;      ++it;
+00111                 *it < eTime ? *it = eTime : 0;      ++it;
+00112                 *it += eTime;                       ++it;
+00113             \}
+00114 
+00115             ss << file.rdbuf();
+00116                 \textcolor{keywordflow}{if} (ss.fail())\{ std::cerr<<\textcolor{stringliteral}{"[simpleReadToStringByStream]->Lost in
+      tergrity of the stream"}<<std::endl; \}
+00117                 \textcolor{keywordflow}{if} (ss.bad())\{ std::cerr<<\textcolor{stringliteral}{"[simpleReadToStringByStream]->Input er
+      ror"}<<std::endl; \}
+00118             *strBuf = ss.str();
+00119             file.close();
+00120 
+00121             \textcolor{keywordflow}{if} (p\_listStats)\{
+00122                 eTime = myTime::TimeDiff( dTime );
+00123                 *it > eTime ? *it = eTime : 0;      ++it;
+00124                 *it < eTime ? *it = eTime : 0;      ++it;
+00125                 *it += eTime;
+00126             \}
+00127             \textcolor{keyword}{delete} dTime;
+00128             \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00129         \}
+00130         \textcolor{keyword}{delete} dTime;
+00131         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00132     \}
+00133     \textcolor{comment}{//WRITE OPERATIONS}
+00134     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} touch(\textcolor{keyword}{const} boost::filesystem::path &pathTo,\(\backslash\)
+00135                       mode\_t mode =0644)\{
+00136         \textcolor{keywordflow}{if} ( boost::filesystem::is\_regular\_file(pathTo) )\{
+00137             std::cerr<<pathTo<<\textcolor{stringliteral}{"::Already exist nothing to be done"}<<std::endl;
+00138             \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00139         \}
+00140         boost::filesystem::ofstream o (pathTo);
+00141         \textcolor{keywordflow}{if}(o.is\_open())\{
+00142             o.close();
+00143             \textcolor{keywordflow}{if} (chmod(pathTo.file\_string().c\_str(),mode)!= 0)\{
+00144                     std::cerr<<pathTo<<\textcolor{stringliteral}{"::Failed to set permisions"}<<std::endl;
+00145             \}
+00146             \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00147 
+00148         \}
+00149         std::cerr<<pathTo<<\textcolor{stringliteral}{"::Failed to open"}<<std::endl;
+00150         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00151     \}
+00152     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} createDir(\textcolor{keyword}{const} boost::filesystem::path &Path)\{
+00153         \textcolor{keywordflow}{if} (!  boost::filesystem::is\_directory(Path) )\{
+00154             boost::filesystem::create\_directory(Path);
+00155         \}
+00156     \}
+00157     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} delDir(\textcolor{keyword}{const} std::string *strPath)\{
+00158         std::cout<<\textcolor{stringliteral}{"Removed: "}<< boost::filesystem::remove(*strPath) << std::endl
+      ;
+00159     \}
+00160     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} SimpleWriteToFile(\textcolor{keyword}{const} boost::filesystem::path &pathTo,\(\backslash\)
+00161                                   \textcolor{keyword}{const} std::string &data,\(\backslash\)
+00162                                   std::ios\_base::openmode mode = std::ios::app|st
+      d::ios::binary)\{
+00163         boost::filesystem::ofstream o (pathTo,mode);
+00164         \textcolor{comment}{//std::ofstream o (pathTo.file\_string().c\_str(),mode); std::cout<<*data<<
+      std::endl;}
+00165         \textcolor{keywordflow}{if}(o)\{
+00166             o << data;
+00167             \textcolor{keywordflow}{if}( o.fail())\{
+00168                 std::cerr << \textcolor{stringliteral}{"Write error:"}<<pathTo<<std::endl; \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00169             \}
+00170             o.close();
+00171             \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00172 
+00173         \}
+00174         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00175     \}
+00176     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} appToFile(\textcolor{keyword}{const} std::string *strFileName,\textcolor{keyword}{const} std::string *data,
+      mode\_t pmode =0644,mode\_t emode = 0444)\{
+00177         \textcolor{keywordflow}{if} (chmod(strFileName->c\_str(),pmode)==0)\{
+00178             std::ofstream o(strFileName->c\_str(),std::ios::app);
+00179             \textcolor{keywordflow}{if}(o)\{
+00180                 o << *data;
+00181                 o.close();
+00182                 \textcolor{keywordflow}{if} (chmod(strFileName->c\_str(),emode)!=0)\{
+00183                     std::cerr<<\textcolor{stringliteral}{"[appToFile]: "}<<*strFileName<<\textcolor{stringliteral}{" Premission error(
+      after write)"}<<std::endl;
+00184                 \}
+00185                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00186             \}
+00187             std::cerr<<\textcolor{stringliteral}{"[appToFile]: "}<<*strFileName<<\textcolor{stringliteral}{" Failed to open"}<<std::end
+      l;
+00188         \}\textcolor{keywordflow}{else}\{
+00189             std::cerr<<\textcolor{stringliteral}{"[appToFile]: "}<<*strFileName<<\textcolor{stringliteral}{" Premission error (before 
+      Open)"}<<std::endl;
+00190         \}
+00191         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00192     \}
+00193     \textcolor{comment}{//REMOVE OPERATIONS}
+00194     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} rmAll(\textcolor{keyword}{const} boost::filesystem::path & directory,\textcolor{keywordtype}{bool} bForced = \textcolor{keyword}{tr
+      ue},\textcolor{keywordtype}{int} intDirScanDepth =1024)\{
+00195         \textcolor{keywordtype}{int} intDirScanCounter = 0;
+00196         \textcolor{keywordflow}{if}( boost::filesystem::exists( directory ) )\{
+00197             boost::filesystem::directory\_iterator end ;
+00198             \textcolor{keywordflow}{for}( boost::filesystem::directory\_iterator iter(directory) ; iter != 
+      end ; ++iter )\{
+00199                 \textcolor{keywordflow}{if} ( boost::filesystem::is\_directory( *iter ) )\{
+00200                     \textcolor{keywordflow}{if}(intDirScanCounter < intDirScanDepth)\{
+00201                         ++intDirScanCounter;
+00202                         myIO::rmAll(*iter,bForced);
+00203                         boost::filesystem::remove(*iter);
+00204                     \}\textcolor{comment}{//deep scan}
+00205                 \}\textcolor{keywordflow}{else}\{
+00206                     \textcolor{keywordflow}{if} (bForced)\{
+00207                         chmod(iter->path().file\_string().c\_str(),0644);
+00208                     \}
+00209                     boost::filesystem::remove(*iter);
+00210                 \}\textcolor{comment}{//if dir}
+00211             \}\textcolor{comment}{//loop}
+00212         \}\textcolor{comment}{//if exist}
+00213     \}
+00214     \textcolor{comment}{//List}
+00215     \textcolor{keyword}{inline} \textcolor{keywordtype}{void} lsFiles(\textcolor{keyword}{const} boost::filesystem::path &bfsp\_dir,\(\backslash\)
+00216                         std::list<boost::filesystem::path> *list\_dir)\{
+00217         \textcolor{keywordflow}{if}( boost::filesystem::exists( bfsp\_dir ) )\{
+00218             boost::filesystem::directory\_iterator end ;
+00219             \textcolor{keywordflow}{for}( boost::filesystem::directory\_iterator iter(bfsp\_dir);\(\backslash\)
+00220                     iter != end; ++iter )
+00221                 \textcolor{keywordflow}{if}( boost::filesystem::is\_regular\_file( *iter ))\{
+00222                     list\_dir->push\_back( iter->path() );
+00223                 \}
+00224         \}\textcolor{keywordflow}{else}\{
+00225             std::cerr<<bfsp\_dir<<\textcolor{stringliteral}{" does not exist"}<<std::endl;
+00226         \}
+00227     \}
+00228     \textcolor{comment}{//COPY}
+00229     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} CopyFileByChar(\textcolor{keyword}{const} boost::filesystem::path &pathFrom,\(\backslash\)
+00230                                \textcolor{keyword}{const} boost::filesystem::path &pathTo)\{
+00231         \textcolor{keywordflow}{if} ( boost::filesystem::is\_directory(pathFrom) )\{std::cerr<<pathFrom<<\textcolor{stringliteral}{" i
+      s a directory file requered"}<<std::endl; \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}
+00232         \textcolor{keywordflow}{if} ( boost::filesystem::is\_directory(pathTo) )\{ std::cerr<<pathFrom<<\textcolor{stringliteral}{" is
+       a directory file requered"}<<std::endl; \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}
+00233 
+00234         boost::filesystem::ifstream fileFrom (pathFrom);
+00235         boost::filesystem::ofstream fileTo (pathTo,std::ios::ate);
+00236         std::string strError;
+00237         \textcolor{keywordflow}{if} (fileFrom.is\_open() and fileTo.is\_open())\{
+00238             \textcolor{keywordtype}{char} c;
+00239             \textcolor{keywordflow}{while} (fileFrom.get(c))\{
+00240                 fileTo.put(c);
+00241                 \textcolor{keywordflow}{if} ( fileTo.fail() ) \{ std::cerr << \textcolor{stringliteral}{"Write error:"}<<pathFrom<<std
+      ::endl; \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}
+00242             \}
+00243             \textcolor{keywordflow}{if} ( !fileFrom.eof() ) \{ std::cerr << \textcolor{stringliteral}{"Read error:"}<<pathTo<<std::end
+      l; \textcolor{keywordflow}{return} \textcolor{keyword}{false}; \}
+00244             \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00245         \}
+00246         \textcolor{keywordflow}{if} (fileFrom.is\_open())\{ fileFrom.close(); \} \textcolor{keywordflow}{else} \{ strError.append(\textcolor{stringliteral}{" "}+p
+      athFrom.file\_string()); \}
+00247         \textcolor{keywordflow}{if} (fileTo.is\_open())\{ fileTo.close(); \} \textcolor{keywordflow}{else} \{ strError.append(\textcolor{stringliteral}{" "}+pathT
+      o.file\_string()); \}
+00248         std::cerr<<\textcolor{stringliteral}{"Failed to copy files by char"}<<strError<<std::endl;
+00249         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00250 
+00251     \}
+00252     \textcolor{keyword}{inline} \textcolor{keywordtype}{bool} ReadByChunk()\{
+00253         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00254     \}
+00255 \}
+00256 
+00257 \textcolor{preprocessor}{#endif // MYIO\_HPP\_INCLUDED}
+\end{alltt}\end{footnotesize}

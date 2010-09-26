@@ -613,7 +613,7 @@ thread_tester_hdd.o: thread_tester_hdd.cpp thread_tester_hdd.hpp \
  /usr/include/bits/stdio.h /usr/include/bits/stdio2.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/basic_file.h \
  /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++io.h \
- /usr/include/c++/4.4/bits/fstream.tcc myConv.hpp myHash.hpp \
+ /usr/include/c++/4.4/bits/fstream.tcc myConv.hpp Globals.h myHash.hpp \
  /usr/include/cryptopp/md5.h /usr/include/cryptopp/iterhash.h \
  /usr/include/cryptopp/cryptlib.h /usr/include/cryptopp/config.h \
  /usr/include/cryptopp/stdcpp.h /usr/include/cryptopp/secblock.h \
@@ -629,11 +629,11 @@ thread_tester_hdd.o: thread_tester_hdd.cpp thread_tester_hdd.hpp \
  /usr/include/cryptopp/oaep.h /usr/include/cryptopp/sha.h \
  /usr/include/cryptopp/emsa2.h /usr/include/cryptopp/base64.h \
  /usr/include/cryptopp/basecode.h /usr/include/cryptopp/hex.h myTime.hpp \
- Globals.h myIO.hpp /usr/include/fcntl.h /usr/include/bits/fcntl.h \
+ myIO.hpp /usr/include/fcntl.h /usr/include/bits/fcntl.h \
  /usr/include/bits/uio.h /usr/include/bits/fcntl2.h \
  /usr/include/boost/filesystem/operations.hpp \
  /usr/include/boost/detail/scoped_enum_emulation.hpp \
- /usr/include/boost/filesystem/fstream.hpp
+ /usr/include/boost/filesystem/fstream.hpp myThreadTemplates.hpp
 
 thread_tester_hdd.hpp:
 
@@ -2079,6 +2079,8 @@ thread_tester_hdd.hpp:
 
 myConv.hpp:
 
+Globals.h:
+
 myHash.hpp:
 
 /usr/include/cryptopp/md5.h:
@@ -2143,8 +2145,6 @@ myHash.hpp:
 
 myTime.hpp:
 
-Globals.h:
-
 myIO.hpp:
 
 /usr/include/fcntl.h:
@@ -2160,3 +2160,5 @@ myIO.hpp:
 /usr/include/boost/detail/scoped_enum_emulation.hpp:
 
 /usr/include/boost/filesystem/fstream.hpp:
+
+myThreadTemplates.hpp:

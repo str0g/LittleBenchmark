@@ -1,0 +1,4 @@
+autoscan: warning: missing AC_TYPE_INT64_T wanted by: 
+	src/tester_hdd.cpp:451
+	src/tester_hdd.cpp:458
+	src/tester_hdd.cpp:460

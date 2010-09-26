@@ -774,8 +774,8 @@ main.o: main.cpp tester_hdd.hpp /usr/include/c++/4.4/cstdlib \
  /usr/include/boost/bind/bind_cc.hpp \
  /usr/include/boost/bind/bind_mf_cc.hpp \
  /usr/include/boost/bind/bind_mf2_cc.hpp \
- /usr/include/boost/bind/placeholders.hpp profileUpdateStore.hpp \
- /usr/include/pwd.h
+ /usr/include/boost/bind/placeholders.hpp myThreadTemplates.hpp \
+ profileUpdateStore.hpp /usr/include/pwd.h
 
 tester_hdd.hpp:
 
@@ -2580,6 +2580,8 @@ thread_tester_hdd.hpp:
 /usr/include/boost/bind/bind_mf2_cc.hpp:
 
 /usr/include/boost/bind/placeholders.hpp:
+
+myThreadTemplates.hpp:
 
 profileUpdateStore.hpp:
 

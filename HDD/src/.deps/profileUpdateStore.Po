@@ -73,7 +73,8 @@ profileUpdateStore.o: profileUpdateStore.cpp profileUpdateStore.hpp \
  /usr/include/c++/4.4/bits/basic_ios.tcc \
  /usr/include/c++/4.4/bits/ostream.tcc /usr/include/c++/4.4/istream \
  /usr/include/c++/4.4/bits/istream.tcc myConv.hpp \
- /usr/include/c++/4.4/sstream /usr/include/c++/4.4/bits/sstream.tcc
+ /usr/include/c++/4.4/sstream /usr/include/c++/4.4/bits/sstream.tcc \
+ Globals.h
 
 profileUpdateStore.hpp:
 
@@ -300,3 +301,5 @@ myConv.hpp:
 /usr/include/c++/4.4/sstream:
 
 /usr/include/c++/4.4/bits/sstream.tcc:
+
+Globals.h:

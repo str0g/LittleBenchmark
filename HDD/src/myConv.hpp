@@ -3,13 +3,14 @@
 
 #include <string>
 #include <sstream>
+#include "Globals.h"
 
 namespace myConv{
     /**
     *Konwertuje dowolna liczbę na string
     */
     template <typename T>
-    inline std::string ToString(const T& liczba){
+    inline std::string ToString(const T& liczba){///Conver number to string
         std::stringstream ss;
         ss << liczba;
         return ss.str();
@@ -19,11 +20,80 @@ namespace myConv{
     *Metoda przyjmoje na wejsciu dowolnych łańcuch textowy i przerabia go na liczbę w zdeklarowanym typie
     */
     template <typename T>
-    inline T FromString(std::string s_liczba){
+    inline T FromString(std::string s_liczba){///Convert string to number
         T liczba;
         std::stringstream myStream(s_liczba);
         myStream>>liczba;
         return liczba;
+    }
+    template <typename T>
+    inline std::string Bandwidth(double dTime ,const T &ui64Counter,const std::string &strAppEnd = "/s"){///Count bandwidth or scale size
+        dTime == 0 ? dTime = 1 : dTime;// /= 1000000;
+        double dRet = 0;
+        if ( ui64Counter == 0){
+            std::cerr<<"\033[22;31mCan not count bandwidth from counter = 0 \033[22;30m]"<<std::endl;
+            std::cerr<<"dTime:"<<dTime<<" Exp end sqc["<<strAppEnd<<"]"<<std::endl;
+        }else{ dRet = ui64Counter / dTime ;}
+        if (dRet < KB ){ //B
+            return myConv::ToString(dRet)+"B"+strAppEnd;
+        }
+        if ( dRet < MB ){//KB
+            return myConv::ToString(dRet/KB)+"KB"+strAppEnd;
+        }
+        if( dRet < GB ){//MB
+            return myConv::ToString(dRet/MB)+"MB"+strAppEnd;
+        }
+        return myConv::ToString(dRet/GB)+"GB"+strAppEnd;
+    }
+    template <typename T>
+    inline T SizeFromString(std::string str){///Genert size from string with auto scaling
+        for (unsigned it = str.length()-2; it < str.length(); it++){ //std::cout<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;
+                if(str.at(it) == 'B' or str.at(it) == 'b'){
+                    str.erase(it);
+                    return myConv::FromString<T>(str);
+                }
+                if(str.at(it) == 'K' or str.at(it) == 'k'){
+                    str.erase(it);
+                    return myConv::FromString<T>(str) * KB;
+                }
+                if(str.at(it) == 'M' or str.at(it) == 'm'){
+                    str.erase(it);
+                    return myConv::FromString<T>(str) * MB;
+                }
+                if(str.at(it) == 'G' or str.at(it) == 'g'){
+                    str.erase(it);
+                    return myConv::FromString<T>(str) * GB;
+                }
+        }
+        std::cerr<<"Cannot convert unsported size unit"<<std::endl;
+        return 0;
+    }
+
+    inline std::string TimeToString(const double &dTime){///From time generates string with auto scaling
+        if ( dTime <= 0){
+            return "[Failed to measure: time diffrence to small]";
+        }
+        if (dTime < US){
+            return myConv::ToString(m_NS * dTime)+"ns";
+        }
+        if(dTime < MS){
+            return myConv::ToString(m_US * dTime)+"us";
+        }
+        if(dTime < 1){
+            return myConv::ToString(m_MS * dTime)+"ms";
+        }
+        return myConv::ToString(dTime)+"s";
+    }
+    template <typename T>
+    inline T TimeFromString(std::string str, double dMulti){///Convert string which contains time to number, can also do scaling
+        for (unsigned it = str.length()-2; it < str.length(); it++){ //std::cout<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;
+            if(str.at(it) == 'N' or str.at(it) == 'n' or str.at(it) == 'U' or str.at(it) == 'u' or str.at(it) == 'M' or str.at(it) == 'm' or str.at(it) == 'S' or str.at(it) == 's'){
+                    str.erase(it);
+                    return myConv::FromString<T>(str) * dMulti;
+            }
+        }
+        std::cerr<<"Cannot convert unsported time unit"<<std::endl;
+        return 0;
     }
 }
 #endif // MYCONV_HPP_INCLUDED

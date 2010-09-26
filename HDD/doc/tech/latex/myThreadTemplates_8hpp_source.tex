@@ -1,0 +1,104 @@
+\hypertarget{myThreadTemplates_8hpp_source}{
+\section{myThreadTemplates.hpp}
+}
+
+
+\begin{footnotesize}\begin{alltt}
+00001 \textcolor{preprocessor}{#ifndef MYTHREADTEMPLATES\_HPP\_INCLUDED}
+00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define MYTHREADTEMPLATES\_HPP\_INCLUDED}
+00003 \textcolor{preprocessor}{}
+00004 \textcolor{comment}{/***************************************************************}
+00005 \textcolor{comment}{ * Name:      <Input name>.cpp/h}
+00006 \textcolor{comment}{ * Purpose:   Code for Application <Name>}
+00007 \textcolor{comment}{ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)}
+00008 \textcolor{comment}{ * Created:   <Input date>}
+00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)}
+00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
+00011 \textcolor{comment}{ **************************************************************/}
+00013 \textcolor{comment}{//#include <cstdlib>}
+00014 \textcolor{comment}{//#include <cstdio>}
+00015 \textcolor{comment}{//#include <sys/stat.h>}
+00016 \textcolor{preprocessor}{#include <iostream>}
+00017 \textcolor{preprocessor}{#include <list>}
+00018 \textcolor{preprocessor}{#include <string>}\textcolor{comment}{/*}
+00019 \textcolor{comment}{#include <vector>*/}
+00020 \textcolor{comment}{//boost}
+00021 \textcolor{preprocessor}{#include <boost/thread/thread.hpp>}
+00022 \textcolor{preprocessor}{#include "boost/date\_time/local\_time/local\_time.hpp"}
+00023 \textcolor{comment}{//my}
+00024 \textcolor{preprocessor}{#include "myTime.hpp"}\textcolor{comment}{/*}
+00025 \textcolor{comment}{#include <boost/filesystem/path.hpp>*/}
+00026 \textcolor{comment}{//#include "thread\_tester\_hdd.hpp"}
+00027 \textcolor{comment}{/*}
+00028 \textcolor{comment}{//my}
+00029 \textcolor{comment}{#include "myConv.hpp"}
+00030 \textcolor{comment}{#include "myHash.hpp"}
+00031 \textcolor{comment}{#include "myIO.hpp"*/}
+00033 \textcolor{keyword}{using} std::list;
+00034 \textcolor{keyword}{using} std::string;\textcolor{comment}{/*}
+00035 \textcolor{comment}{using std::vector;}
+00036 \textcolor{comment}{using std::cout;}
+00037 \textcolor{comment}{using std::cin;*/}
+00038 \textcolor{keyword}{using} std::cerr;
+00039 \textcolor{keyword}{using} std::endl;
+\hypertarget{myThreadTemplates_8hpp_source_l00041}{}\hyperlink{namespacemyThreadTemplates}{00041} \textcolor{keyword}{namespace }myThreadTemplates\{
+00042 
+\hypertarget{myThreadTemplates_8hpp_source_l00043}{}\hyperlink{classmyThreadTemplates_1_1thread__1}{00043} \textcolor{keyword}{template} <\textcolor{keyword}{class} ClassT> \textcolor{keyword}{class }\hyperlink{classmyThreadTemplates_1_1thread__1}{thread_1}\{
+00044         \textcolor{keyword}{private}:
+00045                 ClassT *parent; 
+00046                 boost::local\_time::local\_date\_time *blt\_ldt\_Creation; 
+00047                 boost::local\_time::local\_date\_time *blt\_ldt\_Start; 
+00048                 boost::thread m\_Thread; 
+00049                 boost::mutex mutex\_listIO; 
+00050                 list<string*> *dExTimes; 
+00051                 \textcolor{keywordtype}{bool} bShowOverExecution; 
+00052         \textcolor{keyword}{public}:
+00053                 \hyperlink{classmyThreadTemplates_1_1thread__1}{thread_1}(ClassT *parent, list<string*> *list = NULL,\textcolor{keywordtype}{bool} show = \textcolor{keyword}{f
+      alse}): parent(parent),\(\backslash\)
+00054                 blt\_ldt\_Creation(myTime::GetTime()),\(\backslash\)
+00055                 blt\_ldt\_Start(NULL),\(\backslash\)
+00056                 dExTimes(list),\(\backslash\)
+00057                 bShowOverExecution(show)\{\}
+\hypertarget{myThreadTemplates_8hpp_source_l00058}{}\hyperlink{classmyThreadTemplates_1_1thread__1_a40dcf528dbb18b16ed44054451a575e1}{00058}                 \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_a40dcf528dbb18b16ed44054451a575e1}{start}()\{
+00059             blt\_ldt\_Start = myTime::GetTime();
+00060             m\_Thread = boost::thread (boost::bind(this->\hyperlink{classmyThreadTemplates_1_1thread__1_a24e615ac4afa0d376faefd500ed47e43}{Execute_},parent));
+00061         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00062}{}\hyperlink{classmyThreadTemplates_1_1thread__1_aaa171242d5355f2a472a566d30863894}{00062}                 \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_aaa171242d5355f2a472a566d30863894}{start_self_test}()\{
+00063             blt\_ldt\_Start(myTime::GetTime());
+00064             m\_Thread = boost::thread (\hyperlink{classmyThreadTemplates_1_1thread__1_add97f72749590d4023fd23fcd0a3dece}{self_test});
+00065         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00066}{}\hyperlink{classmyThreadTemplates_1_1thread__1_add97f72749590d4023fd23fcd0a3dece}{00066}                 \textcolor{keyword}{static} \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_add97f72749590d4023fd23fcd0a3dece}{self_test}()\{
+00067             \textcolor{comment}{//test code hear}
+00068         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00069}{}\hyperlink{classmyThreadTemplates_1_1thread__1_a24e615ac4afa0d376faefd500ed47e43}{00069}         \textcolor{keyword}{static} \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_a24e615ac4afa0d376faefd500ed47e43}{Execute_}(ClassT *p)\{
+00070             p->Execute();
+00071         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00072}{}\hyperlink{classmyThreadTemplates_1_1thread__1_ae393ee33ecbfee158a03a4c0f21cf95c}{00072}                 \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_ae393ee33ecbfee158a03a4c0f21cf95c}{join}()\{
+00073             m\_Thread.join();
+00074                     \hyperlink{classmyThreadTemplates_1_1thread__1_a2cd2286a9d51537395123832a6a25ebc}{UpdateStats}(\textcolor{keyword}{new} \textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Thread has been doing something for: 
+      "}+ myConv::TimeToString(myTime::TimeDiff(blt\_ldt\_Start))));
+00075         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00076}{}\hyperlink{classmyThreadTemplates_1_1thread__1_a7acc2e784a8efe4b74a4bdded5feebb3}{00076}                 \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_a7acc2e784a8efe4b74a4bdded5feebb3}{join}(\textcolor{keywordtype}{unsigned} &val)\{
+00077             m\_Thread.join(); boost::thread::timed\_join(val);
+00078             \hyperlink{classmyThreadTemplates_1_1thread__1_a2cd2286a9d51537395123832a6a25ebc}{UpdateStats}(\textcolor{keyword}{new} \textcolor{keywordtype}{string}(\textcolor{stringliteral}{"Thread has been doing something for: "}+ myCon
+      v::TimeToString(myTime::TimeDiff(blt\_ldt\_Start))));
+00079         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00080}{}\hyperlink{classmyThreadTemplates_1_1thread__1_a2cd2286a9d51537395123832a6a25ebc}{00080}         \textcolor{keywordtype}{void} \hyperlink{classmyThreadTemplates_1_1thread__1_a2cd2286a9d51537395123832a6a25ebc}{UpdateStats}(\textcolor{keywordtype}{string} *str)\{
+00081             \textcolor{keywordflow}{if} (dExTimes)
+00082                 dExTimes->push\_back(str);
+00083             \textcolor{keywordflow}{else}
+00084                 \textcolor{keyword}{delete} str;
+00085         \}
+\hypertarget{myThreadTemplates_8hpp_source_l00086}{}\hyperlink{classmyThreadTemplates_1_1thread__1_aab0cedc80707090ec300be40e68c19c1}{00086}         \textcolor{keyword}{virtual} \hyperlink{classmyThreadTemplates_1_1thread__1_aab0cedc80707090ec300be40e68c19c1}{~thread_1}()\{
+00087                     \textcolor{keywordflow}{if} (bShowOverExecution)
+00088                 cerr<<(\textcolor{stringliteral}{"Thread has been executed for: "}+ myConv::TimeToString(myT
+      ime::TimeDiff(blt\_ldt\_Creation)))<<endl;
+00089             \textcolor{keywordflow}{if} ( blt\_ldt\_Creation ) \{ \textcolor{keyword}{delete} blt\_ldt\_Creation; \}
+00090             \textcolor{keywordflow}{if} ( blt\_ldt\_Start ) \{ \textcolor{keyword}{delete} blt\_ldt\_Start; \}
+00091         \}
+00092 \};
+00093 
+00094 \}
+00095 
+00096 \textcolor{preprocessor}{#endif // MYTHREADTEMPLATES\_HPP\_INCLUDED}
+\end{alltt}\end{footnotesize}

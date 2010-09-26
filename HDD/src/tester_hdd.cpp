@@ -25,6 +25,7 @@ tester_hdd::tester_hdd(int ac,char **av):
                                         pathSummary(""),
                                         bThreadingPerDir(false),
                                         bDebugging(false),
+                                        iTextColor(7),
                                         uiThreadsPerDir(1),
                                         uiSelfTestScenerio(15),
                                         uiDataLimit(300 * MB),
@@ -42,6 +43,7 @@ tester_hdd::tester_hdd(int ac,char **av):
     #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
     strSlash = "\\";
     #endif
+    //cout<<myColors::ConsoleColors_[iTextColor]<<endl;//Some consoles/terminals need it to be set at the very begining
     try{
         boost::program_options::options_description desc("Options");
         desc.add_options()
@@ -53,6 +55,7 @@ tester_hdd::tester_hdd(int ac,char **av):
         ("output-file,o",boost::program_options::value<string>(&strSummaryFile)->default_value(strSummaryFile),"Output file")
         ("precision,s",boost::program_options::value<uint8_t>(&ui8Precision)->default_value(ui8Precision),"Set time precision")
         ("probe-size,x",boost::program_options::value<vector<string> >()->composing(),"Set size of probes")
+        ("force-text-color",boost::program_options::value<int>(&iTextColor)->default_value(iTextColor),string("Text colors are in range of 0-"+myConv::ToString(MYCOLORS-1)+" 0 - Black, 16 - White").c_str())
         ("thread-per-dir,p",boost::program_options::value<unsigned int>(&uiThreadsPerDir)->default_value(uiThreadsPerDir),"Number of threads per directory.\nUseful for bandwidth test with NCQ.")
         ("version,v","Print version and quit")
         ("work-dir,w",boost::program_options::value<vector<string> >()->composing(),"Run test in specified locations or drivers (default user directory)\n \" \
@@ -82,6 +85,7 @@ tester_hdd::tester_hdd(int ac,char **av):
 
         boost::filesystem::ifstream ifs(pathConfig);// user_folder/.littlebenchmark/hdd/config.cfg
         boost::program_options::store(boost::program_options::parse_config_file(ifs, desc), vm);
+        //if (ifs.is_open()){ ifs.close(); }
 
         boost::program_options::notify(vm);
 
@@ -103,9 +107,11 @@ tester_hdd::tester_hdd(int ac,char **av):
         }
         if((vm.count("max-char_size"))){
             MaxCharSize = vm["max-char_size"].as<string>();
+            ui64MaxCharSize   = myConv::SizeFromString<uint64_t>( MaxCharSize   );
         }
         if((vm.count("max-string_size"))){
             MaxStringSize = vm["max-string_size"].as<string>();
+            ui64MaxStringSize = myConv::SizeFromString<uint64_t>( MaxStringSize );
         }
         if (vm.count("max-allocation-size")){
             bBufferingTest = true;
@@ -126,24 +132,19 @@ tester_hdd::tester_hdd(int ac,char **av):
         }
         if (vm.count("data-limit")){
             strDataLimit = vm["data-limit"].as<string>();
-            uiDataLimit = myTime::FromString<unsigned int>(strDataLimit);
+            uiDataLimit = myConv::SizeFromString<unsigned int>(strDataLimit);
         }
         if (vm.count("max-loops")){
             uiMaxLoops = vm["max-loops"].as<unsigned int>();
         }
-        //Values setup
-        //
-        ui64MaxCharSize   = myTime::FromString<uint64_t>( MaxCharSize   );
-        ui64MaxStringSize = myTime::FromString<uint64_t>( MaxStringSize );
-        //
         if (vm.count("probe-size")){
             vector<string> vstr = vm["probe-size"].as<std::vector<string> >();
             if (vstr.size() > 0){ vui_Probes.clear(); }
             for (vector<string>::iterator it = vstr.begin();
                 it != vstr.end();
                 ++it){
-                     if ( myTime::FromString<unsigned int>(*it) <= ui64MaxStringSize){
-                         vui_Probes.push_back( myTime::FromString<unsigned int>(*it) );
+                     if ( myConv::SizeFromString<unsigned int>(*it) <= ui64MaxStringSize){
+                         vui_Probes.push_back( myConv::SizeFromString<unsigned int>(*it) );
                     }else{
                         cout<<"Probe:"<<*it<<" is to big for your system"<<endl;
                         cout<<"Current limit is:"<<MaxStringSize+"("<<ui64MaxStringSize<<")"<<endl;
@@ -170,7 +171,7 @@ tester_hdd::tester_hdd(int ac,char **av):
             for(vector<unsigned int>::iterator it = vui_Probes.begin(); it != vui_Probes.end(); ++it){
                 ui64tmp = (uint64_t)*it;
                 if (bDebugging){
-                    cout <<"\t"<< myTime::Bandwidth(0,ui64tmp) <<endl;
+                    cout <<"\t"<< myConv::Bandwidth(0,ui64tmp) <<endl;
                 }
             }
         }
@@ -181,7 +182,11 @@ tester_hdd::tester_hdd(int ac,char **av):
         if (vm.count("dir-thread")) {
             bThreadingPerDir = true;
         }
-        if ("thread-per-dir"){
+        if (vm.count("force-text-color")){
+            iTextColor =  vm["force-text-color"].as<int>();
+            myColors::TextColor = &iTextColor;
+        }
+        if (vm.count("thread-per-dir")){
             uiThreadsPerDir = vm["thread-per-dir"].as<unsigned int>();
         }
         if(uiThreadsPerDir < 1){
@@ -228,7 +233,7 @@ void tester_hdd::BufferingTest(){
         }while(ui64offset > 1);
         delete p;
         ui64MaxStringSize = ui - MB;
-        MaxStringSize =  myTime::Bandwidth(0,ui64MaxStringSize,"");
+        MaxStringSize =  myConv::Bandwidth(0,ui64MaxStringSize,"");
         cerr<<"Max string size: "<<ui <<"("+ MaxStringSize +")"<<endl;
         ui = 0;
         do{
@@ -247,7 +252,7 @@ void tester_hdd::BufferingTest(){
         }while(ui64offset > 1);
         if (c) { delete[] c; }
         ui64MaxCharSize = ui - MB;
-        MaxCharSize = myTime::Bandwidth(0,ui64MaxCharSize,"");
+        MaxCharSize = myConv::Bandwidth(0,ui64MaxCharSize,"");
         cerr<<"Max char table(char*) size: "<<ui <<"("+ MaxCharSize +")"<<endl;
         cout<<"Do you wish to update your configs?[y/n]"<<endl;
         char ca;
@@ -278,7 +283,7 @@ void tester_hdd::GetUserDir(){
         pathProfile /= ("hdd");
         myIO::createDir(pathProfile);
         strPath = pathProfile.file_string()+"/";
-        pathConfig = pathProfile.file_string()+"/config.cfg";
+        pathConfig /= pathProfile.file_string()+"/config.cfg";
         if (myIO::touch(pathConfig) == true){
             string strtmp = "\
 #\n\
@@ -338,27 +343,31 @@ void tester_hdd::SelfTest(){
             break;
         case 5:
             cout <<"Test bandwidth counter" <<endl;
-            cout<<"0.1 / MB\t["; myTime::Bandwidth(0.1,MB) == "10MB/s"    ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(0.1,MB)<<endl;
-            cout<<"0 / MB\t["; myTime::Bandwidth(0,MB) == "1MB/s"         ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(0,MB)<<endl;
-            cout<<"1 / MB\t["; myTime::Bandwidth(1,MB) == "1MB/s"         ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(1,MB)<<endl;
-            cout<<"10 / MB\t["; myTime::Bandwidth(10,MB) == "102.4KB/s"   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(10,MB)<<endl;
-            cout<<"0.1 / GB\t["; myTime::Bandwidth(0.1,GB) == "10GB/s"    ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(0.1,GB)<<endl;
-            cout<<"0 / GB\t["; myTime::Bandwidth(0,GB) == "1GB/s"         ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(0,GB)<<endl;
-            cout<<"1 / GB\t["; myTime::Bandwidth(1,GB) == "1GB/s"         ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(1,GB)<<endl;
-            cout<<"10 / GB\t["; myTime::Bandwidth(10,GB) == "102.4MB/s"   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::Bandwidth(10,GB)<<endl;
-            cout <<"Test scaling" <<endl;
-            cout<<"1ns\t["; myTime::TimeScale(NS) == "1ns"                ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::TimeScale(NS)<<endl;
-            cout<<"1us\t["; myTime::TimeScale(US) == "1us"                ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::TimeScale(US)<<endl;
-            cout<<"1ms\t["; myTime::TimeScale(MS) == "1ms"                ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::TimeScale(MS)<<endl;
-            cout<<"1s\t["; myTime::TimeScale(1) == "1s"                   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<<myTime::TimeScale(1)<<endl;
+            cout<<"0.1 / MB\t[";myConv::Bandwidth(0.1,MB) == "10MB/s"           ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(0.1,MB)<<endl;
+            cout<<"0 / MB\t[";  myConv::Bandwidth(0,MB) == "1MB/s"              ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(0,MB)<<endl;
+            cout<<"1 / MB\t[";  myConv::Bandwidth(1,MB) == "1MB/s"              ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(1,MB)<<endl;
+            cout<<"10 / MB\t["; myConv::Bandwidth(10,MB) == "102.4KB/s"         ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(10,MB)<<endl;
+            cout<<"0.1 / GB\t[";myConv::Bandwidth(0.1,GB) == "10GB/s"           ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(0.1,GB)<<endl;
+            cout<<"0 / GB\t[";  myConv::Bandwidth(0,GB) == "1GB/s"              ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(0,GB)<<endl;
+            cout<<"1 / GB\t[";  myConv::Bandwidth(1,GB) == "1GB/s"              ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(1,GB)<<endl;
+            cout<<"10 / GB\t["; myConv::Bandwidth(10,GB) == "102.4MB/s"         ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::Bandwidth(10,GB)<<endl;
+            cout <<"Test time scaling" <<endl;
+            cout<<"1ns\t[";     myConv::TimeToString(NS) == "1ns"               ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeToString(NS)<<endl;
+            cout<<"1us\t[";     myConv::TimeToString(US) == "1us"               ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeToString(US)<<endl;
+            cout<<"1ms\t[";     myConv::TimeToString(MS) == "1ms"               ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeToString(MS)<<endl;
+            cout<<"1s\t[";      myConv::TimeToString(1) == "1s"                 ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeToString(1)<<endl;
+            cout<<"1ns\t[";     myConv::TimeFromString<int>("1ns",m_NS) == m_NS   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeFromString<int>("1ns",m_NS)<<endl;
+            cout<<"1us\t[";     myConv::TimeFromString<int>("1us",m_US) == m_US   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeFromString<int>("1us",m_US)<<endl;
+            cout<<"1ms\t[";     myConv::TimeFromString<int>("1ms",m_MS) == m_MS   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeFromString<int>("1ms",m_MS)<<endl;
+            cout<<"1s\t[";      myConv::TimeFromString<int>("1s",1) == 1        ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<<myConv::TimeFromString<int>("1s",1)<<endl;
             cout<<"Size from string"<<endl;
-            cout<<"1b\t["; myTime::FromString<unsigned>("1B") == 1      ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1B") <<endl;
-            cout<<"1K\t["; myTime::FromString<unsigned>("1K") == KB     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1K") <<endl;
-            cout<<"1M\t["; myTime::FromString<unsigned>("1M") == MB     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1M") <<endl;
-            cout<<"1G\t["; myTime::FromString<unsigned>("1G") == GB     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1G") <<endl;
-            cout<<"1Kb\t["; myTime::FromString<unsigned>("1Kb") == KB     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1Kb") <<endl;
-            cout<<"1MB\t["; myTime::FromString<unsigned>("1MB") == MB     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1MB") <<endl;
-            cout<<"1GB\t["; myTime::FromString<unsigned>("1GB") == GB     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[0] : cout<<myColors::ConsoleColors_[0]<<"FAIL"<<myColors::ConsoleColors_[0] ; cout<< myTime::FromString<unsigned>("1GB") <<endl;
+            cout<<"1b\t[";      myConv::SizeFromString<unsigned>("1B") == 1     ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1B") <<endl;
+            cout<<"1K\t[";      myConv::SizeFromString<unsigned>("1K") == KB    ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1K") <<endl;
+            cout<<"1M\t[";      myConv::SizeFromString<unsigned>("1M") == MB    ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1M") <<endl;
+            cout<<"1G\t[";      myConv::SizeFromString<unsigned>("1G") == GB    ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1G") <<endl;
+            cout<<"1Kb\t[";     myConv::SizeFromString<unsigned>("1Kb") == KB   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1Kb") <<endl;
+            cout<<"1MB\t[";     myConv::SizeFromString<unsigned>("1MB") == MB   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1MB") <<endl;
+            cout<<"1GB\t[";     myConv::SizeFromString<unsigned>("1GB") == GB   ? cout<<myColors::ConsoleColors_[2]<<"OK"<<myColors::ConsoleColors_[*myColors::TextColor] : cout<<myColors::ConsoleColors_[1]<<"FAIL"<<myColors::ConsoleColors_[*myColors::TextColor] ; cout<<"]"<< myConv::SizeFromString<unsigned>("1GB") <<endl;
             bRun = false; //tmp
             break;
         case 6:
@@ -366,7 +375,7 @@ void tester_hdd::SelfTest(){
             for (int i =0; i < MYCOLORS; i++){
                 cout<<myColors::ConsoleColors_[i]<<i<<"."<<endl;
             }
-            cout<<myColors::ConsoleColors_[0]<<"Should be "<<MYCOLORS<<" diffrent colors"<<endl;
+            cout<<myColors::ConsoleColors_[*myColors::TextColor]<<"Should be "<<MYCOLORS<<" diffrent colors"<<endl;
             bRun = false; //tmp
         default:
             cerr <<"Test scenerio haven't been defined yet" << endl;
@@ -401,8 +410,8 @@ void tester_hdd::Run(){
         bDebugging = false;
     }
     //second value setup...
-    ui64MaxCharSize   = myTime::FromString<uint64_t>( MaxCharSize   );
-    ui64MaxStringSize = myTime::FromString<uint64_t>( MaxStringSize );
+    ui64MaxCharSize   = myConv::SizeFromString<uint64_t>( MaxCharSize   );
+    ui64MaxStringSize = myConv::SizeFromString<uint64_t>( MaxStringSize );
     //
     if (bRun){
         for(vitstr_WorkDirs = vstr_WorkDirs.begin();
@@ -414,7 +423,8 @@ void tester_hdd::Run(){
                                                                    uiDataLimit,
                                                                    uiMaxLoops,
                                                                    ui8Precision,
-                                                                   uiPermissions
+                                                                   uiPermissions,
+                                                                   bDebugging
                                                                    ));
         }
         for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();

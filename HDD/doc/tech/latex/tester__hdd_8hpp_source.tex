@@ -1,0 +1,94 @@
+\hypertarget{tester__hdd_8hpp_source}{
+\section{tester\_\-hdd.hpp}
+}
+
+
+\begin{footnotesize}\begin{alltt}
+00001 \textcolor{preprocessor}{#ifndef TESTER\_HDD\_HPP\_INCLUDED}
+00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define TESTER\_HDD\_HPP\_INCLUDED}
+00003 \textcolor{preprocessor}{}
+00004 \textcolor{comment}{/***************************************************************}
+00005 \textcolor{comment}{ * Name:      <Input name>.cpp/h}
+00006 \textcolor{comment}{ * Purpose:   Code for Application <Name>}
+00007 \textcolor{comment}{ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)}
+00008 \textcolor{comment}{ * Created:   <Input date>}
+00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)}
+00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
+00011 \textcolor{comment}{ **************************************************************/}
+00013 \textcolor{preprocessor}{#include <cstdlib>}
+00014 \textcolor{preprocessor}{#include <iostream>}
+00015 \textcolor{preprocessor}{#include <string>}
+00016 \textcolor{preprocessor}{#include <fstream>}
+00017 \textcolor{preprocessor}{#include <vector>}
+00018 \textcolor{comment}{//boost}
+00019 \textcolor{preprocessor}{#include <boost/program\_options.hpp>}
+00020 \textcolor{preprocessor}{#include <boost/ptr\_container/ptr\_list.hpp>}
+00021 \textcolor{preprocessor}{#include <boost/filesystem/fstream.hpp>}
+00022 \textcolor{comment}{//#include <boost/thread/thread.hpp>}
+00023 \textcolor{comment}{//}
+00024 \textcolor{preprocessor}{#include "version.h"}
+00025 \textcolor{comment}{//my}
+00026 \textcolor{preprocessor}{#include "myHash.hpp"}
+00027 \textcolor{preprocessor}{#include "myIO.hpp"}
+00028 \textcolor{preprocessor}{#include "myConv.hpp"}
+00029 \textcolor{preprocessor}{#include "myTime.hpp"}
+00030 \textcolor{preprocessor}{#include "thread\_tester\_hdd.hpp"}
+00031 \textcolor{preprocessor}{#include "profileUpdateStore.hpp"}
+00032 
+00033 \textcolor{preprocessor}{#ifdef WIN64 || \_WIN64 || \_\_WIN64\_\_ || WIN32 || \_WIN32 || \_\_WIN32\_\_ || \_TOS\_WIN\_\_
+       || \_\_WINDOWS\_\_}
+00034 \textcolor{preprocessor}{}\textcolor{preprocessor}{#include <windows.h>}
+00035 \textcolor{preprocessor}{#else}
+00036 \textcolor{preprocessor}{}\textcolor{preprocessor}{#include <pwd.h>}
+00037 \textcolor{preprocessor}{#endif}
+00038 \textcolor{preprocessor}{}
+00040 \textcolor{keyword}{using} std::string;
+00041 \textcolor{keyword}{using} std::vector;
+00042 \textcolor{keyword}{using} std::cout;
+00043 \textcolor{keyword}{using} std::cerr;
+00044 \textcolor{keyword}{using} std::cin;
+00045 \textcolor{keyword}{using} std::endl;
+00047 
+\hypertarget{tester__hdd_8hpp_source_l00048}{}\hyperlink{classtester__hdd}{00048} \textcolor{keyword}{class }\hyperlink{classtester__hdd}{tester_hdd}\{
+00049     \textcolor{keyword}{private}:
+00050         \textcolor{keywordtype}{string} strSummaryFile; 
+00051         \textcolor{keywordtype}{string} strDataLimit; 
+00052         \textcolor{keywordtype}{string} MaxCharSize; 
+00053         \textcolor{keywordtype}{string} MaxStringSize; 
+00054         \textcolor{keywordtype}{string} strPath;
+00055         boost::filesystem::path pathProfile;
+00056         boost::filesystem::path pathConfig;
+00057         boost::filesystem::path pathSummary;
+00058         \textcolor{keywordtype}{bool} bThreadingPerDir; 
+00059         \textcolor{keywordtype}{bool} bDebugging; 
+00060         \textcolor{keywordtype}{bool} bSelfTest;
+00061         \textcolor{keywordtype}{bool} bBufferingTest;
+00062         \textcolor{keywordtype}{int} iTextColor;
+00063         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} uiThreadsPerDir; 
+00064         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} uiSelfTestScenerio; 
+00065         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} uiDataLimit; 
+00066         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} uiMaxLoops;
+00067         uint64\_t ui64MaxCharSize;
+00068         uint64\_t ui64MaxStringSize;
+00069         uint8\_t ui8Precision;
+00070         mode\_t uiPermissions; 
+00071         vector<profileUpdateStore*> *pus\_Var;
+00072         vector<string> vstr\_WorkDirs; 
+00073         vector<string>::iterator vitstr\_WorkDirs; 
+00074         vector<unsigned int> vui\_Probes;
+00075         boost::ptr\_list<thread\_tester\_hdd> bst\_ptrlist\_tester\_hdd; 
+00076         boost::ptr\_list<thread\_tester\_hdd>::iterator bst\_ptrlist\_it\_tester\_hdd; 
+00077         \textcolor{comment}{//}
+00078         \textcolor{keywordtype}{void} BufferingTest();
+00079         \textcolor{keywordtype}{void} GetUserDir();
+00080         \textcolor{keywordtype}{void} SelfTest();
+00081         \textcolor{keywordtype}{void} UpdateProfile();
+00082     \textcolor{keyword}{public}:
+00083         \textcolor{keywordtype}{bool} bRun;
+00084         \hyperlink{classtester__hdd_af43b8ca9595ed8ebf14b2c7cffe561c2}{tester_hdd}(\textcolor{keywordtype}{int},\textcolor{keywordtype}{char} **);
+00085         ~\hyperlink{classtester__hdd}{tester_hdd}();
+00086         \textcolor{keywordtype}{void} \hyperlink{classtester__hdd_abfdcc395e8be504dfd0ea686da790375}{Run}();
+00087 \};
+00088 
+00089 \textcolor{preprocessor}{#endif // TESTER\_HDD\_HPP\_INCLUDED}
+\end{alltt}\end{footnotesize}

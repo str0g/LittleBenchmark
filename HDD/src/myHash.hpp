@@ -26,13 +26,13 @@ namespace Hash
 {
     #define SHA512LEN 128
         //Hash data by MD5 algorhitm
-        inline std::string MD5(const std::string* data)
+        inline std::string MD5(const std::string &data)
         {
                 std::string res;
                 CryptoPP::Weak1::MD5 hash;
                 byte digest[CryptoPP::Weak1::MD5::DIGESTSIZE];
 
-                hash.CalculateDigest(digest, (byte*)data->c_str(), data->size());
+                hash.CalculateDigest(digest, (byte*)data.c_str(), data.size());
 
                 CryptoPP::HexEncoder encoder;
                 encoder.Attach(new CryptoPP::StringSink(res));

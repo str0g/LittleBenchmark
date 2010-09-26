@@ -2,9 +2,19 @@ xx September 2010
    released version 0.x.x of HDD
 
      Change log:        
-	-Update:  File copy test
-        -Add:     Read by chunk test
-	-Fix:     Memory leaks in allocation test
+	-Update:   File copy test
+        -Add:      Read by chunk test
+	-Fix:      Memory leaks in allocation test (32records)
+
+26 September 2010
+   released version 0.10.6 of HDD [ Build Numbering has been changed! ]
+
+     Change log:
+	-WorkArond:Random Lost of stream integrity in read by char test( if fix won't work user will see information about bad hash sum which means that something went wrong )
+	-Updated:  Threading interface to more complex but reusable for further test modules (CPU,GRAPHIC,RAM)
+	-Updated:  Time and Conversion headers
+	-Updated:  Hash sum verification
+	-Added:    Control of terminal text color
 
 
 22 September 2010

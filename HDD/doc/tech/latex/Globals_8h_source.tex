@@ -1,0 +1,31 @@
+\hypertarget{Globals_8h_source}{
+\section{Globals.h}
+}
+
+
+\begin{footnotesize}\begin{alltt}
+00001 \textcolor{preprocessor}{#ifndef GLOBALS\_H\_INCLUDED}
+00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define GLOBALS\_H\_INCLUDED}
+00003 \textcolor{preprocessor}{}
+00004 \textcolor{preprocessor}{    #define DEBUG}
+00005 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define ASCII 128 //!< Number of ASCII used by generator}
+00006 \textcolor{preprocessor}{}
+00007 \textcolor{preprocessor}{    #define KB 1024 //!<Size of KiloByte}
+00008 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define MB 1048576 //!<Size of MegaByte}
+00009 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define GB 1073741824 //!<Size of GigaByte}
+00010 \textcolor{preprocessor}{}
+00011 \textcolor{preprocessor}{    #define MS 0.001 //!< Milisecond}
+00012 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define US 0.000001 //!< Micorsecond}
+00013 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define NS 0.000000001 //!< Nanosecond}
+00014 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_MS 1000 //!< 1s}
+00015 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_US 1000000 //!< 1s}
+00016 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_NS 1000000000 //!< 1s}
+00017 \textcolor{preprocessor}{}
+00018 \textcolor{preprocessor}{    #include <string>}
+00037 \textcolor{preprocessor}{    #define MYCOLORS 16 //!< Number of colors}
+00038 \textcolor{preprocessor}{}\textcolor{keyword}{namespace }myColors\{
+00039     \textcolor{keyword}{extern} std::string \hyperlink{namespacemyColors_acd2740448dd52d14badb1864e14401ce}{ConsoleColors_}[MYCOLORS]; 
+00040     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} *\hyperlink{namespacemyColors_a52b646aad549675b463b1b37c6be6145}{TextColor}; 
+00041 \}
+00042 \textcolor{preprocessor}{#endif // GLOBALS\_H\_INCLUDED}
+\end{alltt}\end{footnotesize}

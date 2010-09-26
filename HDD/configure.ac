@@ -32,6 +32,8 @@ AC_CHECK_FUNCS([mkdir rmdir])
 
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
+                 doc/readme/Makefile
+                 doc/tech/latex/Makefile
                  man/Makefile
                  src/Makefile])
 AC_OUTPUT

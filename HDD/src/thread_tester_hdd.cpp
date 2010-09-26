@@ -9,7 +9,12 @@
 ///Headers
 #include "thread_tester_hdd.hpp"
 
-thread_tester_hdd::thread_tester_hdd(vector<unsigned int> vui,string str,string slash,unsigned int limit,unsigned int mloops, uint8_t prec,mode_t prem):
+thread_tester_hdd::thread_tester_hdd(vector<unsigned int> vui,\
+                                     string str,string slash,\
+                                     unsigned limit,unsigned mloops,\
+                                     uint8_t prec,\
+                                     mode_t prem,\
+                                     bool dbg): myThreadTemplates::thread_1<thread_tester_hdd>(this,NULL,dbg),
                                     vui_Probes(vui),
                                     strDir(str),//swap me to bfsp
                                     p_strSummary(new string),
@@ -41,7 +46,7 @@ thread_tester_hdd::thread_tester_hdd(vector<unsigned int> vui,string str,string 
 
     //
    if( p_strOutFileDataBuffer->length() != ASCII ){
-        cerr<<myColors::ConsoleColors_[2]<<"Unexpected length of p_strOutFileDataBuffer:"<<p_strOutFileDataBuffer->length()<<myColors::ConsoleColors_[0]<<endl;
+        cerr<<myColors::ConsoleColors_[2]<<"Unexpected length of p_strOutFileDataBuffer:"<<p_strOutFileDataBuffer->length()<<myColors::ConsoleColors_[*myColors::TextColor]<<endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -70,43 +75,43 @@ void thread_tester_hdd::setBuffer(const unsigned int *uiSize){
         do{
             p_strOutFileDataBuffer->append(*p_strOutFileDataBuffer);
             ui64tmp = p_strOutFileDataBuffer->length();
-            //cout<< myTime::Bandwidth(0, &ui64tmp,"")<<endl;
+            //cout<< myConv::Bandwidth(0, &ui64tmp,"")<<endl;
         }while(p_strOutFileDataBuffer->length() <= *uiSize-1);
         if (p_strOutFileDataBuffer->length() > *uiSize){
             ui64tmp = p_strOutFileDataBuffer->length();
-            //cout<<"Buffer overflow resizing["<<ui64tmp<<"("+myTime::Bandwidth(0,&ui64tmp,"")+")"<<"/"<<*uiSize<<"("+myTime::Bandwidth(0,uiSize,"")+")"<<"]"<<endl;
+            //cout<<"Buffer overflow resizing["<<ui64tmp<<"("+myConv::Bandwidth(0,&ui64tmp,"")+")"<<"/"<<*uiSize<<"("+myConv::Bandwidth(0,uiSize,"")+")"<<"]"<<endl;
             p_strOutFileDataBuffer->erase(*uiSize);
         }
     }catch (std::exception &e){
         cerr << e.what()<<endl;
         ui64tmp = p_strOutFileDataBuffer->size();
-        cerr << p_strOutFileDataBuffer->size()<<"("+myTime::Bandwidth(0,ui64tmp)<<")length("<< p_strOutFileDataBuffer->length()<<")" <<endl;
+        cerr << p_strOutFileDataBuffer->size()<<"("+myConv::Bandwidth(0,ui64tmp)<<")length("<< p_strOutFileDataBuffer->length()<<")" <<endl;
     }
 
     ui64tmp = p_strOutFileDataBuffer->length();
-    p_strSummary->append("Testing files of size: "+ myConv::ToString(ui64tmp)+"("+myConv::ToString(myTime::Bandwidth(0,ui64tmp,""))+")"+"\n");
-    p_strSummary->append("Buffer has been setup in "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n");
+    p_strSummary->append("Testing files of size: "+ myConv::ToString(ui64tmp)+"("+myConv::ToString(myConv::Bandwidth(0,ui64tmp,""))+")"+"\n");
+    p_strSummary->append("Buffer has been setup in "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n");
 
     dStartt = myTime::GetTime();
     *p_strHashSum = Hash::SHA512(*p_strOutFileDataBuffer);
-    p_strSummary->append("Buffer hashsum has been counted in "+myTime::TimeScale(myTime::TimeDiff(dStartt))+"\n");
+    p_strSummary->append("Buffer hashsum has been counted in "+myConv::TimeToString(myTime::TimeDiff(dStartt))+"\n");
     delete dStartt;
 
-    p_strSummary->append("setBuffer executed for "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n\n");
+    p_strSummary->append("setBuffer executed for "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n\n");
     delete dStart;
 }
 
 string &thread_tester_hdd::getSummary(){
     return *p_strSummary;
 }
-
+/*
 void thread_tester_hdd::start(){
     m_Thread = boost::thread (&thread_tester_hdd::Execute,this);
 }
 void thread_tester_hdd::join(){
     m_Thread.join();
 }
-
+*/
 void thread_tester_hdd::readByChar(uint16_t mode){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     boost::local_time::local_date_time *dStartt = NULL;
@@ -126,10 +131,11 @@ void thread_tester_hdd::readByChar(uint16_t mode){
     dStartt = myTime::GetTime();
     for(uint64_t i = 0; i < ui64Loop; ++i){//Porting issue
         string *p_strtmp = new string;
+        boost::filesystem::path path_tmp = strDir+"/"+myConv::ToString(i);
         if (mode == 0){
-            bOK = myIO::simpleReadToStringByChar(&(strDir+strSlash+myConv::ToString(i)),p_strtmp,p_list);
+            bOK = myIO::simpleReadToStringByChar(path_tmp,p_strtmp,p_list);
         }else{
-            bOK = myIO::simpleReadToStringByStream((strDir+strSlash+myConv::ToString(i)),p_strtmp,p_list);
+            bOK = myIO::simpleReadToStringByStream(path_tmp,p_strtmp,p_list);
         }
         if (p_strtmp and bOK){//---------------------------
             list_ReadFiles.push_back(p_strtmp);
@@ -140,15 +146,15 @@ void thread_tester_hdd::readByChar(uint16_t mode){
         double dtmp = myTime::TimeDiff(dStartt);
         delete dStartt;
         mode == 0 ? strtmp = "Read by char" : strtmp = "Read by stream";
-        p_strSummary->append(strtmp+": "+myConv::ToString(myTime::Bandwidth(dtmp,ui64tmp))+"\n");
+        p_strSummary->append(strtmp+": "+myConv::ToString(myConv::Bandwidth(dtmp,ui64tmp))+"\n");
         if (p_list){
             list<double>::iterator it = p_list->begin();
-            p_strSummary->append("Access Times-----\nMin:"+myTime::TimeScale(*it));     ++it;
-            p_strSummary->append("\nMax:"+myTime::TimeScale(*it));                      ++it;
-            p_strSummary->append("\nAvg:"+myTime::TimeScale(*it/ui64Loop));             ++it;
-            p_strSummary->append("\nRead Times--------\nMin:"+myTime::TimeScale(*it));  ++it;
-            p_strSummary->append("\nMax:"+myTime::TimeScale(*it));                      ++it;
-            p_strSummary->append("\nAvg:"+myTime::TimeScale(*it/ui64Loop)+"\n");
+            p_strSummary->append("Access Times-----\nMin:"+myConv::TimeToString(*it));     ++it;
+            p_strSummary->append("\nMax:"+myConv::TimeToString(*it));                      ++it;
+            p_strSummary->append("\nAvg:"+myConv::TimeToString(*it/ui64Loop));             ++it;
+            p_strSummary->append("\nRead Times--------\nMin:"+myConv::TimeToString(*it));  ++it;
+            p_strSummary->append("\nMax:"+myConv::TimeToString(*it));                      ++it;
+            p_strSummary->append("\nAvg:"+myConv::TimeToString(*it/ui64Loop)+"\n");
         }
 
         if((list_ReadFiles.size()%ui64Loop) != 0 or list_ReadFiles.size() == 0){
@@ -167,7 +173,7 @@ void thread_tester_hdd::readByChar(uint16_t mode){
         }
     list_ReadFiles.clear();
     if (p_list){ delete p_list; }
-    p_strSummary->append(strtmp+" executed for "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n\n");
+    p_strSummary->append(strtmp+" executed for "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n\n");
     delete dStart;
 }
 
@@ -191,11 +197,11 @@ void thread_tester_hdd::Write(const unsigned int *uiSize){
     }
     double dtmp = myTime::TimeDiff(dStartt);
     p_strSummary->append("Written "+myConv::ToString(ui64Loop)+" files"+"\nBandwidth: "\
-                        +myTime::Bandwidth(dtmp ,ui64tmp)+" ("\
-                        +myTime::TimeScale( dtmp  )+")\n"\
+                        +myConv::Bandwidth(dtmp ,ui64tmp)+" ("\
+                        +myConv::TimeToString( dtmp  )+")\n"\
                          );
     //
-    p_strSummary->append("Write metod executed for "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n\n");
+    p_strSummary->append("Write metod executed for "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n\n");
     delete dStart;
     delete dStartt;
 }
@@ -205,7 +211,7 @@ void thread_tester_hdd::CopyTest(const unsigned int *uiData){
     list<boost::filesystem::path> *list_dir = new list<boost::filesystem::path>;
     boost::filesystem::path fTo;
     Write(uiData);
-    myIO::lsFiles(&boost::filesystem::path(strDir),list_dir);
+    myIO::lsFiles(boost::filesystem::path(strDir),list_dir);
     for ( list<boost::filesystem::path>::iterator it = list_dir->begin();\
             it != list_dir->end();
             ++it ){
@@ -215,25 +221,56 @@ void thread_tester_hdd::CopyTest(const unsigned int *uiData){
         }
     myIO::rmAll(strDir);
     delete list_dir;
-    p_strSummary->append("Copy metod executed for "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n\n");
+    p_strSummary->append("Copy metod executed for "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n\n");
     delete dStart;
 }
 
 bool thread_tester_hdd::VeryfiReadFiles(){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     bool bRet = true;
+    unsigned uiCounter = 0;
     for(list<string*>::iterator it = list_ReadFiles.begin();
         it != list_ReadFiles.end();
         it++){
-            cout<<"["<<*p_strHashSum<<"] / ["<< Hash::SHA512((**it))<<"]\n"<<endl;
             if (*p_strHashSum != Hash::SHA512((**it))){
-                cerr<< "File of size "<< myTime::Bandwidth(0,(**it).length(),"")<<"("<<(**it).length()<<")"<<" has wrong controle sum!\nTest has been aborded!\n" <<endl;
-                p_strSummary->append("File of size "+myTime::Bandwidth(0,(**it).length(),"")+"("+myConv::ToString((**it).length())+")"+" have wrong controle sum!\nTest has been aborded!\n");
+                unsigned uiLengthOfReadFileBuf = (unsigned)(**it).length();
+                unsigned uiLengthOfDataBuf = (unsigned)p_strOutFileDataBuffer->length();
+                cerr<<"expected hash["<<myColors::ConsoleColors_[1]<<*p_strHashSum<<myColors::ConsoleColors_[*myColors::TextColor]<<
+                "] /hash counted ["<<myColors::ConsoleColors_[2]<< Hash::SHA512((**it))<<myColors::ConsoleColors_[*myColors::TextColor]<<"]"<<endl;
+                cerr<< "File ["<< uiCounter<<"] Size "<<
+                    myConv::Bandwidth(0,uiLengthOfReadFileBuf,"")<<
+                    "("<<uiLengthOfReadFileBuf<<")"<<
+                    " has wrong controle sum!\nTest has been aborded!\n" <<endl;
+                p_strSummary->append("File "+myConv::ToString(uiCounter)+
+                                     " Size "+myConv::Bandwidth(0,uiLengthOfReadFileBuf,"")+
+                                     "("+myConv::ToString((**it).length())+")"+
+                                     " have wrong controle sum!\nTest has been aborded!\n");
+                if (uiLengthOfDataBuf!= uiLengthOfReadFileBuf){
+                    cerr<<"File size expected to be equal["<<
+                    myColors::ConsoleColors_[1]<<uiLengthOfDataBuf<<myColors::ConsoleColors_[*myColors::TextColor]<<"]/["<<
+                    myColors::ConsoleColors_[2]<<uiLengthOfDataBuf<<myColors::ConsoleColors_[*myColors::TextColor]<<"]"<<endl;
+                }
+                unsigned *uiLimit;
+                uiLengthOfDataBuf < uiLengthOfReadFileBuf ? uiLimit = &uiLengthOfReadFileBuf : uiLimit = &uiLengthOfDataBuf;
+                for(unsigned i=0; i < *uiLimit; i++){
+                    if (i < uiLengthOfDataBuf ){
+                        if (p_strOutFileDataBuffer->at(i) != (**it).at(i))
+                            cerr<<"["<<myColors::ConsoleColors_[1]<<p_strOutFileDataBuffer->at(i)<<myColors::ConsoleColors_[*myColors::TextColor]<<"]"
+                            <<"["<<myColors::ConsoleColors_[2]<<(**it)<<myColors::ConsoleColors_[*myColors::TextColor]<<"]"<<endl;
+                    }else{
+                        cerr<<" ["<<myColors::ConsoleColors_[1]<<(**it).at(i)<<myColors::ConsoleColors_[*myColors::TextColor]<<"] ";
+                        if (i % 5 == 0 and i > 0)
+                            cerr<<endl;
+                    }
+                }
+                cerr<<endl;
+
                 bRet = false;
                 break;
             }
+            uiCounter++;
     }
-    p_strSummary->append("Verfication "+ myConv::ToString(list_ReadFiles.size())+" taken "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n");
+    p_strSummary->append("Verfication "+ myConv::ToString(list_ReadFiles.size())+" taken "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n");
     delete dStart;
     return bRet;
 }
@@ -259,6 +296,6 @@ void thread_tester_hdd::Execute(){
         p_strSummary->append("Failed to create work directory!\n Nothing will be done.\n");
     }
     //
-    p_strSummary->append("Thread execution taken: "+myTime::TimeScale(myTime::TimeDiff(dStart))+"\n");
+    p_strSummary->append("Thread execution taken: "+myConv::TimeToString(myTime::TimeDiff(dStart))+"\n");
     delete dStart;
 }

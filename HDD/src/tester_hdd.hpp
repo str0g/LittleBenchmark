@@ -59,6 +59,7 @@ class tester_hdd{
         bool bDebugging; //!<Debugging Enable/Disable
         bool bSelfTest;//!<Run selftest
         bool bBufferingTest;//!<Run Max alloc test
+        int iTextColor;//!< TextColor
         unsigned int uiThreadsPerDir; //!<How much threads per one directory/driver
         unsigned int uiSelfTestScenerio; //!<Which test scenerio use
         unsigned int uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes

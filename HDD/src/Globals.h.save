@@ -2,9 +2,9 @@
 #define GLOBALS_H_INCLUDED
 
     #define DEBUG
-    #define ASCII 128
+    #define ASCII 128 //!< Number of ASCII used by generator
 
-    #define KB 1024
+    #define KB 1024 //!<Size of MegaByte
     #define MB 1048576
     #define GB 1073741824
 
@@ -34,8 +34,9 @@
 \033[01;36m - light cyan        15
 \033[01;37m - white             16
 */
-    #define
-namespace colors{
-    extern std::string ConsoleColors_[16];
+    #define MYCOLORS 16 //!< Number of colors
+namespace myColors{
+    extern std::string ConsoleColors_[MYCOLORS]; //!< Keeps Colors definitions
+    extern int *TextColor; //!< Keeps chosen color
 }
 #endif // GLOBALS_H_INCLUDED

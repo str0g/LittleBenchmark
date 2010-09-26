@@ -1,0 +1,57 @@
+\documentclass[a4paper]{article}
+\usepackage[MeX]{english}
+\usepackage{hyperref}
+ \hypersetup{pdfborder={0 0 0}}
+\usepackage[utf8x]{inputenc}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{rotating}
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+
+\lhead{Little Benchmark: HDD}
+\rhead{Read Me}
+\cfoot{page \thepage/\pageref{LastPage}}
+
+\begin{document}
+\title{Little Benchmark: HDD  \LaTeX2}
+\author{Author: Łukasz Buśko
+\\License: General Public Licens
+\\Home:  \href{https://str0g.wordpress.com}{https://str0g.wordpress.com}
+%\\email:\href{mailto:buskol.waw.pl@gmail.com}{buskol.waw.pl@gmail.com}
+\\Copyright \copyright 2010-2011 Łukasz Buśko\\
+\date{\today} Version.: 0.10.6}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\input{license.tex}
+\section{Requirements}
+Operating system: Linux, Windows XP or newer\\
+Library.:libboost 1.40 , libcrypto++ 5.6.0-5
+\section{Features}
+\begin{itemized}
+\item Portability (not tested yet)
+\item Multi threading for controllers and NCQ tests (not test yet)
+\item Test read by 1 character and stream
+\item Test read by chunk useful for server disk drivers speciality if test in multi threading (no implemented yet)
+\item Read files are being validated with sha512 hash sum after read test in order to check if we read what we supposed to read
+\item Nanoseconds precision
+\item Human readable output
+\item Easy and fully customizable by command line or configuration file
+\item Tests designed for hybrid drives
+\item Free of charge but don't forget to appreciate my job by \href{http://str0g.wordpress.com/about/}{\underline{donation}}
+\end{itemized}
+
+\newpage
+\input{howdoesitwork.tex}
+\newpage
+\input{installation.tex}
+\input{configuration.tex}
+\newpage
+\input{knownIssues.tex}
+
+\newpages
+\end{document}
