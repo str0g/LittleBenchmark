@@ -12,50 +12,59 @@
 00006 \textcolor{comment}{ * Purpose:   Code for Application <Name>}
 00007 \textcolor{comment}{ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)}
 00008 \textcolor{comment}{ * Created:   <Input date>}
-00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (www.SoonWillBe.pl)}
+00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (http://str0g.wordpress.com)}
 00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
 00011 \textcolor{comment}{ **************************************************************/}
+00012 \textcolor{comment}{//Headers}
 00013 \textcolor{preprocessor}{#define CRYPTOPP\_ENABLE\_NAMESPACE\_WEAK 1}
 00014 \textcolor{preprocessor}{}\textcolor{preprocessor}{#include <string>}
-00015 \textcolor{preprocessor}{#include <cryptopp/md5.h>}
-00016 \textcolor{preprocessor}{#include <cryptopp/rsa.h>}
-00017 \textcolor{preprocessor}{#include <cryptopp/base64.h>}
-00018 \textcolor{preprocessor}{#include "cryptopp/hex.h"}
-00019 
-00022 
-\hypertarget{myHash_8hpp_source_l00025}{}\hyperlink{namespaceHash}{00025} \textcolor{keyword}{namespace }Hash
-00026 \{
-00027 \textcolor{preprocessor}{    #define SHA512LEN 128}
-00028 \textcolor{preprocessor}{}        \textcolor{comment}{//Hash data by MD5 algorhitm}
-00029         \textcolor{keyword}{inline} std::string MD5(\textcolor{keyword}{const} std::string &data)
-00030         \{
-00031                 std::string res;
-00032                 CryptoPP::Weak1::MD5 hash;
-00033                 byte digest[CryptoPP::Weak1::MD5::DIGESTSIZE];
-00034 
-00035                 hash.CalculateDigest(digest, (byte*)data.c\_str(), data.size());
-00036 
-00037                 CryptoPP::HexEncoder encoder;
-00038                 encoder.Attach(\textcolor{keyword}{new} CryptoPP::StringSink(res));
-00039                 encoder.Put(digest, \textcolor{keyword}{sizeof}(digest));
-00040                 encoder.MessageEnd();
+00015 \textcolor{preprocessor}{#ifdef \_\_WIN32\_\_ || \_\_WIN64\_\_}
+00016 \textcolor{preprocessor}{}\textcolor{preprocessor}{#include "md5.h"}
+00017 \textcolor{preprocessor}{#include "rsa.h"}
+00018 \textcolor{preprocessor}{#include "bas64.h"}
+00019 \textcolor{preprocessor}{#include "hex.h"}
+00020 \textcolor{preprocessor}{#else}
+00021 \textcolor{preprocessor}{}\textcolor{preprocessor}{#include <cryptopp/md5.h>}
+00022 \textcolor{preprocessor}{#include <cryptopp/rsa.h>}
+00023 \textcolor{preprocessor}{#include <cryptopp/base64.h>}
+00024 \textcolor{preprocessor}{#include "cryptopp/hex.h"}
+00025 \textcolor{preprocessor}{#endif}
+00026 \textcolor{preprocessor}{}
+00027 \textcolor{comment}{//Specials}
+00028 \textcolor{comment}{//Globals Varuabels}
+\hypertarget{myHash_8hpp_source_l00032}{}\hyperlink{namespaceHash}{00032} \textcolor{comment}{}\textcolor{keyword}{namespace }Hash
+00033 \{
+00034 \textcolor{preprocessor}{    #define SHA512LEN 128}
+00035 \textcolor{preprocessor}{}        \textcolor{comment}{//Hash data by MD5 algorhitm}
+00036         \textcolor{keyword}{inline} std::string MD5(\textcolor{keyword}{const} std::string &data)
+00037         \{
+00038                 std::string res;
+00039                 CryptoPP::Weak1::MD5 hash;
+00040                 byte digest[CryptoPP::Weak1::MD5::DIGESTSIZE];
 00041 
-00042                 \textcolor{keywordflow}{return} res;
-00043         \}
-00044 
-00045         \textcolor{comment}{//Hash data by SHA512 algorhitm}
-00046         \textcolor{keyword}{inline} std::string SHA512(\textcolor{keyword}{const} std::string &data)
-00047         \{
-00048                 std::string res;
-00049                 CryptoPP::SHA512 hash;
-00050 
-00051                 CryptoPP::StringSource encoder(data, \textcolor{keyword}{true},
-00052                         \textcolor{keyword}{new} CryptoPP::HashFilter(hash, \textcolor{keyword}{new} CryptoPP::HexEncoder(\textcolor{keyword}{n
-      ew} CryptoPP::StringSink(res))));
-00053 
-00054                 \textcolor{keywordflow}{return} res;
-00055         \}
-00056 \}
+00042                 hash.CalculateDigest(digest, (byte*)data.c\_str(), data.size());
+00043 
+00044                 CryptoPP::HexEncoder encoder;
+00045                 encoder.Attach(\textcolor{keyword}{new} CryptoPP::StringSink(res));
+00046                 encoder.Put(digest, \textcolor{keyword}{sizeof}(digest));
+00047                 encoder.MessageEnd();
+00048 
+00049                 \textcolor{keywordflow}{return} res;
+00050         \}
+00051 
+00052         \textcolor{comment}{//Hash data by SHA512 algorhitm}
+00053         \textcolor{keyword}{inline} std::string SHA512(\textcolor{keyword}{const} std::string &data)
+00054         \{
+00055                 std::string res;
+00056                 CryptoPP::SHA512 hash;
 00057 
-00058 \textcolor{preprocessor}{#endif // MYHASH\_HPP\_INCLUDED}
+00058                 CryptoPP::StringSource encoder(data, \textcolor{keyword}{true},
+00059                         \textcolor{keyword}{new} CryptoPP::HashFilter(hash, \textcolor{keyword}{new} CryptoPP::HexEncoder(\textcolor{keyword}{n
+      ew} CryptoPP::StringSink(res))));
+00060 
+00061                 \textcolor{keywordflow}{return} res;
+00062         \}
+00063 \}
+00064 
+00065 \textcolor{preprocessor}{#endif // MYHASH\_HPP\_INCLUDED}
 \end{alltt}\end{footnotesize}

@@ -1,6 +1,15 @@
 #ifndef MYCONV_HPP_INCLUDED
 #define MYCONV_HPP_INCLUDED
 
+/***************************************************************
+ * Name:      <Input name>.cpp/h
+ * Purpose:   Code for Application <Name>
+ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
+ * Created:   <Input date>
+ * Copyright: Łukasz Buśko (http://str0g.wordpress.com)
+ * License:   GNU / General Public Licens
+ **************************************************************/
+
 #include <string>
 #include <sstream>
 #include "Globals.h"
@@ -31,7 +40,7 @@ namespace myConv{
         dTime == 0 ? dTime = 1 : dTime;// /= 1000000;
         double dRet = 0;
         if ( ui64Counter == 0){
-            std::cerr<<"\033[22;31mCan not count bandwidth from counter = 0 \033[22;30m]"<<std::endl;
+            std::cerr<<myColors::ConsoleColors_[1]<<"Can not count bandwidth from counter = 0"<<myColors::ConsoleColors_[*myColors::TextColor]<<std::endl;
             std::cerr<<"dTime:"<<dTime<<" Exp end sqc["<<strAppEnd<<"]"<<std::endl;
         }else{ dRet = ui64Counter / dTime ;}
         if (dRet < KB ){ //B
@@ -46,7 +55,7 @@ namespace myConv{
         return myConv::ToString(dRet/GB)+"GB"+strAppEnd;
     }
     template <typename T>
-    inline T SizeFromString(std::string str){///Genert size from string with auto scaling
+    inline T SizeFromString(std::string str){///Generate size from string with auto scaling
         for (unsigned it = str.length()-2; it < str.length(); it++){ //std::cout<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;
                 if(str.at(it) == 'B' or str.at(it) == 'b'){
                     str.erase(it);

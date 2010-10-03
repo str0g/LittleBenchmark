@@ -8,14 +8,14 @@
  **************************************************************/
  /**
  * Important notes for Linux:
- * * In file /etc/nsswitch.conf change passwd compat to passwd file in order to prevent memory lick
+ * * In file /etc/nsswitch.conf change passwd compat to passwd file in order to prevent memory leak
  */
 
-///Headers
+//Headers
 #include "tester_hdd.hpp"
 
 tester_hdd::tester_hdd(int ac,char **av):
-                                        strSummaryFile("Summary.txt"),
+                                        strSummaryFile("Summary"),
                                         strDataLimit("300M"),
                                         MaxCharSize("511M"),
                                         MaxStringSize("511M"),
@@ -25,6 +25,10 @@ tester_hdd::tester_hdd(int ac,char **av):
                                         pathSummary(""),
                                         bThreadingPerDir(false),
                                         bDebugging(false),
+                                        bSelfTest(false),
+                                        bBufferingTest(false),
+                                        bVerifyCache(true),
+                                        bInsufficientMemory(false),
                                         iTextColor(7),
                                         uiThreadsPerDir(1),
                                         uiSelfTestScenerio(15),
@@ -35,14 +39,8 @@ tester_hdd::tester_hdd(int ac,char **av):
                                         ui8Precision(10),
                                         uiPermissions(0777),
                                         pus_Var(new vector<profileUpdateStore*> ),
-                                        bSelfTest(false),
-                                        bBufferingTest(false),
                                         bRun(true)
                                         {
-
-    #ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
-    strSlash = "\\";
-    #endif
     //cout<<myColors::ConsoleColors_[iTextColor]<<endl;//Some consoles/terminals need it to be set at the very begining
     try{
         boost::program_options::options_description desc("Options");
@@ -51,15 +49,25 @@ tester_hdd::tester_hdd(int ac,char **av):
         ("Author,a","Print info about Author and quit")
         ("data-limit,l",boost::program_options::value<string>(&strDataLimit)->default_value(strDataLimit),"small data read/write limit")
         ("dir-thread,t", boost::program_options::value<bool>(&bThreadingPerDir)->default_value(bThreadingPerDir), "Run thread for every directory.\nUseful for bandwidth test of controllers or NCQ.")
-        ("max-loops,m",boost::program_options::value<unsigned int>(&uiMaxLoops)->default_value(uiMaxLoops),"Limit number of loops per read/write files")
-        ("output-file,o",boost::program_options::value<string>(&strSummaryFile)->default_value(strSummaryFile),"Output file")
+        ("max-loops,m",boost::program_options::value<unsigned>(&uiMaxLoops)->default_value(uiMaxLoops),"Limit number of loops per read/write files")
+        ("ignore-insufficient-memory",boost::program_options::value<bool>(&bInsufficientMemory)->default_value(bInsufficientMemory),"Don't let program to run if threads*greates_probe_size > available memory")
         ("precision,s",boost::program_options::value<uint8_t>(&ui8Precision)->default_value(ui8Precision),"Set time precision")
         ("probe-size,x",boost::program_options::value<vector<string> >()->composing(),"Set size of probes")
         ("force-text-color",boost::program_options::value<int>(&iTextColor)->default_value(iTextColor),string("Text colors are in range of 0-"+myConv::ToString(MYCOLORS-1)+" 0 - Black, 16 - White").c_str())
-        ("thread-per-dir,p",boost::program_options::value<unsigned int>(&uiThreadsPerDir)->default_value(uiThreadsPerDir),"Number of threads per directory.\nUseful for bandwidth test with NCQ.")
+        ("thread-per-dir,p",boost::program_options::value<unsigned>(&uiThreadsPerDir)->default_value(uiThreadsPerDir),"Number of threads per directory.\nUseful for bandwidth test with NCQ.")
         ("version,v","Print version and quit")
-        ("work-dir,w",boost::program_options::value<vector<string> >()->composing(),"Run test in specified locations or drivers (default user directory)\n \" \
+        ("work-dir,w",boost::program_options::value<vector<boost::filesystem::path> >()->composing(),"Run test in specified locations or drivers (default user directory)\n \" \
                                                                                     Importent do NOT  add more then 1 directory if you specified probe sizes.")
+        ("Verify-and-cache", boost::program_options::value<bool>(&bVerifyCache)->default_value(bVerifyCache),"Verfiy files kept in cache (if disable cache is also disabled)")
+        ;
+        boost::program_options::options_description OutOptions("Output options");
+        OutOptions.add_options()
+        ("as-log", boost::program_options::value<bool>(&bLog)->default_value(bLog),"Output as log")
+        ("as-txt", boost::program_options::value<bool>(&bFormattedTxt)->default_value(bFormattedTxt),"Output as formatted text(default)")
+        ("as-xml", boost::program_options::value<bool>(&bGenXML)->default_value(bGenXML),"Output as xml")
+        ("multiply-spacer",boost::program_options::value<unsigned>(&uiMultiplySpacer)->default_value(uiMultiplySpacer),"Multiplay spacer")
+        ("output-file,o",boost::program_options::value<string>(&strSummaryFile)->default_value(strSummaryFile),"Output file with out extention")
+        ("set-spacer",boost::program_options::value<string>(&strSpacerChar)->default_value(strSpacerChar),"Spacer should be 1 char long")
         ;
         boost::program_options::options_description developer("Developer options");
         developer.add_options()
@@ -69,10 +77,11 @@ tester_hdd::tester_hdd(int ac,char **av):
         ("max-char_size",boost::program_options::value<string>(&MaxCharSize)->default_value(MaxCharSize),"Max size of allocated char")
         ("max-string_size",boost::program_options::value<string>(&MaxStringSize)->default_value(MaxStringSize),"Max size of allocated string")
         ("permissions,P",boost::program_options::value<mode_t>(&uiPermissions)->default_value(uiPermissions),"Change temporary folder permission")
-        ("self-test,S",boost::program_options::value<unsigned int>(), "Run self test.\nFor Development purpose only")//DO NOT CHANGE unless you wish to self test all the time :-)
+        ("self-test,S",boost::program_options::value<unsigned>(), "Run self test.\nFor Development purpose only")//DO NOT CHANGE unless you wish to self test on every run :-)
         ;
 
         desc.add(developer);
+        desc.add(OutOptions);
 
         boost::program_options::positional_options_description pos_opt;
         pos_opt.add("work-dir", -1);
@@ -94,7 +103,7 @@ tester_hdd::tester_hdd(int ac,char **av):
             exit(0);
         }
         if (vm.count("version")) {
-            cout << "Version:" << AutoVersion::FULLVERSION_STRING <<endl;
+            cout << "Version: " << AutoVersion::FULLVERSION_STRING <<endl;
             cout << "Build date: " << AutoVersion::DATE <<"."<<AutoVersion::MONTH <<"."<<AutoVersion::YEAR<<endl;
             exit(0);
         }
@@ -105,6 +114,16 @@ tester_hdd::tester_hdd(int ac,char **av):
             cout << "License:   GNU/General Public License"<<endl;
             exit(0);
         }
+        if((vm.count("as-log")))
+            bLog = vm["as-log"].as<bool>();
+
+        if((vm.count("as-txt")))
+            bFormattedTxt = vm["as-txt"].as<bool>();
+
+        if((vm.count("as-xml")))
+            bGenXML = vm["as-xml"].as<bool>();
+        if ((vm.count("ignore-insufficient-memory")))
+            bInsufficientMemory = vm["ignore-insufficient-memory"].as<bool>();
         if((vm.count("max-char_size"))){
             MaxCharSize = vm["max-char_size"].as<string>();
             ui64MaxCharSize   = myConv::SizeFromString<uint64_t>( MaxCharSize   );
@@ -113,29 +132,47 @@ tester_hdd::tester_hdd(int ac,char **av):
             MaxStringSize = vm["max-string_size"].as<string>();
             ui64MaxStringSize = myConv::SizeFromString<uint64_t>( MaxStringSize );
         }
-        if (vm.count("max-allocation-size")){
+        if (vm.count("max-allocation-size"))
             bBufferingTest = true;
-        }
-        if (vm.count("debug")){
+
+        if (vm.count("multiply-spacer"))
+            uiMultiplySpacer = vm["multiply-spacer"].as<unsigned>();
+
+        if (vm.count("debug"))
             bDebugging = true;
-        }
-        if(vm.count("work-dir")){
-            vstr_WorkDirs = vm["work-dir"].as<vector<string> >();
-        }else{
+
+        if(vm.count("work-dir"))
+            vstr_WorkDirs = vm["work-dir"].as<vector<boost::filesystem::path> >();
+        else
             vstr_WorkDirs.push_back(strPath);
-        }
-        if (vm.count("permissions")){
+
+        if (vm.count("permissions"))
             uiPermissions = vm["permissions"].as<mode_t>();
-        }
+
         if ( vm.count("precision")){
             ui8Precision = vm["precision"].as<uint8_t>();
+            cout.setf(std::ios::adjustfield,std::ios::floatfield);
+            cout.precision(ui8Precision);
+            cerr.setf(std::ios::adjustfield,std::ios::floatfield);
+            cerr.precision(ui8Precision);
         }
         if (vm.count("data-limit")){
             strDataLimit = vm["data-limit"].as<string>();
-            uiDataLimit = myConv::SizeFromString<unsigned int>(strDataLimit);
+            uiDataLimit = myConv::SizeFromString<unsigned>(strDataLimit);
         }
         if (vm.count("max-loops")){
-            uiMaxLoops = vm["max-loops"].as<unsigned int>();
+            uiMaxLoops = vm["max-loops"].as<unsigned>();
+        }
+        if (vm.count("dir-thread")) {
+            bThreadingPerDir = true;
+        }
+        if (vm.count("thread-per-dir")){
+            uiThreadsPerDir = vm["thread-per-dir"].as<unsigned>();
+            uiMaxCols = (vstr_WorkDirs.size() * uiThreadsPerDir)+1;///Number of columns
+        }
+        if(uiThreadsPerDir < 1){
+            cerr<<"Number of threads has been corrected to 1"<<endl;
+            uiThreadsPerDir = 1;
         }
         if (vm.count("probe-size")){
             vector<string> vstr = vm["probe-size"].as<std::vector<string> >();
@@ -143,8 +180,8 @@ tester_hdd::tester_hdd(int ac,char **av):
             for (vector<string>::iterator it = vstr.begin();
                 it != vstr.end();
                 ++it){
-                     if ( myConv::SizeFromString<unsigned int>(*it) <= ui64MaxStringSize){
-                         vui_Probes.push_back( myConv::SizeFromString<unsigned int>(*it) );
+                     if ( myConv::SizeFromString<unsigned>(*it) <= ui64MaxStringSize){
+                         vui_Probes.push_back( myConv::SizeFromString<unsigned>(*it) );
                     }else{
                         cout<<"Probe:"<<*it<<" is to big for your system"<<endl;
                         cout<<"Current limit is:"<<MaxStringSize+"("<<ui64MaxStringSize<<")"<<endl;
@@ -168,7 +205,7 @@ tester_hdd::tester_hdd(int ac,char **av):
             cout << "Data limit is set to "+strDataLimit<<endl;
             cout << "Listing probes:" << endl;
             uint64_t ui64tmp;
-            for(vector<unsigned int>::iterator it = vui_Probes.begin(); it != vui_Probes.end(); ++it){
+            for(vector<unsigned>::iterator it = vui_Probes.begin(); it != vui_Probes.end(); ++it){
                 ui64tmp = (uint64_t)*it;
                 if (bDebugging){
                     cout <<"\t"<< myConv::Bandwidth(0,ui64tmp) <<endl;
@@ -176,27 +213,59 @@ tester_hdd::tester_hdd(int ac,char **av):
             }
         }
         if (vm.count("self-test")) {
-            uiSelfTestScenerio = vm["self-test"].as<unsigned int>();
+            uiSelfTestScenerio = vm["self-test"].as<unsigned>();
             bSelfTest = true;
         }
-        if (vm.count("dir-thread")) {
-            bThreadingPerDir = true;
-        }
+        if (vm.count("set-spacer"))
+            strSpacerChar = vm["set-spacer"].as<string>();
         if (vm.count("force-text-color")){
             iTextColor =  vm["force-text-color"].as<int>();
             myColors::TextColor = &iTextColor;
         }
-        if (vm.count("thread-per-dir")){
-            uiThreadsPerDir = vm["thread-per-dir"].as<unsigned int>();
-        }
-        if(uiThreadsPerDir < 1){
-            cerr<<"Number of threads has been corrected to 1"<<endl;
-            uiThreadsPerDir = 1;
-        }
-        if (vm.count("output-file")){
+        if (vm.count("output-file"))
             strSummaryFile = vm["output-file"].as<string>();
+
+        if(vm.count("Verify-and-cache"))
+            bVerifyCache = vm["Verify-and-cache"].as<bool>();
+        if (!bInsufficientMemory){
+            //pobierz wolna pamiec
+            uint64_t ui64FreeRam = 0;
+            unsigned uiModulo = 0;
+            #ifdef __WIN32__ || __WIN64__
+/*
+            // Get memory status
+            MEMORYSTATUS theStatus;
+            ZeroMemory(&theStatus,sizeof(theStatus));
+            theStatus.dwLength = sizeof(theStatus);
+            GlobalMemoryStatus(&theStatus);
+
+            // Log it
+            DWORD dwRAM = (DWORD)(theStatus.dwTotalPhys/(1024*1024));
+            if(theStatus.dwTotalPhys != dwRAM*1024*1024)
+                ++dwRAM;
+            ELog::Get().SystemFormat(L"PERF    : Available physical RAM: %dMB/%dMB\n",
+            theStatus.dwAvailPhys/(1024*1024), dwRAM);
+
+*/
+            #else
+            struct sysinfo sys_info;
+            if(sysinfo(&sys_info) != 0)
+                throw std::runtime_error("Failed to get sys informations");
+            ui64FreeRam =  sys_info.freeram;
+            #endif
+            for (vector<unsigned>::iterator it = vui_Probes.begin();
+                it != vui_Probes.end();
+                it++){
+                    uiModulo = *it % uiDataLimit;
+                    uiModulo == 0 ? uiModulo = 1 : uiModulo;
+                    if ( uint64_t ((uiMaxCols * *it) + (uiMaxCols * uiModulo)) >= ui64FreeRam)
+                        throw std::runtime_error("Insufficient memory for tests ("\
+                                                 +myConv::Bandwidth(0,(uiMaxCols * *it) + (uiMaxCols * uiModulo),"")\
+                                                 +"/"+myConv::Bandwidth(0,ui64FreeRam,"")+")");
+                }
         }
         pathSummary /= pathProfile.file_string() + "/"+strSummaryFile;
+        setArgs();///Set output args
     }
     catch(std::exception& e) {
         cerr << e.what() << "\n";
@@ -204,13 +273,20 @@ tester_hdd::tester_hdd(int ac,char **av):
     }
 }
 tester_hdd::~tester_hdd(){
-    if ( pus_Var ){ delete pus_Var; }
+    cerr<<"Disctructing: tester_hdd"<<endl;
+    if ( pus_Var ){
+        cerr<<"Disctructing: tester_hdd: pus_Var"<<endl;
+        delete pus_Var;
+    }/*
+    cerr<<"Disctructing: tester_hdd: joining threads"<<endl;
     for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
-        bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
-        ++bst_ptrlist_it_tester_hdd){
-            myIO::SimpleWriteToFile(pathSummary, bst_ptrlist_it_tester_hdd->getSummary() );
-        }
-        myIO::SimpleWriteToFile(pathSummary, string("\n") );
+                bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
+                ++bst_ptrlist_it_tester_hdd){
+                    bst_ptrlist_it_tester_hdd->join(unsigned(0));
+                }*/
+    cerr<<"Disctructing: tester_hdd: Cleaning after threads"<<endl;
+    bst_ptrlist_tester_hdd.clear();
+    cerr<<"Disctructing: tester_hdd: Bye"<<endl;
 }
 
 void tester_hdd::BufferingTest(){
@@ -222,36 +298,31 @@ void tester_hdd::BufferingTest(){
             try{
                 while (true){
                     p->reserve(ui);
+                    ui64MaxStringSize = ui - MB;
                     ui += ui64offset*MB;
                 }
             }catch(std::exception &e){
                 ui *= 0.8;
                 ui64offset /= 10;
-                delete p;
-                p = new string;
             }
         }while(ui64offset > 1);
-        delete p;
-        ui64MaxStringSize = ui - MB;
+        if( p ){ delete p; p = NULL; }
         MaxStringSize =  myConv::Bandwidth(0,ui64MaxStringSize,"");
         cerr<<"Max string size: "<<ui <<"("+ MaxStringSize +")"<<endl;
         ui = 0;
         do{
-            try{
-                while (true){
-                    c = new char[ui];
+            c = new (std::nothrow) char[ui];///Using nothrow in order to avoid bad alloc signal handler in libboost and libcrypto
+            if ( c) {
                     delete[] c;
                     c = NULL;
+                    ui64MaxCharSize = ui - MB;
                     ui += ui64offset*MB;
-                }
-            }catch(std::exception &e){
-                //delete[] c;
+            }else{
                 ui *= 0.8;
                 ui64offset /= 10;
             }
         }while(ui64offset > 1);
-        if (c) { delete[] c; }
-        ui64MaxCharSize = ui - MB;
+        if (c) { delete[] c; c = NULL ; }
         MaxCharSize = myConv::Bandwidth(0,ui64MaxCharSize,"");
         cerr<<"Max char table(char*) size: "<<ui <<"("+ MaxCharSize +")"<<endl;
         cout<<"Do you wish to update your configs?[y/n]"<<endl;
@@ -265,8 +336,26 @@ void tester_hdd::BufferingTest(){
 }
 
 void tester_hdd::GetUserDir(){
-#ifdef WIN64 || _WIN64 || __WIN64__ || WIN32 || _WIN32 || __WIN32__ || _TOS_WIN__ || __WINDOWS__
-//
+#ifdef __WIN32__ || __WIN64__
+char path[ MAX_PATH ];
+  if (SHGetFolderPathA( NULL, CSIDL_PROFILE, NULL, 0, path ) != S_OK)
+    {
+    cout << "I could not retrieve the user's home directory!\n";
+    }
+  else
+    {
+    cout << "Home directory = \"" << path << "\"\n";
+    }
+
+  if (SHGetFolderPathA( NULL, CSIDL_LOCAL_APPDATA, NULL, 0, path ) != S_OK)
+    {
+    cout << "I could not retrieve the user's application data directory!\n";
+    }
+  else
+    {
+    cout << "Application data directory = \"" << path << "\"\n";
+    }
+    pathProfile /= path;
 #else
 /*MEM leak */
     struct passwd *gUserdir = getpwuid(getuid());
@@ -409,23 +498,26 @@ void tester_hdd::Run(){
         }
         bDebugging = false;
     }
-    //second value setup...
-    ui64MaxCharSize   = myConv::SizeFromString<uint64_t>( MaxCharSize   );
-    ui64MaxStringSize = myConv::SizeFromString<uint64_t>( MaxStringSize );
-    //
     if (bRun){
+        unsigned i = 0;
+        unsigned uiCounter = 0 ;
         for(vitstr_WorkDirs = vstr_WorkDirs.begin();
             vitstr_WorkDirs != vstr_WorkDirs.end();
             ++vitstr_WorkDirs){///Create threads and insert it to list
-                bst_ptrlist_tester_hdd.push_back(new thread_tester_hdd(vui_Probes,
-                                                                   *vitstr_WorkDirs,
-                                                                   string("/"),//remove later
-                                                                   uiDataLimit,
-                                                                   uiMaxLoops,
-                                                                   ui8Precision,
-                                                                   uiPermissions,
-                                                                   bDebugging
-                                                                   ));
+            do{
+                bst_ptrlist_tester_hdd.push_back(new thread_tester_hdd<tester_hdd>(
+                                                vui_Probes,
+                                                *vitstr_WorkDirs,
+                                                uiDataLimit,
+                                                uiMaxLoops,
+                                                ++uiCounter,
+                                                ui8Precision,
+                                                uiPermissions,
+                                                bDebugging,
+                                                bVerifyCache,
+                                                this
+                                                ));
+            }while( uiThreadsPerDir > ++i );
         }
         for(bst_ptrlist_it_tester_hdd = bst_ptrlist_tester_hdd.begin();
             bst_ptrlist_it_tester_hdd != bst_ptrlist_tester_hdd.end();
@@ -443,6 +535,7 @@ void tester_hdd::Run(){
                 }
         }
         bRun =false;
+        SaveToDisk(pathSummary);
     }
 }
 

@@ -6,9 +6,9 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 #include "Globals.h"
-///Globals Varuabels
+//Globals Varuabels
 namespace myColors{
     std::string ConsoleColors_[MYCOLORS] = { ("\033[22;30m"), //!<black
                                         ("\033[22;31m"), //!< red

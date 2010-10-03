@@ -41,7 +41,7 @@ namespace myTime{
         ///Pobiera czas wedlug zdefinowanego formatowania
         time_t rawtime; //!< pobranie czasu
         struct tm * timeinfo; //!< struktura czasu, dzieki ktorej dziala formatowanie
-        char buffer2 [KB]; //!< buffor do ktorego zostanie wpisany string
+        char buffer2 [KB]; //!< buffer do ktorego zostanie wpisany string
 
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );

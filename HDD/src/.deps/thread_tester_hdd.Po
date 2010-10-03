@@ -79,6 +79,10 @@ thread_tester_hdd.o: thread_tester_hdd.cpp thread_tester_hdd.hpp \
  /usr/include/c++/4.4/bits/stl_bvector.h \
  /usr/include/c++/4.4/bits/vector.tcc /usr/include/c++/4.4/list \
  /usr/include/c++/4.4/bits/stl_list.h /usr/include/c++/4.4/bits/list.tcc \
+ /usr/include/c++/4.4/csignal /usr/include/bits/signum.h \
+ /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h \
+ /usr/include/bits/sigcontext.h /usr/include/bits/sigstack.h \
+ /usr/include/sys/ucontext.h /usr/include/bits/sigthread.h \
  /usr/include/boost/thread/thread.hpp \
  /usr/include/boost/thread/detail/platform.hpp \
  /usr/include/boost/config.hpp /usr/include/boost/config/user.hpp \
@@ -876,6 +880,22 @@ thread_tester_hdd.hpp:
 /usr/include/c++/4.4/bits/stl_list.h:
 
 /usr/include/c++/4.4/bits/list.tcc:
+
+/usr/include/c++/4.4/csignal:
+
+/usr/include/bits/signum.h:
+
+/usr/include/bits/siginfo.h:
+
+/usr/include/bits/sigaction.h:
+
+/usr/include/bits/sigcontext.h:
+
+/usr/include/bits/sigstack.h:
+
+/usr/include/sys/ucontext.h:
+
+/usr/include/bits/sigthread.h:
 
 /usr/include/boost/thread/thread.hpp:
 

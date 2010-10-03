@@ -2,8 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT(LittleBenchmark:HDD, 0.8.5, str0g.wordpress.com)
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
+AC_INIT(LittleBenchmark:HDD, 1.0.9, str0g.wordpress.com)
+AM_INIT_AUTOMAKE(LitttleBenchmark:HDD,1.0.9)
 AC_CONFIG_SRCDIR([src/myTime.hpp])
 AC_CONFIG_HEADERS([config.h])
 

@@ -1,13 +1,6 @@
 \indexentry{Hash@{Hash}|hyperpage}{7}
-\indexentry{myColors@{myColors}|hyperpage}{8}
-\indexentry{myColors@{myColors}!ConsoleColors\_\discretionary {-}{}{}@{ConsoleColors\_\discretionary {-}{}{}}|hyperpage}{8}
-\indexentry{ConsoleColors\_\discretionary {-}{}{}@{ConsoleColors\_\discretionary {-}{}{}}!myColors@{myColors}|hyperpage}{8}
-\indexentry{myColors@{myColors}!TextColor@{TextColor}|hyperpage}{8}
-\indexentry{TextColor@{TextColor}!myColors@{myColors}|hyperpage}{8}
-\indexentry{myThreadTemplates@{myThreadTemplates}|hyperpage}{9}
-\indexentry{profileUpdateStore@{profileUpdateStore}|hyperpage}{11}
-\indexentry{profileUpdateStore@{profileUpdateStore}!profileUpdateStore@{profileUpdateStore}|hyperpage}{11}
-\indexentry{profileUpdateStore@{profileUpdateStore}!profileUpdateStore@{profileUpdateStore}|hyperpage}{11}
+\indexentry{profileUpdateStore@{profileUpdateStore}|hyperpage}{9}
+\indexentry{stats\_\discretionary {-}{}{}keeper@{stats\_\discretionary {-}{}{}keeper}|hyperpage}{10}
 \indexentry{tester\_\discretionary {-}{}{}hdd@{tester\_\discretionary {-}{}{}hdd}|hyperpage}{12}
 \indexentry{tester\_\discretionary {-}{}{}hdd@{tester\_\discretionary {-}{}{}hdd}!tester\_\discretionary {-}{}{}hdd@{tester\_\discretionary {-}{}{}hdd}|hyperpage}{12}
 \indexentry{tester\_\discretionary {-}{}{}hdd@{tester\_\discretionary {-}{}{}hdd}!tester_hdd@{tester\_\discretionary {-}{}{}hdd}|hyperpage}{12}
@@ -22,10 +15,10 @@
 \indexentry{join@{join}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{13}
 \indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!join@{join}|hyperpage}{13}
 \indexentry{join@{join}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{13}
-\indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!self\_\discretionary {-}{}{}test@{self\_\discretionary {-}{}{}test}|hyperpage}{13}
-\indexentry{self\_\discretionary {-}{}{}test@{self\_\discretionary {-}{}{}test}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{13}
-\indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!start@{start}|hyperpage}{13}
-\indexentry{start@{start}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{13}
+\indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!self\_\discretionary {-}{}{}test@{self\_\discretionary {-}{}{}test}|hyperpage}{14}
+\indexentry{self\_\discretionary {-}{}{}test@{self\_\discretionary {-}{}{}test}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{14}
+\indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!start@{start}|hyperpage}{14}
+\indexentry{start@{start}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{14}
 \indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test@{start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}|hyperpage}{14}
 \indexentry{start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test@{start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}|hyperpage}{14}
 \indexentry{myThreadTemplates::thread\_\discretionary {-}{}{}1@{myThreadTemplates::thread\_\discretionary {-}{}{}1}!UpdateStats@{UpdateStats}|hyperpage}{14}
@@ -33,3 +26,4 @@
 \indexentry{thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd@{thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}|hyperpage}{15}
 \indexentry{thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd@{thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}!Execute@{Execute}|hyperpage}{15}
 \indexentry{Execute@{Execute}!thread_tester_hdd@{thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}|hyperpage}{15}
+\indexentry{vector\_\discretionary {-}{}{}str@{vector\_\discretionary {-}{}{}str}|hyperpage}{16}

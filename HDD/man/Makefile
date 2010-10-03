@@ -15,10 +15,10 @@
 
 
 
-pkgdatadir = $(datadir)/littlebenchmark-hdd
-pkgincludedir = $(includedir)/littlebenchmark-hdd
-pkglibdir = $(libdir)/littlebenchmark-hdd
-pkglibexecdir = $(libexecdir)/littlebenchmark-hdd
+pkgdatadir = $(datadir)/LitttleBenchmark:HDD
+pkgincludedir = $(includedir)/LitttleBenchmark:HDD
+pkglibdir = $(libdir)/LitttleBenchmark:HDD
+pkglibexecdir = $(libexecdir)/LitttleBenchmark:HDD
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -104,18 +104,18 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/lukasz/Pulpit/Little_Benchmark/HDD/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-PACKAGE = littlebenchmark-hdd
+PACKAGE = LitttleBenchmark:HDD
 PACKAGE_BUGREPORT = str0g.wordpress.com
 PACKAGE_NAME = LittleBenchmark:HDD
-PACKAGE_STRING = LittleBenchmark:HDD 0.8.5
+PACKAGE_STRING = LittleBenchmark:HDD 1.0.9
 PACKAGE_TARNAME = littlebenchmark-hdd
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.8.5
+PACKAGE_VERSION = 1.0.9
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 0.8.5
+VERSION = 1.0.9
 abs_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD/man
 abs_srcdir = /home/lukasz/Pulpit/Little_Benchmark/HDD/man
 abs_top_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD
@@ -172,9 +172,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign man/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu man/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign man/Makefile
+	  $(AUTOMAKE) --gnu man/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

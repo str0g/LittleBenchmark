@@ -20,6 +20,7 @@
 //boost
 #include <boost/thread/thread.hpp>
 #include "boost/date_time/local_time/local_time.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
 //my
 #include "myTime.hpp"/*
 #include <boost/filesystem/path.hpp>*/
@@ -46,9 +47,9 @@ template <class ClassT> class thread_1{
 		boost::local_time::local_date_time *blt_ldt_Creation; //!< Keep creation time
 		boost::local_time::local_date_time *blt_ldt_Start; //!< Keep thread creation time
 		boost::thread m_Thread; //!< Thread
-		boost::mutex mutex_listIO; //!< Mutex for locking list IO
+		static boost::mutex mutex_listIO; //!< Mutex for locking list IO
 		list<string*> *dExTimes; //!< list for statistics
-		bool bShowOverExecution;
+		bool bShowOverExecution; //!< Show execution time
 	public:
 		thread_1(ClassT *parent, list<string*> *list = NULL,bool show = false): parent(parent),\
                 blt_ldt_Creation(myTime::GetTime()),\
@@ -73,17 +74,21 @@ template <class ClassT> class thread_1{
             m_Thread.join();
 		    UpdateStats(new string("Thread has been doing something for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
         }
-		void join(unsigned &val){///Join thread after specified time
-            m_Thread.join(); boost::thread::timed_join(val);
+		void join(unsigned val){///Join thread after specified time in miliseconds
+            m_Thread.join(); boost::thread::timed_join( boost::posix_time::time_duration delay(0,0,0,boost::posix_time::time_duration::ticks_per_second() / 10));
             UpdateStats(new string("Thread has been doing something for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
         }
+        string GetThreadID(){
+            return myConv::ToString(m_Thread.get_id());
+        }
         void UpdateStats(string *str){///Push statistic information
+            boost::mutex::scoped_lock(mutex_listIO);
             if (dExTimes)
                 dExTimes->push_back(str);
             else
                 delete str;
         }
-        virtual ~thread_1(){///Virtual
+        virtual ~thread_1(){///Virtual destructor which can show time of execution
 		    if (bShowOverExecution)
                 cerr<<("Thread has been executed for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Creation)))<<endl;
             if ( blt_ldt_Creation ) { delete blt_ldt_Creation; }

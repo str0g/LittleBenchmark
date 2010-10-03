@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-v -x 1K 1M -l 2m -m 10 -S 1" />
+				<Option parameters="-v -x 1g -l 2g -m 10 -S 2" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -53,6 +53,8 @@
 		<Unit filename="src/myTime.hpp" />
 		<Unit filename="src/profileUpdateStore.cpp" />
 		<Unit filename="src/profileUpdateStore.hpp" />
+		<Unit filename="src/stats_keeper.cpp" />
+		<Unit filename="src/stats_keeper.hpp" />
 		<Unit filename="src/tester_hdd.cpp" />
 		<Unit filename="src/tester_hdd.hpp" />
 		<Unit filename="src/thread_tester_hdd.cpp" />

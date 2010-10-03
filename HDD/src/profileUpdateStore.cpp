@@ -6,10 +6,10 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 #include "profileUpdateStore.hpp"
 
-///Globals Varuabels
+//Globals Varuabels
 /*profileUpdateStore::profileUpdateStore(const string &strvar,const string &val):strVar(strvar),\
                                                                     strVal((myConv::ToString(val))){
 }*/

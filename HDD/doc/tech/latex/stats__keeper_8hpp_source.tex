@@ -1,0 +1,65 @@
+\hypertarget{stats__keeper_8hpp_source}{
+\section{stats\_\-keeper.hpp}
+}
+
+
+\begin{footnotesize}\begin{alltt}
+00001 \textcolor{preprocessor}{#ifndef STATS\_KEEPER\_HPP\_INCLUDED}
+00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define STATS\_KEEPER\_HPP\_INCLUDED}
+00003 \textcolor{preprocessor}{}
+00004 \textcolor{comment}{/***************************************************************}
+00005 \textcolor{comment}{ * Name:      <Input name>.cpp/h}
+00006 \textcolor{comment}{ * Purpose:   Code for Application <Name>}
+00007 \textcolor{comment}{ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)}
+00008 \textcolor{comment}{ * Created:   <Input date>}
+00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)}
+00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
+00011 \textcolor{comment}{ **************************************************************/}
+00012 \textcolor{comment}{//Headers}
+00013 \textcolor{preprocessor}{#include <cstdlib>}
+00014 \textcolor{preprocessor}{#include <iostream>}
+00015 \textcolor{preprocessor}{#include <string>}
+00016 \textcolor{preprocessor}{#include <vector>}
+00017 \textcolor{preprocessor}{#include <boost/filesystem/path.hpp>}
+00018 \textcolor{preprocessor}{#include "myIO.hpp"}
+00019 
+00020 \textcolor{comment}{//Specials}
+00021 \textcolor{keyword}{using} std::string;
+00022 \textcolor{keyword}{using} std::vector;
+00023 \textcolor{keyword}{using} std::cout;
+00024 \textcolor{keyword}{using} std::cerr;
+00025 \textcolor{keyword}{using} std::cin;
+00026 \textcolor{keyword}{using} std::endl;
+00027 \textcolor{comment}{//Globals Varuabels}
+00028 
+\hypertarget{stats__keeper_8hpp_source_l00029}{}\hyperlink{structvector__str}{00029} \textcolor{keyword}{struct }\hyperlink{structvector__str}{vector_str}\{
+00030     vector<string> data;
+00031     \hyperlink{structvector__str}{vector_str}(\textcolor{keywordtype}{unsigned} &);
+00032 \};
+00033 
+\hypertarget{stats__keeper_8hpp_source_l00034}{}\hyperlink{classstats__keeper}{00034} \textcolor{keyword}{class }\hyperlink{classstats__keeper}{stats_keeper}\{
+00035     \textcolor{keyword}{private}:
+00036         \textcolor{keywordtype}{string} strSpacer; 
+00037     \textcolor{keyword}{protected}:
+\hypertarget{stats__keeper_8hpp_source_l00038}{}\hyperlink{classstats__keeper_a63b7a9f360e0a77d64236c59427c5a70}{00038}         vector<string> *\hyperlink{classstats__keeper_a63b7a9f360e0a77d64236c59427c5a70}{p_vecstr_Log}; 
+\hypertarget{stats__keeper_8hpp_source_l00039}{}\hyperlink{classstats__keeper_ace46f580da108c5ddbef12d0733f4569}{00039}         vector<vector\_str> *\hyperlink{classstats__keeper_ace46f580da108c5ddbef12d0733f4569}{p_vecstr_formattedTXT}; 
+\hypertarget{stats__keeper_8hpp_source_l00040}{}\hyperlink{classstats__keeper_a575bbfaa39e0f4d816d9229bc5d19795}{00040}         \textcolor{keywordtype}{bool} \hyperlink{classstats__keeper_a575bbfaa39e0f4d816d9229bc5d19795}{bGenXML}; 
+\hypertarget{stats__keeper_8hpp_source_l00041}{}\hyperlink{classstats__keeper_a9d490ff7931f71f3cc8f925b8a7cdd8b}{00041}         \textcolor{keywordtype}{bool} \hyperlink{classstats__keeper_a9d490ff7931f71f3cc8f925b8a7cdd8b}{bLog}; 
+\hypertarget{stats__keeper_8hpp_source_l00042}{}\hyperlink{classstats__keeper_a1e4fed8a069f534f85c5bc0b4054bbe6}{00042}         \textcolor{keywordtype}{bool} \hyperlink{classstats__keeper_a1e4fed8a069f534f85c5bc0b4054bbe6}{bFormattedTxt}; 
+\hypertarget{stats__keeper_8hpp_source_l00043}{}\hyperlink{classstats__keeper_a77ee69cc8b6a80296c69b8af4de678f1}{00043}         \textcolor{keywordtype}{unsigned} \hyperlink{classstats__keeper_a77ee69cc8b6a80296c69b8af4de678f1}{uiMultiplySpacer}; 
+\hypertarget{stats__keeper_8hpp_source_l00044}{}\hyperlink{classstats__keeper_ac5ad6cbbee0763290d1569ee7ff70b29}{00044}         \textcolor{keywordtype}{unsigned} \hyperlink{classstats__keeper_ac5ad6cbbee0763290d1569ee7ff70b29}{uiMaxCols}; 
+\hypertarget{stats__keeper_8hpp_source_l00045}{}\hyperlink{classstats__keeper_acd8f177a6ee5df7bb623685fdf8b7c3c}{00045}         \textcolor{keywordtype}{string} \hyperlink{classstats__keeper_acd8f177a6ee5df7bb623685fdf8b7c3c}{strSpacerChar}; 
+00046         \textcolor{keywordtype}{void} \hyperlink{classstats__keeper_af5b6f86db5cbfae21c4055aa498ee426}{setArgs}();
+00047     \textcolor{keyword}{public}:
+00048         \hyperlink{classstats__keeper_aaae9b4375bd4436758125c29f3d90d8f}{stats_keeper}();
+00049         \textcolor{keyword}{virtual} ~\hyperlink{classstats__keeper}{stats_keeper}();
+00050         \textcolor{keywordtype}{void} \hyperlink{classstats__keeper_a3a642d07e6a5e05f2a32b5698b3233d5}{addStatData}(\textcolor{keywordtype}{string} *,\textcolor{keywordtype}{string}*,\textcolor{keywordtype}{unsigned} =0,\textcolor{keywordtype}{unsigned} =0);
+00051         \textcolor{keywordtype}{void} FormatDataInVector();
+00052         \textcolor{keywordtype}{void} SaveToDisk(boost::filesystem::path);
+00053         \textcolor{keywordtype}{string} \hyperlink{classstats__keeper_ab10c9697298961d0411df74d6759b63f}{GeneratDataFromVector}();
+00054         \textcolor{keywordtype}{string} GenerateXMLFromVector();
+00055 \};
+00056 
+00057 
+00058 \textcolor{preprocessor}{#endif // STATS\_KEEPER\_HPP\_INCLUDED}
+\end{alltt}\end{footnotesize}

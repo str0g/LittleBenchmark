@@ -9,7 +9,7 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 //#include <cstdlib>
 //#include <cstdio>
 //#include <sys/stat.h>
@@ -20,6 +20,7 @@
 //boost
 #include <boost/thread/thread.hpp>
 #include "boost/date_time/local_time/local_time.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
 //my
 #include "myTime.hpp"/*
 #include <boost/filesystem/path.hpp>*/
@@ -29,7 +30,7 @@
 #include "myConv.hpp"
 #include "myHash.hpp"
 #include "myIO.hpp"*/
-///Specials
+//Specials
 using std::list;
 using std::string;/*
 using std::vector;
@@ -37,16 +38,17 @@ using std::cout;
 using std::cin;*/
 using std::cerr;
 using std::endl;
-///Globals Varuabels
+//Globals Varuabels
 namespace myThreadTemplates{
 
+///Thread_1 is very simple thread template which constainst few controle methods and entry for statistics
 template <class ClassT> class thread_1{
 	private:
 		ClassT *parent; //!< Paret class adress
 		boost::local_time::local_date_time *blt_ldt_Creation; //!< Keep creation time
 		boost::local_time::local_date_time *blt_ldt_Start; //!< Keep thread creation time
 		boost::thread m_Thread; //!< Thread
-		boost::mutex mutex_listIO; //!< Mutex for locking list IO
+		static boost::mutex mutex_listIO; //!< Mutex for locking list IO
 		list<string*> *dExTimes; //!< list for statistics
 		bool bShowOverExecution; //!< Show execution time
 	public:
@@ -73,11 +75,15 @@ template <class ClassT> class thread_1{
             m_Thread.join();
 		    UpdateStats(new string("Thread has been doing something for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
         }
-		void join(unsigned &val){///Join thread after specified time
-            m_Thread.join(); boost::thread::timed_join(val);
+		void join(unsigned val){///Join thread after specified time in seconds
+            m_Thread.timed_join(( boost::posix_time::time_duration(0,0,val,int(boost::posix_time::time_duration::ticks_per_second() / 10))));
             UpdateStats(new string("Thread has been doing something for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
         }
+        string GetThreadID(){
+            return myConv::ToString(m_Thread.get_id());
+        }
         void UpdateStats(string *str){///Push statistic information
+            boost::mutex::scoped_lock(mutex_listIO);
             if (dExTimes)
                 dExTimes->push_back(str);
             else

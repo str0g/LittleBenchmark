@@ -15,6 +15,7 @@
 00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)}
 00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
 00011 \textcolor{comment}{ **************************************************************/}
+00012 \textcolor{comment}{//Headers}
 00013 \textcolor{preprocessor}{#include <cstdlib>}
 00014 \textcolor{comment}{//#include <cstdio>}
 00015 \textcolor{preprocessor}{#include <sys/stat.h>}
@@ -22,64 +23,76 @@
 00017 \textcolor{preprocessor}{#include <string>}
 00018 \textcolor{preprocessor}{#include <vector>}
 00019 \textcolor{preprocessor}{#include <list>}
-00020 \textcolor{comment}{//boost}
-00021 \textcolor{preprocessor}{#include <boost/thread/thread.hpp>}
-00022 \textcolor{preprocessor}{#include <boost/filesystem/path.hpp>}
-00023 \textcolor{preprocessor}{#include "boost/date\_time/local\_time/local\_time.hpp"}
-00024 \textcolor{comment}{//my}
-00025 \textcolor{preprocessor}{#include "myConv.hpp"}
-00026 \textcolor{preprocessor}{#include "myHash.hpp"}
-00027 \textcolor{preprocessor}{#include "myTime.hpp"}
-00028 \textcolor{preprocessor}{#include "myIO.hpp"}
-00029 \textcolor{preprocessor}{#include "myThreadTemplates.hpp"}
-00031 \textcolor{keyword}{using} std::string;
-00032 \textcolor{keyword}{using} std::vector;
-00033 \textcolor{keyword}{using} std::list;
-00034 \textcolor{keyword}{using} std::cout;
-00035 \textcolor{keyword}{using} std::cerr;
-00036 \textcolor{keyword}{using} std::cin;
-00037 \textcolor{keyword}{using} std::endl;
-00039 
-\hypertarget{thread__tester__hdd_8hpp_source_l00040}{}\hyperlink{classthread__tester__hdd}{00040} \textcolor{keyword}{class }\hyperlink{classthread__tester__hdd}{thread_tester_hdd}: \textcolor{keyword}{public} myThreadTemplates::thread\_1<thread\_tester\_hdd>\{
+00020 \textcolor{preprocessor}{#include <csignal>}
+00021 \textcolor{comment}{//boost}
+00022 \textcolor{preprocessor}{#include <boost/thread/thread.hpp>}
+00023 \textcolor{preprocessor}{#include <boost/filesystem/path.hpp>}
+00024 \textcolor{preprocessor}{#include "boost/date\_time/local\_time/local\_time.hpp"}
+00025 \textcolor{comment}{//my}
+00026 \textcolor{preprocessor}{#include "myConv.hpp"}
+00027 \textcolor{preprocessor}{#include "myHash.hpp"}
+00028 \textcolor{preprocessor}{#include "myTime.hpp"}
+00029 \textcolor{preprocessor}{#include "myIO.hpp"}
+00030 \textcolor{preprocessor}{#include "myThreadTemplates.hpp"}
+00031 \textcolor{comment}{//Specials}
+00032 \textcolor{keyword}{using} std::string;
+00033 \textcolor{keyword}{using} std::vector;
+00034 \textcolor{keyword}{using} std::list;
+00035 \textcolor{keyword}{using} std::cout;
+00036 \textcolor{keyword}{using} std::cerr;
+00037 \textcolor{keyword}{using} std::cin;
+00038 \textcolor{keyword}{using} std::endl;
+00039 \textcolor{comment}{//Globals Varuabels}
+\hypertarget{thread__tester__hdd_8hpp_source_l00040}{}\hyperlink{classthread__tester__hdd}{00040} \textcolor{keyword}{template} <\textcolor{keyword}{class} \textcolor{keyword}{class}T> \textcolor{keyword}{class }\hyperlink{classthread__tester__hdd}{thread_tester_hdd}: \textcolor{keyword}{public} myThreadTemplates::thread
+      \_1<thread\_tester\_hdd<classT> >\{
 00041     \textcolor{keyword}{private}:
-00042         \textcolor{keywordtype}{string} strDir; 
-00043         \textcolor{keywordtype}{string} *p\_strSummary; 
-00044         \textcolor{keywordtype}{string} *p\_strOutFileDataBuffer; 
-00045         \textcolor{keywordtype}{string} *p\_strHashSum; 
-00046         \textcolor{keywordtype}{string} strSlash; 
-00047         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} uiDataLimit; 
-00048         uint64\_t ui64Loop;
-00049         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} uiMaxLoops; 
-00050         uint8\_t ui8Precision;
-00051         mode\_t uiPermissions; 
-00052         \textcolor{keywordtype}{bool} bWriteFailed;
-00053         vector<unsigned int> vui\_Probes; 
-00054         list<string*> list\_ReadFiles; 
-00055         list<string> it\_list\_RF; 
-00056         boost::thread m\_Thread; 
-00057         \textcolor{keywordtype}{void} CopyTest(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} *);
-00058         \textcolor{comment}{//void Execute();}
-00059         \textcolor{keywordtype}{void} readByChar(uint16\_t);
-00060         \textcolor{keywordtype}{void} readByLine();
-00061         \textcolor{keywordtype}{void} Write(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}*);
-00062         \textcolor{keywordtype}{bool} VeryfiReadFiles();
-00063     \textcolor{keyword}{public}:
-00064         \hyperlink{classthread__tester__hdd_ab318188f613c5b36e107084a8229f823}{thread_tester_hdd}(vector<unsigned int>,
-00065                           \textcolor{keywordtype}{string},
-00066                           \textcolor{keywordtype}{string},
-00067                           \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int},
-00068                           \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int},
-00069                           uint8\_t,
-00070                           mode\_t,
-00071                           \textcolor{keywordtype}{bool});
-00072         ~\hyperlink{classthread__tester__hdd}{thread_tester_hdd}();
-00073         \textcolor{keywordtype}{void} setNewData(vector<unsigned int>,\textcolor{keywordtype}{string});
-00074         \textcolor{keywordtype}{void} setBuffer(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}*);
-00075         \textcolor{keywordtype}{string} &getSummary();\textcolor{comment}{/*}
-00076 \textcolor{comment}{        void start();}
-00077 \textcolor{comment}{        void join();*/}
-00078         \textcolor{keywordtype}{void} \hyperlink{classthread__tester__hdd_a9d9f6f67783301bb7d1b9859ecd932c0}{Execute}();
-00079 \};
-00080 
-00081 \textcolor{preprocessor}{#endif // THREAD\_TESTER\_HDD\_HPP\_INCLUDED}
+00042         boost::filesystem::path pathDir; 
+00043         \textcolor{keywordtype}{string} *p\_strOutFileDataBuffer; 
+00044         \textcolor{keywordtype}{string} *p\_strHashSum; 
+00045         \textcolor{keywordtype}{string} strSlash; 
+00046         \textcolor{keywordtype}{unsigned} uiDataLimit; 
+00047         uint64\_t ui64Loop;
+00048         \textcolor{keywordtype}{unsigned} uiMaxLoops; 
+00049         \textcolor{keywordtype}{unsigned} uiThreadNumber; 
+00050         \textcolor{keywordtype}{unsigned} uiStatsCounter; 
+00051         uint8\_t ui8Precision;
+00052         mode\_t uiPermissions; 
+00053         \textcolor{keywordtype}{bool} bWriteFailed;
+00054         \textcolor{keywordtype}{bool} bVerifyCache;
+00055         \textcolor{keywordtype}{bool} bCleanWorkFolder;
+00056         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} bFailer; 
+00057         vector<unsigned> vui\_Probes; 
+00058         list<string*> list\_ReadFiles; 
+00059         list<string> it\_list\_RF; 
+00060         classT *p\_Parent;
+00061         \textcolor{keyword}{static} boost::mutex mutex\_Stats; 
+00062         \textcolor{comment}{//boost::thread m\_Thread; //!<Thread for magic to be happening}
+00063         \textcolor{keywordtype}{void} CopyTest();
+00064         \textcolor{comment}{//void Execute();}
+00065         \textcolor{keywordtype}{void} readByChar(uint16\_t);
+00066         \textcolor{keywordtype}{void} readByLine();
+00067         \textcolor{keywordtype}{void} Write(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} *);
+00068         \textcolor{keywordtype}{bool} VeryfiReadFiles();
+00069         \textcolor{keywordtype}{void} addStats(\textcolor{keywordtype}{string}*,\textcolor{keywordtype}{string}*);
+00070     \textcolor{keyword}{public}:
+00071         \hyperlink{classthread__tester__hdd}{thread_tester_hdd}(vector<unsigned>&,
+00072                           boost::filesystem::path &,
+00073                           \textcolor{keywordtype}{unsigned}&,
+00074                           \textcolor{keywordtype}{unsigned}&,
+00075                           \textcolor{keywordtype}{unsigned}&,
+00076                           uint8\_t&,
+00077                           mode\_t&,
+00078                           \textcolor{keywordtype}{bool},\textcolor{keywordtype}{bool},
+00079                           classT*
+00080                           );
+00081         \hyperlink{classthread__tester__hdd}{thread_tester_hdd}(classT*);
+00082         ~\hyperlink{classthread__tester__hdd}{thread_tester_hdd}();
+00083         \textcolor{keywordtype}{void} setNewData(vector<unsigned>&,boost::filesystem::path&);
+00084         \textcolor{keywordtype}{void} setBuffer(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} *);
+00085         \textcolor{keywordtype}{string} &getSummary();
+00086         \textcolor{keywordtype}{void} \hyperlink{classthread__tester__hdd_aad16d6b6f1be66d5e851fa2b0408cf06}{Execute}();
+00087 \};
+00088 \textcolor{keyword}{template} <\textcolor{keyword}{class} \textcolor{keyword}{class}T>
+00089 boost::mutex \hyperlink{classthread__tester__hdd}{thread_tester_hdd<classT>::mutex_Stats};
+00090 \textcolor{preprocessor}{#endif // THREAD\_TESTER\_HDD\_HPP\_INCLUDED}
 \end{alltt}\end{footnotesize}

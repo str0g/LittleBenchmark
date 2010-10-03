@@ -2,6 +2,15 @@
 \section{myThreadTemplates::thread\_\-1$<$ ClassT $>$ Class Template Reference}
 \label{classmyThreadTemplates_1_1thread__1}\index{myThreadTemplates::thread\_\-1@{myThreadTemplates::thread\_\-1}}
 }
+
+
+Thread\_\-1 is very simple thread template which constainst few controle methods and entry for statistics.  
+
+
+
+
+{\ttfamily \#include $<$myThreadTemplates.hpp$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -16,7 +25,12 @@ void \hyperlink{classmyThreadTemplates_1_1thread__1_aaa171242d5355f2a472a566d308
 \item 
 void \hyperlink{classmyThreadTemplates_1_1thread__1_ae393ee33ecbfee158a03a4c0f21cf95c}{join} ()
 \item 
-void \hyperlink{classmyThreadTemplates_1_1thread__1_a7acc2e784a8efe4b74a4bdded5feebb3}{join} (unsigned \&val)
+void \hyperlink{classmyThreadTemplates_1_1thread__1_a9a0372afc5bd30783dde8fed70df908c}{join} (unsigned val)
+\item 
+\hypertarget{classmyThreadTemplates_1_1thread__1_a415d33614fa9faf235c7ed0f189e4fc4}{
+string {\bfseries GetThreadID} ()}
+\label{classmyThreadTemplates_1_1thread__1_a415d33614fa9faf235c7ed0f189e4fc4}
+
 \item 
 void \hyperlink{classmyThreadTemplates_1_1thread__1_a2cd2286a9d51537395123832a6a25ebc}{UpdateStats} (string $\ast$str)
 \item 
@@ -29,9 +43,12 @@ static void \hyperlink{classmyThreadTemplates_1_1thread__1_add97f72749590d4023fd
 \item 
 static void \hyperlink{classmyThreadTemplates_1_1thread__1_a24e615ac4afa0d376faefd500ed47e43}{Execute\_\-} (ClassT $\ast$p)
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
 \subsubsection*{template$<$class ClassT$>$ class myThreadTemplates::thread\_\-1$<$ ClassT $>$}
 
-
+Thread\_\-1 is very simple thread template which constainst few controle methods and entry for statistics. 
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classmyThreadTemplates_1_1thread__1_aab0cedc80707090ec300be40e68c19c1}{
@@ -55,14 +72,14 @@ Virtual destructor which can show time of execution
 
 Static linker for dynamic method 
 
-\hypertarget{classmyThreadTemplates_1_1thread__1_a7acc2e784a8efe4b74a4bdded5feebb3}{
+\hypertarget{classmyThreadTemplates_1_1thread__1_a9a0372afc5bd30783dde8fed70df908c}{
 \index{myThreadTemplates::thread\_\-1@{myThreadTemplates::thread\_\-1}!join@{join}}
 \index{join@{join}!myThreadTemplates::thread_1@{myThreadTemplates::thread\_\-1}}
-\subsubsection[{join}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ClassT$>$ void {\bf myThreadTemplates::thread\_\-1}$<$ ClassT $>$::join (unsigned \& {\em val})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classmyThreadTemplates_1_1thread__1_a7acc2e784a8efe4b74a4bdded5feebb3}
+\subsubsection[{join}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ClassT$>$ void {\bf myThreadTemplates::thread\_\-1}$<$ ClassT $>$::join (unsigned {\em val})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classmyThreadTemplates_1_1thread__1_a9a0372afc5bd30783dde8fed70df908c}
 
 
-Join thread after specified time 
+Join thread after specified time in seconds 
 
 \hypertarget{classmyThreadTemplates_1_1thread__1_ae393ee33ecbfee158a03a4c0f21cf95c}{
 \index{myThreadTemplates::thread\_\-1@{myThreadTemplates::thread\_\-1}!join@{join}}

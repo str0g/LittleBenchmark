@@ -6,15 +6,15 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 //#include <cstdlib>
 //#include <iostream>
 #include "tester_hdd.hpp"
-#include "Globals.h"
+//#include "Globals.h"
 //export ConsoleColors[];
 //extern string ConsoleColors[];
-
-#include <string>
+#include <csignal>
+//#include <string>
 /*#include <list>
 #include <vector>
 using std::string;
@@ -23,12 +23,36 @@ using std::cout;
 using std::endl;
 using std::list;
 */
-///Specials
-///Globals Varuabels
+//Specials
+//Globals Varuabels
+
+static tester_hdd *p_hdd = NULL;
+static bool bFl = false;
+
+void clean (int param){
+///Method run destructors on common signals
+if(!bFl){
+    bFl = true;
+    cout<<"\nTerminating program...["<<param<<"]"<<endl;
+    if (p_hdd){
+      p_hdd->~tester_hdd();
+    }
+    exit(param);
+  }
+}
 
 int main(int ac,char **av){
 
+    signal (SIGSEGV, clean);
+    #ifdef __WIN32__ || __WIN64__
+    #else
+    signal (SIGKILL,clean);
+    #endif
+    signal (SIGINT,clean);
+    signal (SIGABRT,clean);
+
     tester_hdd hdd(ac,av);
+    p_hdd = &hdd;
     hdd.Run();
 
     return 0;

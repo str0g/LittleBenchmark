@@ -9,12 +9,12 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 #include <cstdlib>
 #include <iostream>
 #include <string>
 #include "myConv.hpp"
-///Specials
+//Specials
 using std::string;
 using std::cout;
 using std::cerr;

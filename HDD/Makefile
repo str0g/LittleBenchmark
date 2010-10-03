@@ -15,10 +15,10 @@
 
 
 
-pkgdatadir = $(datadir)/littlebenchmark-hdd
-pkgincludedir = $(includedir)/littlebenchmark-hdd
-pkglibdir = $(libdir)/littlebenchmark-hdd
-pkglibexecdir = $(libexecdir)/littlebenchmark-hdd
+pkgdatadir = $(datadir)/LitttleBenchmark:HDD
+pkgincludedir = $(includedir)/LitttleBenchmark:HDD
+pkglibdir = $(libdir)/LitttleBenchmark:HDD
+pkglibexecdir = $(libexecdir)/LitttleBenchmark:HDD
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -34,7 +34,9 @@ POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(top_srcdir)/configure depcomp install-sh missing
+	$(top_srcdir)/configure \
+	$(top_srcdir)/doc/tech/latex/Makefile.in depcomp install-sh \
+	missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -43,7 +45,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = doc/tech/latex/Makefile
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -133,18 +135,18 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/lukasz/Pulpit/Little_Benchmark/HDD/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-PACKAGE = littlebenchmark-hdd
+PACKAGE = LitttleBenchmark:HDD
 PACKAGE_BUGREPORT = str0g.wordpress.com
 PACKAGE_NAME = LittleBenchmark:HDD
-PACKAGE_STRING = LittleBenchmark:HDD 0.8.5
+PACKAGE_STRING = LittleBenchmark:HDD 1.0.9
 PACKAGE_TARNAME = littlebenchmark-hdd
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.8.5
+PACKAGE_VERSION = 1.0.9
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 0.8.5
+VERSION = 1.0.9
 abs_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD
 abs_srcdir = /home/lukasz/Pulpit/Little_Benchmark/HDD
 abs_top_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD
@@ -245,6 +247,8 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
+doc/tech/latex/Makefile: $(top_builddir)/config.status $(top_srcdir)/doc/tech/latex/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.

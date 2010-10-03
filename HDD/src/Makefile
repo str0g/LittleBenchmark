@@ -16,10 +16,10 @@
 
 
 
-pkgdatadir = $(datadir)/littlebenchmark-hdd
-pkgincludedir = $(includedir)/littlebenchmark-hdd
-pkglibdir = $(libdir)/littlebenchmark-hdd
-pkglibexecdir = $(libexecdir)/littlebenchmark-hdd
+pkgdatadir = $(datadir)/LitttleBenchmark:HDD
+pkgincludedir = $(includedir)/LitttleBenchmark:HDD
+pkglibdir = $(libdir)/LitttleBenchmark:HDD
+pkglibexecdir = $(libexecdir)/LitttleBenchmark:HDD
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -47,7 +47,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_LittleBenchmarkHDD_OBJECTS = main.$(OBJEXT) tester_hdd.$(OBJEXT) \
 	thread_tester_hdd.$(OBJEXT) profileUpdateStore.$(OBJEXT) \
-	Globals.$(OBJEXT)
+	stats_keeper.$(OBJEXT) Globals.$(OBJEXT)
 LittleBenchmarkHDD_OBJECTS = $(am_LittleBenchmarkHDD_OBJECTS)
 LittleBenchmarkHDD_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -103,18 +103,18 @@ LTLIBOBJS =
 MAKEINFO = ${SHELL} /home/lukasz/Pulpit/Little_Benchmark/HDD/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 OBJEXT = o
-PACKAGE = littlebenchmark-hdd
+PACKAGE = LitttleBenchmark:HDD
 PACKAGE_BUGREPORT = str0g.wordpress.com
 PACKAGE_NAME = LittleBenchmark:HDD
-PACKAGE_STRING = LittleBenchmark:HDD 0.8.5
+PACKAGE_STRING = LittleBenchmark:HDD 1.0.9
 PACKAGE_TARNAME = littlebenchmark-hdd
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.8.5
+PACKAGE_VERSION = 1.0.9
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 0.8.5
+VERSION = 1.0.9
 abs_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD/src
 abs_srcdir = /home/lukasz/Pulpit/Little_Benchmark/HDD/src
 abs_top_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD
@@ -165,7 +165,7 @@ top_srcdir = ..
 #LDFLAGS = -lm
 AM_CPPFLGAS = -pedantic -Wall -march=core2
 AM_LDFLAGS = -lm -lboost_thread-mt -lboost_program_options-mt -lboost_filesystem-mt -L /usr/lib/libcrypto++ -L /usr/lib64/libcrypto++ -lcrypto++
-LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp myThreadTemplates.hpp profileUpdateStore.cpp profileUpdateStore.hpp Globals.h Globals.cpp version.h
+LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp myThreadTemplates.hpp profileUpdateStore.cpp profileUpdateStore.hpp stats_keeper.cpp stats_keeper.hpp Globals.h Globals.cpp version.h
 all: all-am
 
 .SUFFIXES:
@@ -179,9 +179,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign src/Makefile
+	  $(AUTOMAKE) --gnu src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -250,6 +250,7 @@ distclean-compile:
 include ./$(DEPDIR)/Globals.Po
 include ./$(DEPDIR)/main.Po
 include ./$(DEPDIR)/profileUpdateStore.Po
+include ./$(DEPDIR)/stats_keeper.Po
 include ./$(DEPDIR)/tester_hdd.Po
 include ./$(DEPDIR)/thread_tester_hdd.Po
 

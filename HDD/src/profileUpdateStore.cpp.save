@@ -9,13 +9,20 @@
 ///Headers
 #include "profileUpdateStore.hpp"
 
-///Globals Varuabels
-
-profileUpdateStore::profileUpdateStore(string strvar,string strval):strVar(new string (strvar)),\
-                                                                    strVal(new string(strval)){
+//Globals Varuabels
+/*profileUpdateStore::profileUpdateStore(const string &strvar,const string &val):strVar(strvar),\
+                                                                    strVal((myConv::ToString(val))){
+}*/
+profileUpdateStore::profileUpdateStore( string strvar, string val):strVar(strvar),\
+                                                                    strVal((myConv::ToString(val))){
 }
-profileUpdateStore::profileUpdateStore(string strvar,uint64_t strval){
-    profileUpdateStore(strvar,myConv::ToString())
+profileUpdateStore::~profileUpdateStore(){}
+string profileUpdateStore::GetstrVar(){
+    return strVar;
 }
-profileUpdateStore::profileUpdateStore(string strvar,string strval){
+string profileUpdateStore::GetstrVal(){
+    return strVal;
+}
+string profileUpdateStore::GetIt(){
+    return "\n"+strVar+" "+strVal;
 }

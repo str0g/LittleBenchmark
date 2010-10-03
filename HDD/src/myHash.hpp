@@ -6,21 +6,28 @@
  * Purpose:   Code for Application <Name>
  * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
  * Created:   <Input date>
- * Copyright: Łukasz Buśko (www.SoonWillBe.pl)
+ * Copyright: Łukasz Buśko (http://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 #define CRYPTOPP_ENABLE_NAMESPACE_WEAK 1
 #include <string>
+#ifdef __WIN32__ || __WIN64__
+#include "md5.h"
+#include "rsa.h"
+#include "bas64.h"
+#include "hex.h"
+#else
 #include <cryptopp/md5.h>
 #include <cryptopp/rsa.h>
 #include <cryptopp/base64.h>
 #include "cryptopp/hex.h"
+#endif
 
-///Specials
-///Globals Varuabels
+//Specials
+//Globals Varuabels
 /**
-* Hash functions from http://nopaste.gamedev.pl/?id=5546
+* Hash functions has been taken from http://nopaste.gamedev.pl/?id=5546
 */
 namespace Hash
 {

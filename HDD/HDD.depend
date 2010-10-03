@@ -77,18 +77,19 @@
 	<fstream>
 	<iterator>
 
-1285317278 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/main.cpp
+1286139746 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/main.cpp
 	"tester_hdd.hpp"
-	"Globals.h"
-	<string>
+	<csignal>
 	<vector>
 
-1285318483 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.hpp
+1286140952 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.hpp
 	<cstdlib>
 	<iostream>
 	<string>
 	<fstream>
 	<vector>
+	<new>
+	<stdexcept>
 	<boost/program_options.hpp>
 	<boost/ptr_container/ptr_list.hpp>
 	<boost/filesystem/fstream.hpp>
@@ -98,14 +99,23 @@
 	"myConv.hpp"
 	"myTime.hpp"
 	"thread_tester_hdd.hpp"
+	"thread_tester_hdd.cpp"
 	"profileUpdateStore.hpp"
+	"stats_keeper.hpp"
 	<windows.h>
+	<shlobj.h>
+	<intrin.h>
 	<pwd.h>
+	<sys/sysinfo.h>
 
-1285503947 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/version.h
+1286140952 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/version.h
 
-1285326805 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myHash.hpp
+1286140515 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myHash.hpp
 	<string>
+	"md5.h"
+	"rsa.h"
+	"bas64.h"
+	"hex.h"
 	<cryptopp/md5.h>
 	<cryptopp/rsa.h>
 	<cryptopp/base64.h>
@@ -123,25 +133,26 @@
 	"boost/date_time/local_time/local_time.hpp"
 	"myTime.hpp"
 
-1285503945 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myConv.hpp
+1286010337 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myConv.hpp
 	<string>
 	<sstream>
 	"Globals.h"
 
-1285326779 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myTime.hpp
+1286036833 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myTime.hpp
 	<string>
 	"boost/date_time/posix_time/posix_time.hpp"
 	"boost/date_time/local_time/local_time.hpp"
 	"myConv.hpp"
 	"Globals.h"
 
-1285489311 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.hpp
+1286140754 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.hpp
 	<cstdlib>
 	<sys/stat.h>
 	<iostream>
 	<string>
 	<vector>
 	<list>
+	<csignal>
 	<boost/thread/thread.hpp>
 	<boost/filesystem/path.hpp>
 	"boost/date_time/local_time/local_time.hpp"
@@ -151,10 +162,10 @@
 	"myIO.hpp"
 	"myThreadTemplates.hpp"
 
-1285489342 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.cpp
+1286139420 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.cpp
 	"thread_tester_hdd.hpp"
 
-1285489519 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.cpp
+1286139828 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/tester_hdd.cpp
 	"tester_hdd.hpp"
 
 1285176310 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/profileUpdateStore.hpp
@@ -166,25 +177,40 @@
 1285176337 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/profileUpdateStore.cpp
 	"profileUpdateStore.hpp"
 
-1285503441 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/Globals.h
+1285504140 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/Globals.h
 	<string>
 
-1285318356 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/Globals.cpp
+1285504151 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/Globals.cpp
 	"Globals.h"
 
 1285448226 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/myThreadTemplates.cpp
 	"myThreadTemplates.hpp"
 
-1285503718 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myThreadTemplates.hpp
+1286140769 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/myThreadTemplates.hpp
 	<iostream>
 	<list>
 	<string>
 	<vector>
 	<boost/thread/thread.hpp>
 	"boost/date_time/local_time/local_time.hpp"
+	"boost/date_time/posix_time/posix_time.hpp"
 	"myTime.hpp"
 	<boost/filesystem/path.hpp>
 	"myConv.hpp"
 	"myHash.hpp"
 	"myIO.hpp"
+
+1286140952 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/stats_keeper.hpp
+	<cstdlib>
+	<iostream>
+	<string>
+	<vector>
+	<boost/filesystem/path.hpp>
+	"myIO.hpp"
+
+1286042946 source:/home/lukasz/Pulpit/Little_Benchmark/HDD/src/stats_keeper.cpp
+	"stats_keeper.hpp"
+
+1286139420 /home/lukasz/Pulpit/Little_Benchmark/HDD/src/thread_tester_hdd.cpp
+	"thread_tester_hdd.hpp"
 

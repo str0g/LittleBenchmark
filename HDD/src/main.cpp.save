@@ -10,37 +10,51 @@
 //#include <cstdlib>
 //#include <iostream>
 #include "tester_hdd.hpp"
-#include <string>
-#include <list>
+//#include "Globals.h"
+//export ConsoleColors[];
+//extern string ConsoleColors[];
+#include <csignal>
+//#include <string>
+/*#include <list>
 #include <vector>
 using std::string;
 using std::vector;
 using std::cout;
 using std::endl;
 using std::list;
-
+*/
 ///Specials
-///Globals Varuabels
-class dupa{
-    public:
-        string sdupa;
-        dupa(string abc,string dca):sdupa(abc){}
-        template <typename T>
-        friend std::ostream & operator << (T & Output, dupa &w){
-            return Output<<"string sdupa: "<<w.sdupa<<"\n";
-        }
-};
-int main(int ac,char **av){
-/*
-    tester_hdd hdd(ac,av);
-    if (hdd.bRun)
-        hdd.Run();*/
+//Globals Varuabels
 
-vector<dupa*> *d = new vector<dupa*>;
-d->push_back(new dupa("asd","dsa"));
-cout<<**d->begin()<<endl;
-delete &(**d->begin());
-delete d;
+static tester_hdd *p_hdd = NULL;
+static bool bFl = false;
+
+void clean (int param){
+///Method run destructors on common signals
+if(!bFl){
+    bFl = true;
+    cout<<"\nTerminating program...["<<param<<"]"<<endl;
+    if (p_hdd){
+      p_hdd->~tester_hdd();
+    }
+    exit(param);
+  }
+}
+
+int main(int ac,char **av){
+
+    signal (SIGSEGV, clean);
+    #ifdef __WIN32__ || __WIN64__
+    #else
+    signal (SIGKILL,clean);
+    #endif
+    signal (SIGINT,clean);
+    signal (SIGABRT,clean);
+
+    tester_hdd hdd(ac,av);
+    p_hdd = &hdd;
+    hdd.Run();
+
     return 0;
 }
 /*
