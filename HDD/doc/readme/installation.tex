@@ -29,21 +29,22 @@ Open terminal:\\
 Windows port will be done latter.
 
 \subsubsection{From source}
-What is needed to compile from source: (Working on it\ldots)
+What is needed to compile from source: (Working on it with Visual Studio 2008 which at least links boost libraries\ldots)
 \begin{itemize}
-\item [ \href{http://sourceforge.net/projects/mingw/files/Automated\%20MinGW\%20Installer/mingw-get-inst/mingw-get-inst-20100909/mingw-get-inst-20100909.exe/download/}{\textbf{MiniGw gcc}} ] Compiler to make things possible.
-\item [ \href{http://www.codeblocks.org/}{\textbf{CodeBlocks}} ] IDE.
-\item [ \href{http://sourceforge.net/projects/boost/files/boost/1.41.0/boost_1_41_0.7z/download}{\textbf{Boost library}} ] This Library takes care about porting issues between Linux and Windows.
+%\item [ \href{http://sourceforge.net/projects/mingw/files/Automated\%20MinGW\%20Installer/mingw-get-inst/mingw-get-inst-20100909/mingw-get-inst-20100909.exe/download/}{\textbf{MiniGw gcc}} ] Compiler to make things possible.
+%\item [ \href{http://www.codeblocks.org/}{\textbf{CodeBlocks}} ] IDE.
+\item [ \href{http://sourceforge.net/projects/boost/files/boost/1.44.0/boost_1_44_0.7z/download}{\textbf{Boost library}} ] This Library takes care about porting issues between Linux and Windows.
 \item [ \href{http://www.cryptopp.com/}{\textbf{Crypto++}} ] Cryptographic library for file validation.
 %\item [ \href{http://qt.nokia.com/downloads/}{\textbf{Qt4 sdk}} ] To compile cryptopp.
 \item [ \href{http://notepad-plus-plus.org/}{\textbf{Notpad++}} ] For file editing with out blowing encoding.
+\item [ \textbf{Visual Studio} ] Compiling from source required MSVC.
 \end{itemize}
-Set up Compiler:\\
-Check download C++ , C - objective, msys* stuff \\
-After installation successful end.\\
-Press button with windows logo + break/pause got to environment variable\\
-Edit Path, add \begin{verbatim}  ";C:\MiniGw\bin;C:\MinGW\msys\1.0\bin" 
-\end{verbatim}
+%Set up Compiler:\\
+%Check download C++ , C - objective, msys* stuff \\
+%After installation successful end.\\
+%Press button with windows logo + break/pause got to environment variable\\
+%Edit Path, add \begin{verbatim}  ";C:\MiniGw\bin;C:\MinGW\msys\1.0\bin" 
+%\end{verbatim}
 
 Set up boost:\\
 open command line\\
@@ -86,14 +87,14 @@ bjam --build-dir=boost-build --toolset=gcc install --without-python
 %
 %
 %Compile Project with make:\\
-Compile Project with Codeblocks:
-Settings->Global Variables->New\\
-Name it boost
-\begin{verbatim}
-base bath C:\boost
-include bath C:\Boost\include\boost-1_41
-lib bath C:\boost
-\end{verbatim}
+%Compile Project with Codeblocks:
+%Settings->Global Variables->New\\
+%Name it boost
+%\begin{verbatim}
+%base bath C:\boost
+%include bath C:\Boost\include\boost-1_41
+%lib bath C:\boost
+%\end{verbatim}
 %Next New variable cryptopp
 %\begin{verbatim}
 %base bath C:\cryptopp

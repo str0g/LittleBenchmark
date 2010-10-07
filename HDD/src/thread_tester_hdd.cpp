@@ -11,31 +11,34 @@
 template <class classT>
 bool thread_tester_hdd<classT>::bFailer = false;
 template <class classT>
-thread_tester_hdd<classT>::thread_tester_hdd(vector<unsigned> &vui,
+thread_tester_hdd<classT>::thread_tester_hdd(vector<uint64_t> &vui,
                                      boost::filesystem::path &str,
-                                     unsigned &limit,unsigned &mloops, unsigned &uiNumber,
-                                     uint8_t &prec,
+                                     unsigned &limit,unsigned &mloops, unsigned &uiThNumber, unsigned & reads,
+                                     uint16_t &prec,
                                      mode_t &prem,
-                                     bool dbg, bool bVerifyCache,
-                                     classT *parent): myThreadTemplates::thread_1<thread_tester_hdd<classT> >(this,NULL,dbg),
-                                    vui_Probes(vui),
+                                     bool dbg, bool bVerifyCache, bool ssd,
+                                     classT *parent): blTT::thread_1<thread_tester_hdd<classT> >(this,NULL,dbg),
                                     pathDir(str),
                                     p_strOutFileDataBuffer(new string),
                                     p_strHashSum(new string),
+                                    strSizeTest(""),
                                     uiDataLimit(limit),
                                     ui64Loop(0),
                                     uiMaxLoops(mloops),
-                                    uiThreadNumber(uiNumber),
+                                    uiThreadNumber(uiThNumber),
                                     uiStatsCounter(0),
+                                    uiNumberOfReads(reads),
                                     ui8Precision(prec),
                                     uiPermissions(prem),
                                     bWriteFailed(false),
                                     bVerifyCache(bVerifyCache),
                                     bCleanWorkFolder(false),
+                                    bSSD(ssd),
+                                    vui_Probes(vui),
                                     p_Parent(parent){
 
-    addStats(&string("Thread number:"),&myConv::ToString(uiThreadNumber));
-    addStats(&string("Start date:"),&myTime::GetLocalTime());
+    addStats("Thread number:",blC::ToString(uiThreadNumber));
+    addStats("Start date:",myTime::GetLocalTime());
 
     p_strHashSum->reserve(SHA512LEN);
 
@@ -58,7 +61,7 @@ thread_tester_hdd<classT>::thread_tester_hdd(vector<unsigned> &vui,
     }
 }
 template <class classT>thread_tester_hdd<classT>::~thread_tester_hdd(){
-    cerr<<"Disctructing: thread: "<<uiThreadNumber<<endl;
+    cerr<<"Destructor: thread: "<<uiThreadNumber<<endl;
     if (p_strOutFileDataBuffer){
         delete p_strOutFileDataBuffer;
     }
@@ -68,7 +71,11 @@ template <class classT>thread_tester_hdd<classT>::~thread_tester_hdd(){
     if (bCleanWorkFolder){
         cerr<<"From some reasons work folder is being cleaned in emergency way"<<endl;
         myIO::rmAll(pathDir);
+    #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+        RemoveDirectory(pathDir.file_string().c_str());
+    #else
         rmdir(pathDir.file_string().c_str());
+    #endif
 
         cerr<<"From some reasons cache is being cleared in emergency way"<<endl;
         for(list<string*>::iterator it = list_ReadFiles.begin();
@@ -81,11 +88,12 @@ template <class classT>thread_tester_hdd<classT>::~thread_tester_hdd(){
     }
 }
 
-template <class classT> void thread_tester_hdd<classT>::addStats(string *desc,string *val){
+template <class classT> void thread_tester_hdd<classT>::addStats(string desc,string val){
     if ( p_Parent ){
         ++uiStatsCounter;
         boost::mutex::scoped_lock lock(mutex_Stats);
-        p_Parent->addStatData(desc,val,uiStatsCounter,uiThreadNumber);
+            if (p_Parent->findAndAdd(desc,val,uiStatsCounter,uiThreadNumber)!= 0)
+                --uiStatsCounter;
     }
 }
 
@@ -94,7 +102,7 @@ template <class classT> void thread_tester_hdd<classT>::setNewData(vector<unsign
     pathDir = str;
 }
 
-template <class classT> void thread_tester_hdd<classT>::setBuffer(const unsigned *uiSize){
+template <class classT> void thread_tester_hdd<classT>::setBuffer(const uint64_t *uiSize){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     boost::local_time::local_date_time *dStartt = NULL;
     uint64_t ui64tmp = 0;
@@ -103,11 +111,11 @@ template <class classT> void thread_tester_hdd<classT>::setBuffer(const unsigned
         do{
             p_strOutFileDataBuffer->append(*p_strOutFileDataBuffer);
             ui64tmp = p_strOutFileDataBuffer->length();
-            //cout<< myConv::Bandwidth(0, &ui64tmp,"")<<endl;
+            //cout<< blC::Bandwidth(0, &ui64tmp,"")<<endl;
         }while(p_strOutFileDataBuffer->length() <= *uiSize-1);
         if (p_strOutFileDataBuffer->length() > *uiSize){
             ui64tmp = p_strOutFileDataBuffer->length();
-            //cout<<"Buffer overflow resizing["<<ui64tmp<<"("+myConv::Bandwidth(0,&ui64tmp,"")+")"<<"/"<<*uiSize<<"("+myConv::Bandwidth(0,uiSize,"")+")"<<"]"<<endl;
+            //cout<<"Buffer overflow resizing["<<ui64tmp<<"("+blC::Bandwidth(0,&ui64tmp,"")+")"<<"/"<<*uiSize<<"("+blC::Bandwidth(0,uiSize,"")+")"<<"]"<<endl;
             p_strOutFileDataBuffer->erase(*uiSize);
         }
     }catch (std::exception &e){
@@ -116,7 +124,7 @@ template <class classT> void thread_tester_hdd<classT>::setBuffer(const unsigned
         cerr <<"Failed to Set work buffer!\n"<<endl;
         cerr << e.what()<<endl;
         cerr << p_strOutFileDataBuffer->size()<<
-        "("+myConv::Bandwidth(0,ui64tmp,"")<<
+        "("+blC::Bandwidth(0,ui64tmp,"")<<
         ")length("<< p_strOutFileDataBuffer->length()<<")"<<endl;
         if (bFailer){
             raise(SIGABRT);
@@ -124,19 +132,21 @@ template <class classT> void thread_tester_hdd<classT>::setBuffer(const unsigned
     }
 
     ui64tmp = p_strOutFileDataBuffer->length();
-    addStats(&string("Testing files of size:"),&string(myConv::ToString(ui64tmp)+"("+myConv::ToString(myConv::Bandwidth(0,ui64tmp,""))+")"));
-    addStats(&string("Buffer has been setup in:"),&string(myConv::TimeToString(myTime::TimeDiff(dStart))));
+    addStats(strSizeTest+"Testing files of size:",blC::ToString(ui64tmp)+"("+blC::ToString(blC::Bandwidth(0,ui64tmp,""))+")");
+    addStats(strSizeTest+"Buffer has been setup in:",blC::TimeToString(myTime::TimeDiff(dStart)));
 
     dStartt = myTime::GetTime();
+    #if COMPILE_WITH_CRYPTOPP == 1
     *p_strHashSum = Hash::SHA512(*p_strOutFileDataBuffer);
-    addStats(&string("Buffer hashsum has been counted in:"),&myConv::TimeToString(myTime::TimeDiff(dStartt)));
+    addStats(strSizeTest+"Buffer hashsum has been counted in:",blC::TimeToString(myTime::TimeDiff(dStartt)));
+    #endif
     delete dStartt;
 
-    addStats(&string("setBuffer executed for:"),&myConv::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(strSizeTest+"setBuffer executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     delete dStart;
 }
 
-template <class classT> void thread_tester_hdd<classT>::readByChar(uint16_t mode){
+template <class classT> void thread_tester_hdd<classT>::Read(uint16_t mode,string desc){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     boost::local_time::local_date_time *dStartt = NULL;
     uint64_t ui64tmp = 0;
@@ -156,7 +166,7 @@ template <class classT> void thread_tester_hdd<classT>::readByChar(uint16_t mode
     for(uint64_t i = 0; i < ui64Loop; ++i){
         string *p_strtmp = new string;
         boost::filesystem::path path_tmp = pathDir;
-        path_tmp /= myConv::ToString(i);
+        path_tmp /= blC::ToString(i);
         if (mode == 0){
             bOK = myIO::simpleReadToStringByChar(path_tmp,p_strtmp,p_list);
         }else{
@@ -170,26 +180,26 @@ template <class classT> void thread_tester_hdd<classT>::readByChar(uint16_t mode
             ui64tmp += p_strtmp->length();
         }
     }
+    mode == 0 ? strtmp = "Read by char:" : strtmp = "Read by stream:";
     if(VeryfiReadFiles()){
         double dtmp = myTime::TimeDiff(dStartt);
         delete dStartt;
-        mode == 0 ? strtmp = "Read by char:" : strtmp = "Read by stream:";
-        addStats(&strtmp,&myConv::ToString(myConv::Bandwidth(dtmp,ui64tmp)));
+        addStats(strtmp,blC::ToString(blC::Bandwidth(dtmp,ui64tmp)));
         if (p_list){
             list<double>::iterator it = p_list->begin();
-            addStats(&string("Access Times-----"),&string(""));
-            addStats(&string("Min:"),&myConv::TimeToString(*it));            ++it;
-            addStats(&string("Max:"),&myConv::TimeToString(*it));            ++it;
-            addStats(&string("Avg:"),&myConv::TimeToString(*it/ui64Loop));   ++it;
-            addStats(&string("Read Times-----"),&string(""));
-            addStats(&string("Min:"),&myConv::TimeToString(*it));            ++it;
-            addStats(&string("Max:"),&myConv::TimeToString(*it));            ++it;
-            addStats(&string("Avg:"),&myConv::TimeToString(*it/ui64Loop));
+            addStats(desc+strtmp.at(8)+"_Access Times-----","");
+            addStats(desc+strtmp.at(8)+"_Min:",blC::TimeToString(*it));            ++it;
+            addStats(desc+strtmp.at(8)+"_Max:",blC::TimeToString(*it));            ++it;
+            addStats(desc+strtmp.at(8)+"_Avg:",blC::TimeToString(*it/ui64Loop));   ++it;
+            addStats(desc+strtmp.at(8)+"_Read Times-----","");
+            addStats(desc+strtmp.at(8)+"__Min:",blC::TimeToString(*it));           ++it;
+            addStats(desc+strtmp.at(8)+"__Max:",blC::TimeToString(*it));           ++it;
+            addStats(desc+strtmp.at(8)+"__Avg:",blC::TimeToString(*it/ui64Loop));
         }
 
         if((list_ReadFiles.size()%ui64Loop) != 0 or list_ReadFiles.size() == 0){
-            cerr<<strtmp<<"Read wrong number of files! ["<<list_ReadFiles.size()<<"/"<<ui64Loop<<"]"<<endl;
-            addStats(&string("Read wrong number of files:"),&string(myConv::ToString(list_ReadFiles.size())+"/"+myConv::ToString(ui64Loop)));
+            cerr<<desc<<"Read wrong number of files! ["<<list_ReadFiles.size()<<"/"<<ui64Loop<<"]"<<endl;
+            addStats(desc+strtmp.at(8)+"_Read wrong number of files:",blC::ToString(list_ReadFiles.size())+"/"+blC::ToString(ui64Loop));
         }
     }
 
@@ -201,11 +211,11 @@ template <class classT> void thread_tester_hdd<classT>::readByChar(uint16_t mode
         }
     list_ReadFiles.clear();
     if (p_list){ delete p_list; }
-    addStats(&string(strtmp+" executed for:"),&string(myConv::TimeToString(myTime::TimeDiff(dStart))));
+    addStats(desc+strtmp+" executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     delete dStart;
 }
 
-template <class classT> void thread_tester_hdd<classT>::Write(const unsigned *uiSize){
+template <class classT> void thread_tester_hdd<classT>::Write(const uint64_t *uiSize,string desc){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     setBuffer(uiSize);
     uint64_t ui64tmp = p_strOutFileDataBuffer->length();
@@ -217,19 +227,19 @@ template <class classT> void thread_tester_hdd<classT>::Write(const unsigned *ui
     //
     for(unsigned i = 0; i < ui64Loop; ++i){
         boost::filesystem::path pathtmp = pathDir;
-        pathtmp /= myConv::ToString(i);
+        pathtmp /= blC::ToString(i);
         if (!myIO::SimpleWriteToFile(pathtmp,*p_strOutFileDataBuffer)){
             cerr<<"Failed to create file: "<<i<<endl;
-            addStats(&string("Failed to create file:"),&myConv::ToString(i));
+            addStats(desc+" Failed to create file:",blC::ToString(i));
             bWriteFailed = true;
             break;
         }
     }
     double dtmp = myTime::TimeDiff(dStartt);
-    addStats(&string("Written files:"),&myConv::ToString(ui64Loop));
-    addStats(&string("Bandwidth:"),&myConv::Bandwidth(dtmp ,ui64tmp));
-    addStats(&string("Time:"),&myConv::TimeToString( dtmp  ));
-    addStats(&string("Write metod executed for:"),&myConv::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(desc+"Written files:",blC::ToString(ui64Loop));
+    addStats(desc+"Bandwidth:",blC::Bandwidth(dtmp ,ui64tmp));
+    addStats(desc+"Time:",blC::TimeToString( dtmp  ));
+    addStats(desc+"Write metod executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     //
     delete dStart;
     delete dStartt;
@@ -248,10 +258,9 @@ template <class classT> void thread_tester_hdd<classT>::CopyTest(){
                 fTo = fTo.file_string()+"_cpy";
         myIO::CopyFileByChar(*it, fTo);
         }
-    myIO::rmAll(pathDir);
     delete list_dir;
 
-    addStats(&string("Copy metod executed for:"),&myConv::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(strSizeTest+"Copy metod executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     delete dStart;
 }
 
@@ -261,6 +270,9 @@ template <class classT> bool thread_tester_hdd<classT>::VeryfiReadFiles(){
 
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     bool bRet = true;
+
+    #if COMPILE_WITH_CRYPTOPP == 1
+
     unsigned uiCounter = 0;
     for(list<string*>::iterator it = list_ReadFiles.begin();
         it != list_ReadFiles.end();
@@ -271,12 +283,12 @@ template <class classT> bool thread_tester_hdd<classT>::VeryfiReadFiles(){
                 cerr<<"expected hash["<<myColors::ConsoleColors_[1]<<*p_strHashSum<<myColors::ConsoleColors_[*myColors::TextColor]<<
                 "] /hash counted ["<<myColors::ConsoleColors_[2]<< Hash::SHA512((**it))<<myColors::ConsoleColors_[*myColors::TextColor]<<"]"<<endl;
                 cerr<< "File ["<< uiCounter<<"] Size "<<
-                    myConv::Bandwidth(0,uiLengthOfReadFileBuf,"")<<
+                    blC::Bandwidth(0,uiLengthOfReadFileBuf,"")<<
                     "("<<uiLengthOfReadFileBuf<<")"<<
                     " has wrong controle sum!\nTest has been aborded!\n" <<endl;
-                addStats(&string("Fialed to verify file:"),&myConv::ToString(uiCounter));
-                addStats(&string("Size:"),&string(myConv::Bandwidth(0,uiLengthOfReadFileBuf,"")+"("+myConv::ToString((**it).length())+")"));
-                addStats(&string("Reason:"),&string("Bad hash sum"));
+                addStats(strSizeTest+"Fialed to verify file:",blC::ToString(uiCounter));
+                addStats(strSizeTest+"Size:",blC::Bandwidth(0,uiLengthOfReadFileBuf,"")+"("+blC::ToString((**it).length())+")");
+                addStats(strSizeTest+"Reason:","Bad hash sum");
                 if (uiLengthOfDataBuf!= uiLengthOfReadFileBuf){
                     cerr<<"File size expected to be equal["<<
                     myColors::ConsoleColors_[1]<<uiLengthOfDataBuf<<myColors::ConsoleColors_[*myColors::TextColor]<<"]/["<<
@@ -302,8 +314,9 @@ template <class classT> bool thread_tester_hdd<classT>::VeryfiReadFiles(){
             }
             uiCounter++;
     }
-    addStats(&string("Files to verify"),&myConv::ToString(list_ReadFiles.size()));
-    addStats(&string("Veryfing taken:"),&myConv::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(strSizeTest+"Files to verify",blC::ToString(list_ReadFiles.size()));
+    addStats(strSizeTest+"Veryfing taken:",blC::TimeToString(myTime::TimeDiff(dStart)));
+    #endif
     delete dStart;
     return bRet;
 }
@@ -311,42 +324,53 @@ template <class classT> bool thread_tester_hdd<classT>::VeryfiReadFiles(){
 template <class classT> void thread_tester_hdd<classT>::Execute(){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     //
-    pathDir /= myConv::ToString(myThreadTemplates::thread_1<thread_tester_hdd<classT> >::GetThreadID());
-    #ifdef __WIN32__ || __WIN64__
+    pathDir /= blC::ToString(blTT::thread_1<thread_tester_hdd<classT> >::GetThreadID());
+    #if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
     if(mkdir(pathDir.file_string().c_str()) == 0){
     #else
     if(mkdir(pathDir.file_string().c_str(),uiPermissions) == 0){
     #endif
         bCleanWorkFolder = true;
-        for(vector<unsigned>::iterator it = vui_Probes.begin();
+        for(vector<uint64_t>::iterator it = vui_Probes.begin();
             it != vui_Probes.end(); ++it){
-                Write(&*it);///Write test
+                unsigned uiI = 0;
+                strSizeTest = "("+blC::Bandwidth(0,*it,"")+")";
+                Write(&*it,strSizeTest);///Write test
                 if ( !bWriteFailed){///Both read test
-                    readByChar(0);
-                    readByChar(1);
+                    do{
+                        Read(0,strSizeTest);
+                        Read(1,strSizeTest);
+                    }while(++uiI < uiNumberOfReads);
                 }
+                uiI = 0;
                 myIO::rmAll(pathDir);///Cleaning after rw tests
-                if (false){//hybrid drive
-                    Write(&*it);///Write test
+                if (bSSD){///hybrird drive test which is normal test but with reversed order
+                    Write(&*it,strSizeTest+"[rOrder]");///Write test
                     if ( !bWriteFailed){///Both read test
-                        readByChar(1);
-                        readByChar(0);
+                        do{
+                            Read(1,strSizeTest+" [rOrder]");
+                            Read(0,strSizeTest+" [rOrder]");
+                        }while(++uiI < uiNumberOfReads);
                     }
                     myIO::rmAll(pathDir);///Cleaning after rw tests
                 }
-                Write(&*it);///Write test
+                Write(&*it,strSizeTest+" [copy]");///Write test
                 CopyTest();
                 myIO::rmAll(pathDir);///Cleaning after rw tests
         }
+    #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+        RemoveDirectory(pathDir.file_string().c_str());
+    #else
         rmdir(pathDir.file_string().c_str());
+    #endif
         bCleanWorkFolder = false;
         delete p_strOutFileDataBuffer;
         p_strOutFileDataBuffer = NULL;
     }else{
         cerr<<"Failed to create work directory! ["+pathDir.file_string()+"]\n Nothing will be done."<<endl;
-        addStats(&string("Failed to create work directory!:"),&string(pathDir.file_string()));
+        addStats("Failed to create work directory!:",pathDir.file_string());
     }
     //
-    addStats(&string("Thread execution taken:"),&myConv::TimeToString(myTime::TimeDiff(dStart)));
+    addStats("Thread execution taken:",blC::TimeToString(myTime::TimeDiff(dStart)));
     delete dStart;
 }

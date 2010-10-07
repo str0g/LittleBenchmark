@@ -10,7 +10,18 @@ xx October 2010
 	-Add:	   Generator for xml + html
 	-Add:      Chart generator
 	-Fix:      Memory leaks in allocation test (32records)
-	-Update:   Workable windows port 
+	Update:    Windows portability
+
+07 October 2010
+   released version 1.1.2 of HDD
+
+     Change log:
+	-Fixed:   Allot of windows portability issues
+	-Updated: Most of warnings has been eliminated to reduce compilation time.
+	-Updated: Overall clean ups and optimizations
+	-Added:	  Reading tests can be repeated defined number times.
+	-Added:   Chosen options can be stored in configuration file
+	-Added:   Compilation from source can be done with out libcryptopp
 
 03 October 2010
    released version 1.0.9 of HDD

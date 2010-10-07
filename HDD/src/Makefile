@@ -46,8 +46,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_LittleBenchmarkHDD_OBJECTS = main.$(OBJEXT) tester_hdd.$(OBJEXT) \
-	thread_tester_hdd.$(OBJEXT) profileUpdateStore.$(OBJEXT) \
-	stats_keeper.$(OBJEXT) Globals.$(OBJEXT)
+	thread_tester_hdd.$(OBJEXT) handler_Configuration.$(OBJEXT) \
+	handler_Report.$(OBJEXT) Globals.$(OBJEXT)
 LittleBenchmarkHDD_OBJECTS = $(am_LittleBenchmarkHDD_OBJECTS)
 LittleBenchmarkHDD_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
@@ -165,7 +165,7 @@ top_srcdir = ..
 #LDFLAGS = -lm
 AM_CPPFLGAS = -pedantic -Wall -march=core2
 AM_LDFLAGS = -lm -lboost_thread-mt -lboost_program_options-mt -lboost_filesystem-mt -L /usr/lib/libcrypto++ -L /usr/lib64/libcrypto++ -lcrypto++
-LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp myThreadTemplates.hpp profileUpdateStore.cpp profileUpdateStore.hpp stats_keeper.cpp stats_keeper.hpp Globals.h Globals.cpp version.h
+LittleBenchmarkHDD_SOURCES = main.cpp tester_hdd.cpp tester_hdd.hpp thread_tester_hdd.cpp thread_tester_hdd.hpp myConv.hpp myHash.hpp myTime.hpp myIO.hpp myThreadTemplates.hpp handler_Configuration.cpp handler_Configuration.hpp handler_Report.cpp handler_Report.hpp Globals.h Globals.cpp version.h
 all: all-am
 
 .SUFFIXES:
@@ -248,9 +248,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/Globals.Po
+include ./$(DEPDIR)/handler_Configuration.Po
+include ./$(DEPDIR)/handler_Report.Po
 include ./$(DEPDIR)/main.Po
-include ./$(DEPDIR)/profileUpdateStore.Po
-include ./$(DEPDIR)/stats_keeper.Po
 include ./$(DEPDIR)/tester_hdd.Po
 include ./$(DEPDIR)/thread_tester_hdd.Po
 

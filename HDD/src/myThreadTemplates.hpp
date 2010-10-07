@@ -22,12 +22,13 @@
 #include "boost/date_time/local_time/local_time.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
 //my
-#include "myTime.hpp"/*
+#include "myTime.hpp"
+#include "myConv.hpp"/*
 #include <boost/filesystem/path.hpp>*/
 //#include "thread_tester_hdd.hpp"
-/*
+
 //my
-#include "myConv.hpp"
+/*
 #include "myHash.hpp"
 #include "myIO.hpp"*/
 //Specials
@@ -39,63 +40,67 @@ using std::cin;*/
 using std::cerr;
 using std::endl;
 //Globals Varuabels
-namespace myThreadTemplates{
+namespace blC = buskol::Conv;
 
-///Thread_1 is very simple thread template which constainst few controle methods and entry for statistics
-template <class ClassT> class thread_1{
-	private:
-		ClassT *parent; //!< Paret class adress
-		boost::local_time::local_date_time *blt_ldt_Creation; //!< Keep creation time
-		boost::local_time::local_date_time *blt_ldt_Start; //!< Keep thread creation time
-		boost::thread m_Thread; //!< Thread
-		static boost::mutex mutex_listIO; //!< Mutex for locking list IO
-		list<string*> *dExTimes; //!< list for statistics
-		bool bShowOverExecution; //!< Show execution time
-	public:
-		thread_1(ClassT *parent, list<string*> *list = NULL,bool show = false): parent(parent),\
+namespace buskol{
+    namespace ThreadTemplates{
+
+    ///Thread_1 is very simple thread template which constainst few controle methods and entry for statistics
+    template <class ClassT> class thread_1{
+        private:
+            ClassT *parent; //!< Paret class adress
+            boost::local_time::local_date_time *blt_ldt_Creation; //!< Keep creation time
+            boost::local_time::local_date_time *blt_ldt_Start; //!< Keep thread creation time
+            boost::thread m_Thread; //!< Thread
+            static boost::mutex mutex_listIO; //!< Mutex for locking list IO
+            list<string*> *dExTimes; //!< list for statistics
+            bool bShowOverExecution; //!< Show execution time
+        public:
+            thread_1(ClassT *parent, list<string*> *list = NULL,bool show = false): parent(parent),\
                 blt_ldt_Creation(myTime::GetTime()),\
                 blt_ldt_Start(NULL),\
                 dExTimes(list),\
                 bShowOverExecution(show){}
-		void start(){///Creates Thread and links it dynamic using static method
-            blt_ldt_Start = myTime::GetTime();
-            m_Thread = boost::thread (boost::bind(this->Execute_,parent));
-        }
-		void start_self_test(){///This method is only for test purpose!
-            blt_ldt_Start(myTime::GetTime());
-            m_Thread = boost::thread (self_test);
-        }
-		static void self_test(){///This method is only for test purpose!
-            //test code hear
-        }
-        static void Execute_(ClassT *p){///Static linker for dynamic method
-            p->Execute();
-        }
-		void join(){///Join thread
-            m_Thread.join();
-		    UpdateStats(new string("Thread has been doing something for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
-        }
-		void join(unsigned val){///Join thread after specified time in seconds
-            m_Thread.timed_join(( boost::posix_time::time_duration(0,0,val,int(boost::posix_time::time_duration::ticks_per_second() / 10))));
-            UpdateStats(new string("Thread has been doing something for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
-        }
-        string GetThreadID(){
-            return myConv::ToString(m_Thread.get_id());
-        }
-        void UpdateStats(string *str){///Push statistic information
-            boost::mutex::scoped_lock(mutex_listIO);
-            if (dExTimes)
-                dExTimes->push_back(str);
-            else
-                delete str;
-        }
-        virtual ~thread_1(){///Virtual destructor which can show time of execution
-		    if (bShowOverExecution)
-                cerr<<("Thread has been executed for: "+ myConv::TimeToString(myTime::TimeDiff(blt_ldt_Creation)))<<endl;
-            if ( blt_ldt_Creation ) { delete blt_ldt_Creation; }
-            if ( blt_ldt_Start ) { delete blt_ldt_Start; }
-        }
-};
+            void start(){///Creates Thread and links it dynamic using static method
+                blt_ldt_Start = myTime::GetTime();
+                m_Thread = boost::thread (boost::bind(this->Execute_,parent));
+            }
+            void start_self_test(){///This method is only for test purpose!
+                blt_ldt_Start(myTime::GetTime());
+                m_Thread = boost::thread (self_test);
+            }
+            static void self_test(){///This method is only for test purpose!
+                //test code hear
+            }
+            static void Execute_(ClassT *p){///Static linker for dynamic method
+                p->Execute();
+            }
+            void join(){///Join thread
+                m_Thread.join();
+                UpdateStats(new string("Thread has been doing something for: "+ blC::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
+            }
+            void join(unsigned val){///Join thread after specified time in seconds
+                m_Thread.timed_join(( boost::posix_time::time_duration(0,0,val,int(boost::posix_time::time_duration::ticks_per_second() / 10))));
+                UpdateStats(new string("Thread has been doing something for: "+ blC::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
+            }
+            string GetThreadID(){
+                return blC::ToString(m_Thread.get_id());
+            }
+            void UpdateStats(string *str){///Push statistic information
+                boost::mutex::scoped_lock(mutex_listIO);
+                if (dExTimes)
+                    dExTimes->push_back(str);
+                else
+                    delete str;
+            }
+            virtual ~thread_1(){///Virtual destructor which can show time of execution
+                if (bShowOverExecution)
+                    cerr<<("Thread has been executed for: "+ blC::TimeToString(myTime::TimeDiff(blt_ldt_Creation)))<<endl;
+                if ( blt_ldt_Creation ) { delete blt_ldt_Creation; }
+                if ( blt_ldt_Start ) { delete blt_ldt_Start; }
+            }
+        };
+    }
 
 }
 

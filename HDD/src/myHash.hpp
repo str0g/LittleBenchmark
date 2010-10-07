@@ -10,18 +10,26 @@
  * License:   GNU / General Public Licens
  **************************************************************/
 //Headers
+#define SHA512LEN 128
+#include "Globals.h"
+#ifndef COMPILE_WITH_CRYPTOPP
+    #define COMPILE_WITH_CRYPTOPP 1
+#endif
+
+#if COMPILE_WITH_CRYPTOPP == 1
+
 #define CRYPTOPP_ENABLE_NAMESPACE_WEAK 1
 #include <string>
-#ifdef __WIN32__ || __WIN64__
-#include "md5.h"
-#include "rsa.h"
-#include "bas64.h"
-#include "hex.h"
+#if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
+    #include "md5.h"
+    #include "rsa.h"
+    #include "base64.h"
+    #include "hex.h"
 #else
-#include <cryptopp/md5.h>
-#include <cryptopp/rsa.h>
-#include <cryptopp/base64.h>
-#include "cryptopp/hex.h"
+    #include <cryptopp/md5.h>
+    #include <cryptopp/rsa.h>
+    #include <cryptopp/base64.h>
+    #include "cryptopp/hex.h"
 #endif
 
 //Specials
@@ -31,7 +39,6 @@
 */
 namespace Hash
 {
-    #define SHA512LEN 128
         //Hash data by MD5 algorhitm
         inline std::string MD5(const std::string &data)
         {
@@ -61,5 +68,5 @@ namespace Hash
                 return res;
         }
 }
-
+    #endif //COMPILE_WITH_CRYPTOPP
 #endif // MYHASH_HPP_INCLUDED

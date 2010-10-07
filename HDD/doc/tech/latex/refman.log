@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  3 OCT 2010 23:23
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  5 OCT 2010 21:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -780,12 +780,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 2.
- [1
-
-])
+)
 \tf@toc=\write5
 \openout5 = `refman.toc'.
 
+ [1
+
+]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 50.
  [2]
@@ -794,7 +795,7 @@ Package hyperref Info: Option `pageanchor' set `true' on input line 52.
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 53.
-(./namespaces.tex
+(./hierarchy.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 ) [1
@@ -804,55 +805,44 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 
 ]
 Chapter 2.
-(./hierarchy.tex) [3] [4
+(./annotated.tex) [3] [4
 
 ]
 Chapter 3.
-(./annotated.tex) [5] [6
-
-]
-Chapter 4.
-(./namespaceHash.tex
+(./classprofileUpdateStore.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 5.
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 8.
- (/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 21.
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)) [7] [8
-
-]
-Chapter 5.
-(./classprofileUpdateStore.tex
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 32.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 32.
-) [9]
+) [5]
 \openout2 = `classstats__keeper.aux'.
 
- (./classstats__keeper.tex
-<classstats__keeper.pdf, id=267, 501.875pt x 441.20834pt>
+
+(./classstats__keeper.tex
+<classstats__keeper.pdf, id=216, 501.875pt x 441.20834pt>
 File: classstats__keeper.pdf Graphic file (type pdf)
 
-<use classstats__keeper.pdf> [10
+<use classstats__keeper.pdf> [6
 
- <./classstats__keeper.pdf>]) [11]
+ <./classstats__keeper.pdf>]) [7]
 \openout2 = `classtester__hdd.aux'.
 
 
 (./classtester__hdd.tex
-<classtester__hdd.pdf, id=313, 501.875pt x 441.20834pt>
+<classtester__hdd.pdf, id=263, 501.875pt x 441.20834pt>
 File: classtester__hdd.pdf Graphic file (type pdf)
 
 <use classtester__hdd.pdf>
 LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
 (Font)              Font shape `T1/ptm/b/it' tried instead on input line 32.
-) [12
+) [8
 
 
  <./classtester__hdd.pdf>]
@@ -879,8 +869,13 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 4.
 
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 12.
+(/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
 (Font)              Font shape `T1/pcr/b/n' tried instead on input line 57.
+
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
@@ -893,10 +888,10 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
 
-[13
+[9
 
 
-]) [14]
+]) [10]
 \openout2 = `classthread__tester__hdd.aux'.
 
  (./classthread__tester__hdd.tex
@@ -916,20 +911,20 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 4.
 
-<classthread__tester__hdd.pdf, id=362, 501.875pt x 107.35106pt>
+<classthread__tester__hdd.pdf, id=314, 501.875pt x 107.35106pt>
 File: classthread__tester__hdd.pdf Graphic file (type pdf)
 
-<use classthread__tester__hdd.pdf>) [15
+<use classthread__tester__hdd.pdf>) [11
 
 
  <./classthread__tester__hdd.pdf>]
 \openout2 = `structvector__str.aux'.
 
 
-(./structvector__str.tex) [16
+(./structvector__str.tex) [12
 
 
-] (./refman.ind [17
+] (./refman.ind [13
 
 
 
@@ -938,10 +933,10 @@ File: classthread__tester__hdd.pdf Graphic file (type pdf)
 (./classmyThreadTemplates_1_1thread__1.aux) (./classthread__tester__hdd.aux)
 (./structvector__str.aux)) ) 
 Here is how much of TeX's memory you used:
- 8530 strings out of 495026
- 121217 string characters out of 1181803
+ 8506 strings out of 495026
+ 120866 string characters out of 1181803
  208619 words of memory out of 3000000
- 11383 multiletter control sequences out of 15000+50000
+ 11376 multiletter control sequences out of 15000+50000
  48027 words of font info for 57 fonts, out of 3000000 for 9000
  48 hyphenation exceptions out of 8191
  38i,12n,58p,422b,500s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -955,9 +950,9 @@ courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb
 exlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/
 urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pf
 b>
-Output written on refman.pdf (21 pages, 187141 bytes).
+Output written on refman.pdf (17 pages, 177926 bytes).
 PDF statistics:
- 481 PDF objects out of 1000 (max. 8388607)
- 117 named destinations out of 1000 (max. 500000)
- 280 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 428 PDF objects out of 1000 (max. 8388607)
+ 105 named destinations out of 1000 (max. 500000)
+ 240 words of extra memory for PDF output out of 10000 (max. 10000000)
 

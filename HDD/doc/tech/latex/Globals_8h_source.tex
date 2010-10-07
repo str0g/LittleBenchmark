@@ -8,24 +8,35 @@
 00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define GLOBALS\_H\_INCLUDED}
 00003 \textcolor{preprocessor}{}
 00004 \textcolor{preprocessor}{    #define DEBUG}
-00005 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define ASCII 128 //!< Number of ASCII used by generator}
-00006 \textcolor{preprocessor}{}
-00007 \textcolor{preprocessor}{    #define KB 1024 //!<Size of KiloByte}
-00008 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define MB 1048576 //!<Size of MegaByte}
-00009 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define GB 1073741824 //!<Size of GigaByte}
-00010 \textcolor{preprocessor}{}
-00011 \textcolor{preprocessor}{    #define MS 0.001 //!< Milisecond}
-00012 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define US 0.000001 //!< Micorsecond}
-00013 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define NS 0.000000001 //!< Nanosecond}
-00014 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_MS 1000 //!< 1s}
-00015 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_US 1000000 //!< 1s}
-00016 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_NS 1000000000 //!< 1s}
+00005 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define COMPILE\_WITH\_CRYPTOPP 1}
+00006 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #if ( \_WIN32 || \_WIN64 ) || ( \_\_WIN32\_\_ || \_\_WIN64\_\_ )}
+00007 \textcolor{preprocessor}{}\textcolor{preprocessor}{        #ifdef \_MSC\_VER}
+00008 \textcolor{preprocessor}{}\textcolor{preprocessor}{            #define and &&}
+00009 \textcolor{preprocessor}{}            \textcolor{keyword}{typedef} \_\_int64 int64\_t;
+00010             \textcolor{keyword}{typedef} \textcolor{keywordtype}{int} mode\_t;
+00011             \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \_\_int8 uint8\_t;
+00012             \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \_\_int16 uint16\_t;
+00013             \textcolor{keyword}{typedef} \textcolor{keywordtype}{unsigned} \_\_int64 uint64\_t;
+00014 \textcolor{preprocessor}{        #endif}
+00015 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #endif}
+00016 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define ASCII 128 //!< Number of ASCII used by generator}
 00017 \textcolor{preprocessor}{}
-00018 \textcolor{preprocessor}{    #include <string>}
-00037 \textcolor{preprocessor}{    #define MYCOLORS 16 //!< Number of colors}
-00038 \textcolor{preprocessor}{}\textcolor{keyword}{namespace }myColors\{
-00039     \textcolor{keyword}{extern} std::string ConsoleColors\_[MYCOLORS]; 
-00040     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} *TextColor; 
-00041 \}
-00042 \textcolor{preprocessor}{#endif // GLOBALS\_H\_INCLUDED}
+00018 \textcolor{preprocessor}{    #define KB 1024 //!<Size of KiloByte}
+00019 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define MB 1048576 //!<Size of MegaByte}
+00020 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define GB 1073741824 //!<Size of GigaByte}
+00021 \textcolor{preprocessor}{}
+00022 \textcolor{preprocessor}{    #define MS 0.001 //!< Milisecond}
+00023 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define US 0.000001 //!< Micorsecond}
+00024 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define NS 0.000000001 //!< Nanosecond}
+00025 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_MS 1000 //!< 1s}
+00026 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_US 1000000 //!< 1s}
+00027 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #define m\_NS 1000000000 //!< 1s}
+00028 \textcolor{preprocessor}{}
+00029 \textcolor{preprocessor}{    #include <string>}
+00048 \textcolor{preprocessor}{    #define MYCOLORS 16 //!< Number of colors}
+00049 \textcolor{preprocessor}{}\textcolor{keyword}{namespace }myColors\{
+00050     \textcolor{keyword}{extern} std::string ConsoleColors\_[MYCOLORS]; 
+00051     \textcolor{keyword}{extern} \textcolor{keywordtype}{int} *TextColor; 
+00052 \}
+00053 \textcolor{preprocessor}{#endif // GLOBALS\_H\_INCLUDED}
 \end{alltt}\end{footnotesize}

@@ -1,0 +1,115 @@
+\hypertarget{classhandler__Report}{
+\section{handler\_\-Report Class Reference}
+\label{classhandler__Report}\index{handler\_\-Report@{handler\_\-Report}}
+}
+Inheritance diagram for handler\_\-Report:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classhandler__Report}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classhandler__Report_a69a82b65c02449796be662b897ee56fc}{
+\hyperlink{classhandler__Report_a69a82b65c02449796be662b897ee56fc}{handler\_\-Report} ()}
+\label{classhandler__Report_a69a82b65c02449796be662b897ee56fc}
+
+\begin{DoxyCompactList}\small\item\em Constractor set all args with default values. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_ae03757935a7d0ee9a4b1a8ef15b54040}{
+void \hyperlink{classhandler__Report_ae03757935a7d0ee9a4b1a8ef15b54040}{addStatData} (string \&, string \&, unsigned=1, unsigned=1)}
+\label{classhandler__Report_ae03757935a7d0ee9a4b1a8ef15b54040}
+
+\begin{DoxyCompactList}\small\item\em Will add data to specified buffers. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_af493d5f27da28ae1f611315208a98b83}{
+uint8\_\-t {\bfseries findAndAdd} (string \&, string \&, unsigned=1, unsigned=1)}
+\label{classhandler__Report_af493d5f27da28ae1f611315208a98b83}
+
+\item 
+\hypertarget{classhandler__Report_a56de9bfebe51073d5d85d0660418cd06}{
+void {\bfseries FormatDataInVector} ()}
+\label{classhandler__Report_a56de9bfebe51073d5d85d0660418cd06}
+
+\item 
+\hypertarget{classhandler__Report_a566af7550041c738548f29da0fd4a9ea}{
+void {\bfseries SaveToDisk} (boost::filesystem::path)}
+\label{classhandler__Report_a566af7550041c738548f29da0fd4a9ea}
+
+\item 
+\hypertarget{classhandler__Report_ab389a775c2650f0a5954be52c9a362a3}{
+string \hyperlink{classhandler__Report_ab389a775c2650f0a5954be52c9a362a3}{GeneratDataFromVector} ()}
+\label{classhandler__Report_ab389a775c2650f0a5954be52c9a362a3}
+
+\begin{DoxyCompactList}\small\item\em Return refernce to string value generated from vector. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_ae9889e1bb0a6a23d35a7a513a2f4056f}{
+string {\bfseries GenerateXMLFromVector} ()}
+\label{classhandler__Report_ae9889e1bb0a6a23d35a7a513a2f4056f}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classhandler__Report_a1406730673c2d437877e0f76ed5901f4}{
+void \hyperlink{classhandler__Report_a1406730673c2d437877e0f76ed5901f4}{setArgs} ()}
+\label{classhandler__Report_a1406730673c2d437877e0f76ed5901f4}
+
+\begin{DoxyCompactList}\small\item\em Set Args determinates functionality. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classhandler__Report_a2a2e8a8bc459a3b007acb40ff556c2ae}{
+vector$<$ string $>$ $\ast$ \hyperlink{classhandler__Report_a2a2e8a8bc459a3b007acb40ff556c2ae}{p\_\-vecstr\_\-Log}}
+\label{classhandler__Report_a2a2e8a8bc459a3b007acb40ff556c2ae}
+
+\begin{DoxyCompactList}\small\item\em keep log output in vector \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_aa36af55735b04c6bcc41a27fc913caff}{
+vector$<$ \hyperlink{structstructRow}{structRow} $>$ $\ast$ \hyperlink{classhandler__Report_aa36af55735b04c6bcc41a27fc913caff}{p\_\-vecstr\_\-formattedTXT}}
+\label{classhandler__Report_aa36af55735b04c6bcc41a27fc913caff}
+
+\begin{DoxyCompactList}\small\item\em keep data in vector \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_a9837a9440d4966101ce058aac3d9f2c1}{
+boost::filesystem::path \hyperlink{classhandler__Report_a9837a9440d4966101ce058aac3d9f2c1}{pathReport}}
+\label{classhandler__Report_a9837a9440d4966101ce058aac3d9f2c1}
+
+\begin{DoxyCompactList}\small\item\em Keeps path to report file. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_a3886bbd9c74f29d506556d9e5df880b3}{
+string \hyperlink{classhandler__Report_a3886bbd9c74f29d506556d9e5df880b3}{strReportFile}}
+\label{classhandler__Report_a3886bbd9c74f29d506556d9e5df880b3}
+
+\begin{DoxyCompactList}\small\item\em File to report will be written. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_a31a53042cd0a7573c6085f873cc7c9c2}{
+bool \hyperlink{classhandler__Report_a31a53042cd0a7573c6085f873cc7c9c2}{bLog}}
+\label{classhandler__Report_a31a53042cd0a7573c6085f873cc7c9c2}
+
+\begin{DoxyCompactList}\small\item\em To log. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_a01b617c244828e8b335d340c7100cda9}{
+bool \hyperlink{classhandler__Report_a01b617c244828e8b335d340c7100cda9}{bFormattedTxt}}
+\label{classhandler__Report_a01b617c244828e8b335d340c7100cda9}
+
+\begin{DoxyCompactList}\small\item\em Generate formatted txt. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_af4d0a63e01b33543e5c99f506e26b501}{
+bool \hyperlink{classhandler__Report_af4d0a63e01b33543e5c99f506e26b501}{bGenXML}}
+\label{classhandler__Report_af4d0a63e01b33543e5c99f506e26b501}
+
+\begin{DoxyCompactList}\small\item\em Generate xml. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_a4c432f8d94b302551fc555c5ecc38be3}{
+unsigned \hyperlink{classhandler__Report_a4c432f8d94b302551fc555c5ecc38be3}{uiMultiplySpacer}}
+\label{classhandler__Report_a4c432f8d94b302551fc555c5ecc38be3}
+
+\begin{DoxyCompactList}\small\item\em Multiply spacer. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_abe60637871a948045fc0c8a9bf55a096}{
+unsigned \hyperlink{classhandler__Report_abe60637871a948045fc0c8a9bf55a096}{uiMaxCols}}
+\label{classhandler__Report_abe60637871a948045fc0c8a9bf55a096}
+
+\begin{DoxyCompactList}\small\item\em Max columns. \item\end{DoxyCompactList}\item 
+\hypertarget{classhandler__Report_a3ab81c5a6cdd06611c7e2e6d2d2424e3}{
+string \hyperlink{classhandler__Report_a3ab81c5a6cdd06611c7e2e6d2d2424e3}{strSpacerChar}}
+\label{classhandler__Report_a3ab81c5a6cdd06611c7e2e6d2d2424e3}
+
+\begin{DoxyCompactList}\small\item\em spacer character \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+handler\_\-Report.hpp\item 
+handler\_\-Report.cpp\end{DoxyCompactItemize}

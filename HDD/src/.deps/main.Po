@@ -574,7 +574,7 @@ main.o: main.cpp tester_hdd.hpp /usr/include/c++/4.4/cstdlib \
  /usr/include/boost/config/abi_prefix.hpp \
  /usr/include/boost/config/abi_suffix.hpp \
  /usr/include/boost/detail/scoped_enum_emulation.hpp version.h myHash.hpp \
- /usr/include/cryptopp/md5.h /usr/include/cryptopp/iterhash.h \
+ Globals.h /usr/include/cryptopp/md5.h /usr/include/cryptopp/iterhash.h \
  /usr/include/cryptopp/cryptlib.h /usr/include/cryptopp/config.h \
  /usr/include/cryptopp/stdcpp.h /usr/include/cryptopp/secblock.h \
  /usr/include/cryptopp/misc.h /usr/include/cryptopp/smartptr.h \
@@ -737,7 +737,7 @@ main.o: main.cpp tester_hdd.hpp /usr/include/c++/4.4/cstdlib \
  /usr/include/boost/date_time/local_time/conversion.hpp \
  /usr/include/boost/date_time/local_time/tz_database.hpp \
  /usr/include/boost/date_time/tz_db_base.hpp myTime.hpp myConv.hpp \
- Globals.h thread_tester_hdd.hpp /usr/include/c++/4.4/csignal \
+ thread_tester_hdd.hpp /usr/include/c++/4.4/csignal \
  /usr/include/bits/signum.h /usr/include/bits/siginfo.h \
  /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
  /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
@@ -778,8 +778,8 @@ main.o: main.cpp tester_hdd.hpp /usr/include/c++/4.4/cstdlib \
  /usr/include/boost/bind/bind_mf_cc.hpp \
  /usr/include/boost/bind/bind_mf2_cc.hpp \
  /usr/include/boost/bind/placeholders.hpp myThreadTemplates.hpp \
- thread_tester_hdd.cpp profileUpdateStore.hpp stats_keeper.hpp \
- /usr/include/pwd.h /usr/include/sys/sysinfo.h \
+ thread_tester_hdd.cpp handler_Configuration.hpp /usr/include/pwd.h \
+ handler_Report.hpp /usr/include/sys/sysinfo.h \
  /usr/include/linux/kernel.h
 
 tester_hdd.hpp:
@@ -2110,6 +2110,8 @@ version.h:
 
 myHash.hpp:
 
+Globals.h:
+
 /usr/include/cryptopp/md5.h:
 
 /usr/include/cryptopp/iterhash.h:
@@ -2498,8 +2500,6 @@ myTime.hpp:
 
 myConv.hpp:
 
-Globals.h:
-
 thread_tester_hdd.hpp:
 
 /usr/include/c++/4.4/csignal:
@@ -2606,11 +2606,11 @@ myThreadTemplates.hpp:
 
 thread_tester_hdd.cpp:
 
-profileUpdateStore.hpp:
-
-stats_keeper.hpp:
+handler_Configuration.hpp:
 
 /usr/include/pwd.h:
+
+handler_Report.hpp:
 
 /usr/include/sys/sysinfo.h:
 

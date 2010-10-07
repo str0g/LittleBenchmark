@@ -2,80 +2,76 @@
 
   \item {$\sim $thread\_\discretionary {-}{}{}1}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{13}
+		\hyperpage{9}
 
   \indexspace
 
   \item {Execute}
     \subitem {thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}, 
-		\hyperpage{15}
+		\hyperpage{11}
   \item {Execute\_\discretionary {-}{}{}}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{13}
-
-  \indexspace
-
-  \item {Hash}, \hyperpage{7}
+		\hyperpage{9}
 
   \indexspace
 
   \item {join}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{13}
+		\hyperpage{9}
 
   \indexspace
 
   \item {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{13}
-    \subitem {$\sim $thread\_\discretionary {-}{}{}1}, \hyperpage{13}
-    \subitem {Execute\_\discretionary {-}{}{}}, \hyperpage{13}
-    \subitem {join}, \hyperpage{13}
-    \subitem {self\_\discretionary {-}{}{}test}, \hyperpage{14}
-    \subitem {start}, \hyperpage{14}
+		\hyperpage{9}
+    \subitem {$\sim $thread\_\discretionary {-}{}{}1}, \hyperpage{9}
+    \subitem {Execute\_\discretionary {-}{}{}}, \hyperpage{9}
+    \subitem {join}, \hyperpage{9}
+    \subitem {self\_\discretionary {-}{}{}test}, \hyperpage{10}
+    \subitem {start}, \hyperpage{10}
     \subitem {start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}, 
-		\hyperpage{14}
-    \subitem {UpdateStats}, \hyperpage{14}
+		\hyperpage{10}
+    \subitem {UpdateStats}, \hyperpage{10}
 
   \indexspace
 
-  \item {profileUpdateStore}, \hyperpage{9}
+  \item {profileUpdateStore}, \hyperpage{5}
 
   \indexspace
 
   \item {Run}
-    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{12}
+    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
 
   \indexspace
 
   \item {self\_\discretionary {-}{}{}test}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{14}
+		\hyperpage{10}
   \item {start}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{14}
+		\hyperpage{10}
   \item {start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{14}
-  \item {stats\_\discretionary {-}{}{}keeper}, \hyperpage{10}
+		\hyperpage{10}
+  \item {stats\_\discretionary {-}{}{}keeper}, \hyperpage{6}
 
   \indexspace
 
-  \item {tester\_\discretionary {-}{}{}hdd}, \hyperpage{12}
-    \subitem {Run}, \hyperpage{12}
-    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{12}
-    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{12}
+  \item {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
+    \subitem {Run}, \hyperpage{8}
+    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
+    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
   \item {thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}, 
-		\hyperpage{15}
-    \subitem {Execute}, \hyperpage{15}
+		\hyperpage{11}
+    \subitem {Execute}, \hyperpage{11}
 
   \indexspace
 
   \item {UpdateStats}
     \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{14}
+		\hyperpage{10}
 
   \indexspace
 
-  \item {vector\_\discretionary {-}{}{}str}, \hyperpage{16}
+  \item {vector\_\discretionary {-}{}{}str}, \hyperpage{12}
 
 \end{theindex}

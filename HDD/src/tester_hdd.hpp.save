@@ -9,7 +9,7 @@
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -32,18 +32,15 @@
 #include "thread_tester_hdd.hpp"
 #include "thread_tester_hdd.cpp"//change it later
 #include "profileUpdateStore.hpp"
-#include "stats_keeper.hpp"
+#include "handler_Report.hpp"
 
 #ifdef __WIN32__ || __WIN64__
-#include <windows.h>
-#include <shlobj.h>
-#include <intrin.h>
+    #include <windows.h>/*mem info*/
 #else
-#include <pwd.h>
-#include <sys/sysinfo.h>
+    #include <sys/sysinfo.h>/*mem info*/
 #endif
 
-///Specials
+//Specials
 using std::string;
 using std::vector;
 using std::cout;
@@ -52,16 +49,11 @@ using std::cin;
 using std::endl;
 //Globals Varuabels
 
-class tester_hdd: public stats_keeper{
+class tester_hdd: public handler_Configuration, public handler_Report{
     private:
-        string strSummaryFile; //!<File to summary will be written
         string strDataLimit; //!<Data Limit as string beforre conversion to unsigned
         string MaxCharSize; //!<Limit for char size
         string MaxStringSize; //!< Limit for string size
-        string strPath;//!<Profile path
-        boost::filesystem::path pathProfile;//!<Keeps path to config file
-        boost::filesystem::path pathConfig;//!<Keeps path to config file
-        boost::filesystem::path pathSummary;//!<Keeps path to summary file
         bool bThreadingPerDir; //!<Every dir in new thread simuisly
         bool bDebugging; //!<Debugging Enable/Disable
         bool bSelfTest;//!<Run selftest
@@ -77,7 +69,6 @@ class tester_hdd: public stats_keeper{
         uint64_t ui64MaxStringSize;//!< Limit for string size
         uint8_t ui8Precision;//!<Precision of cout
         mode_t uiPermissions; //!< Temporary folder premissions
-        vector<profileUpdateStore*> *pus_Var;//!<Store Profiles varuables name and values
         vector<boost::filesystem::path> vstr_WorkDirs; //!<Store work directories
         vector<boost::filesystem::path>::iterator vitstr_WorkDirs; //!<iterator for Stored directories
         vector<unsigned> vui_Probes;//!<Store Probes as unsigned

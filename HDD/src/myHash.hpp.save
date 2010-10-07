@@ -6,25 +6,37 @@
  * Purpose:   Code for Application <Name>
  * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
  * Created:   <Input date>
- * Copyright: Łukasz Buśko (www.SoonWillBe.pl)
+ * Copyright: Łukasz Buśko (http://str0g.wordpress.com)
  * License:   GNU / General Public Licens
  **************************************************************/
-///Headers
+//Headers
+#define SHA512LEN 128
+#include "Globals.h"
+#if
+#define COMPILE_WITH_CRYPTOPP 1
+#ifdef COMPILE_WITH_CRYPTOPP == 1
+
 #define CRYPTOPP_ENABLE_NAMESPACE_WEAK 1
 #include <string>
+#ifdef __WIN32__ || __WIN64__
+#include "md5.h"
+#include "rsa.h"
+#include "base64.h"
+#include "hex.h"
+#else
 #include <cryptopp/md5.h>
 #include <cryptopp/rsa.h>
 #include <cryptopp/base64.h>
 #include "cryptopp/hex.h"
+#endif
 
-///Specials
-///Globals Varuabels
+//Specials
+//Globals Varuabels
 /**
-* Hash functions from http://nopaste.gamedev.pl/?id=5546
+* Hash functions has been taken from http://nopaste.gamedev.pl/?id=5546
 */
 namespace Hash
 {
-    #define SHA512LEN 128
         //Hash data by MD5 algorhitm
         inline std::string MD5(const std::string &data)
         {
@@ -32,7 +44,7 @@ namespace Hash
                 CryptoPP::Weak1::MD5 hash;
                 byte digest[CryptoPP::Weak1::MD5::DIGESTSIZE];
 
-                hash.CalculateDigest(digest, (byte*)data, data.size());
+                hash.CalculateDigest(digest, (byte*)data.c_str(), data.size());
 
                 CryptoPP::HexEncoder encoder;
                 encoder.Attach(new CryptoPP::StringSink(res));
@@ -54,5 +66,5 @@ namespace Hash
                 return res;
         }
 }
-
+#endif //COMPILE_WITH_CRYPTOPP
 #endif // MYHASH_HPP_INCLUDED

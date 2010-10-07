@@ -44,7 +44,7 @@ if(!bFl){
 int main(int ac,char **av){
 
     signal (SIGSEGV, clean);
-    #ifdef __WIN32__ || __WIN64__
+    #if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
     #else
     signal (SIGKILL,clean);
     #endif

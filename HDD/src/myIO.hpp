@@ -131,8 +131,12 @@ namespace myIO{
         return false;
     }
     //WRITE OPERATIONS
+#if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+    inline bool touch(const boost::filesystem::path &pathTo){
+#else
     inline bool touch(const boost::filesystem::path &pathTo,\
                       mode_t mode =0644){
+#endif
         if ( boost::filesystem::is_regular_file(pathTo) ){
             std::cerr<<pathTo<<"::Already exist nothing to be done"<<std::endl;
             return false;
@@ -140,9 +144,12 @@ namespace myIO{
         boost::filesystem::ofstream o (pathTo);
         if(o.is_open()){
             o.close();
+        #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+        #else
             if (chmod(pathTo.file_string().c_str(),mode)!= 0){
                     std::cerr<<pathTo<<"::Failed to set permisions"<<std::endl;
             }
+        #endif
             return true;
 
         }
@@ -173,16 +180,28 @@ namespace myIO{
         }
         return false;
     }
+#if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+    inline bool appToFile(const std::string *strFileName,const std::string *data){
+#else
     inline bool appToFile(const std::string *strFileName,const std::string *data,mode_t pmode =0644,mode_t emode = 0444){
+#endif
+    #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+        if(true){
+    #else
         if (chmod(strFileName->c_str(),pmode)==0){
+    #endif
             std::ofstream o(strFileName->c_str(),std::ios::app);
             if(o){
                 o << *data;
                 o.close();
+            #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+                return true;
+            #else
                 if (chmod(strFileName->c_str(),emode)!=0){
                     std::cerr<<"[appToFile]: "<<*strFileName<<" Premission error(after write)"<<std::endl;
                 }
                 return true;
+            #endif
             }
             std::cerr<<"[appToFile]: "<<*strFileName<<" Failed to open"<<std::endl;
         }else{
@@ -204,7 +223,10 @@ namespace myIO{
                     }//deep scan
                 }else{
                     if (bForced){
+                    #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+                    #else
                         chmod(iter->path().file_string().c_str(),0644);
+                    #endif
                     }
                     boost::filesystem::remove(*iter);
                 }//if dir

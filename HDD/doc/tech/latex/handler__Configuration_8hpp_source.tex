@@ -1,0 +1,74 @@
+\hypertarget{handler__Configuration_8hpp_source}{
+\section{handler\_\-Configuration.hpp}
+}
+
+
+\begin{footnotesize}\begin{alltt}
+00001 \textcolor{preprocessor}{#ifndef handler\_Configuration\_HPP\_INCLUDED}
+00002 \textcolor{preprocessor}{}\textcolor{preprocessor}{#define handler\_Configuration\_HPP\_INCLUDED}
+00003 \textcolor{preprocessor}{}
+00004 \textcolor{comment}{/***************************************************************}
+00005 \textcolor{comment}{ * Name:      <Input name>.cpp/h}
+00006 \textcolor{comment}{ * Purpose:   Code for Application <Name>}
+00007 \textcolor{comment}{ * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)}
+00008 \textcolor{comment}{ * Created:   <Input date>}
+00009 \textcolor{comment}{ * Copyright: Łukasz Buśko (https://str0g.wordpress.com)}
+00010 \textcolor{comment}{ * License:   GNU / General Public Licens}
+00011 \textcolor{comment}{ **************************************************************/}
+00012 \textcolor{comment}{//Headers}
+00013 
+00014 \textcolor{preprocessor}{#if ( \_WIN32 ||  \_WIN64) || ( \_\_WIN32\_\_ || \_\_WIN64\_\_ )}
+00015 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #include <shlobj.h>} \textcolor{comment}{/*profile path*/}
+00016 \textcolor{preprocessor}{#else}
+00017 \textcolor{preprocessor}{}\textcolor{preprocessor}{    #include <pwd.h>} \textcolor{comment}{/*profile path*/}
+00018 \textcolor{preprocessor}{#endif}
+00019 \textcolor{preprocessor}{}
+00020 \textcolor{preprocessor}{#include <cstdlib>}
+00021 \textcolor{preprocessor}{#include <iostream>}
+00022 \textcolor{preprocessor}{#include <string>}
+00023 \textcolor{preprocessor}{#include <vector>}
+00024 \textcolor{preprocessor}{#include <boost/filesystem/path.hpp>}
+00025 \textcolor{comment}{//}
+00026 \textcolor{preprocessor}{#include "myConv.hpp"}
+00027 \textcolor{preprocessor}{#include "myIO.hpp"}
+00028 \textcolor{comment}{//Specials}
+00029 \textcolor{keyword}{using} std::vector;
+00030 \textcolor{keyword}{using} std::string;
+00031 \textcolor{keyword}{using} std::cout;
+00032 \textcolor{keyword}{using} std::cerr;
+00033 \textcolor{keyword}{using} std::cin;
+00034 \textcolor{keyword}{using} std::endl;
+00035 
+\hypertarget{handler__Configuration_8hpp_source_l00036}{}\hyperlink{structprofileNode}{00036} \textcolor{keyword}{struct }\hyperlink{structprofileNode}{profileNode}\{
+00037     \textcolor{keywordtype}{string} strVar;
+00038     \textcolor{keywordtype}{string} strVal;
+00039     \hyperlink{structprofileNode}{profileNode}(\textcolor{keywordtype}{string}&,\textcolor{keywordtype}{string}&);
+00040     \textcolor{keywordtype}{string} getData();
+00041 \};
+00042 
+\hypertarget{handler__Configuration_8hpp_source_l00043}{}\hyperlink{classhandler__Configuration}{00043} \textcolor{keyword}{class }\hyperlink{classhandler__Configuration}{handler_Configuration}\{
+00044     \textcolor{keyword}{private}:
+00045         vector<profileNode> *p\_vec\_Nodes;
+00046         \textcolor{keywordtype}{string} *p\_strConfigs;
+00047     \textcolor{keyword}{protected}:
+\hypertarget{handler__Configuration_8hpp_source_l00048}{}\hyperlink{classhandler__Configuration_aa4302de200eb462a44938b64cb7ed944}{00048}         boost::filesystem::path \hyperlink{classhandler__Configuration_aa4302de200eb462a44938b64cb7ed944}{pathProfile};
+\hypertarget{handler__Configuration_8hpp_source_l00049}{}\hyperlink{classhandler__Configuration_af547a16146ccb86cf5102068e855b3a2}{00049}         boost::filesystem::path \hyperlink{classhandler__Configuration_af547a16146ccb86cf5102068e855b3a2}{pathConfig};
+00050         \textcolor{keywordtype}{bool} bLetUpdate;
+00051     \textcolor{keyword}{public}:
+00052         \hyperlink{classhandler__Configuration}{handler_Configuration}();
+00053         \textcolor{keyword}{virtual} ~\hyperlink{classhandler__Configuration}{handler_Configuration}();
+00054         \textcolor{keywordtype}{void} \hyperlink{classhandler__Configuration_a9f850565461949dbb96f6cc5028618c1}{setUserDir}();
+00055         \textcolor{keywordtype}{void} addNodeToStored(\textcolor{keywordtype}{string},\textcolor{keywordtype}{string});
+00056         \textcolor{keywordtype}{void} clearNodes();
+00057         \textcolor{keywordtype}{void} parseConfigs();
+00058         \textcolor{keywordtype}{void} saveConfigs();
+00059 \};\textcolor{comment}{/*}
+00060 \textcolor{comment}{        template <typename T>}
+00061 \textcolor{comment}{        friend std::ostream & operator << (T & Output, handler\_Configuration &w)\{
+      }
+00062 \textcolor{comment}{            return Output<<"string Variable: "<<w.strVar<<"\(\backslash\)nstring Value: "<<w.s
+      trVal<<"\(\backslash\)n";}
+00063 \textcolor{comment}{*/}
+00064 
+00065 \textcolor{preprocessor}{#endif // handler\_Configuration\_HPP\_INCLUDED}
+\end{alltt}\end{footnotesize}

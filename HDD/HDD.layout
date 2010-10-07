@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="src/Globals.cpp" open="1" top="0" tabpos="14">
-		<Cursor position="1583" topLine="0" />
+	<File name="src/Globals.cpp" open="1" top="0" tabpos="12">
+		<Cursor position="419" topLine="0" />
 	</File>
-	<File name="src/Globals.h" open="1" top="0" tabpos="12">
-		<Cursor position="1265" topLine="0" />
+	<File name="src/Globals.h" open="1" top="0" tabpos="10">
+		<Cursor position="110" topLine="0" />
 	</File>
-	<File name="src/main.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="785" topLine="30" />
+	<File name="src/handler_Configuration.cpp" open="1" top="0" tabpos="16">
+		<Cursor position="3888" topLine="68" />
+	</File>
+	<File name="src/handler_Configuration.hpp" open="1" top="0" tabpos="17">
+		<Cursor position="893" topLine="0" />
+	</File>
+	<File name="src/handler_Report.cpp" open="1" top="0" tabpos="15">
+		<Cursor position="5058" topLine="108" />
+	</File>
+	<File name="src/handler_Report.hpp" open="1" top="0" tabpos="14">
+		<Cursor position="1603" topLine="13" />
+	</File>
+	<File name="src/main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1148" topLine="16" />
 	</File>
 	<File name="src/myConv.hpp" open="1" top="0" tabpos="8">
-		<Cursor position="2149" topLine="30" />
+		<Cursor position="1477" topLine="9" />
 	</File>
 	<File name="src/myHash.hpp" open="1" top="0" tabpos="9">
-		<Cursor position="612" topLine="0" />
+		<Cursor position="718" topLine="22" />
 	</File>
 	<File name="src/myIO.hpp" open="1" top="0" tabpos="5">
-		<Cursor position="2092" topLine="42" />
+		<Cursor position="7733" topLine="189" />
 	</File>
-	<File name="src/myThreadTemplates.hpp" open="1" top="0" tabpos="15">
-		<Cursor position="2874" topLine="53" />
+	<File name="src/myThreadTemplates.hpp" open="1" top="0" tabpos="13">
+		<Cursor position="1120" topLine="18" />
 	</File>
 	<File name="src/myTime.hpp" open="1" top="0" tabpos="4">
-		<Cursor position="2098" topLine="6" />
-	</File>
-	<File name="src/profileUpdateStore.cpp" open="1" top="0" tabpos="11">
-		<Cursor position="697" topLine="0" />
-	</File>
-	<File name="src/profileUpdateStore.hpp" open="1" top="0" tabpos="10">
-		<Cursor position="822" topLine="0" />
-	</File>
-	<File name="src/stats_keeper.cpp" open="1" top="0" tabpos="16">
-		<Cursor position="1949" topLine="33" />
-	</File>
-	<File name="src/stats_keeper.hpp" open="1" top="0" tabpos="17">
-		<Cursor position="592" topLine="9" />
+		<Cursor position="1956" topLine="6" />
 	</File>
 	<File name="src/tester_hdd.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="26748" topLine="460" />
+		<Cursor position="14508" topLine="267" />
 	</File>
 	<File name="src/tester_hdd.hpp" open="1" top="0" tabpos="3">
-		<Cursor position="1053" topLine="15" />
+		<Cursor position="1082" topLine="36" />
 	</File>
-	<File name="src/thread_tester_hdd.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="13632" topLine="252" />
+	<File name="src/thread_tester_hdd.cpp" open="1" top="1" tabpos="7">
+		<Cursor position="16085" topLine="324" />
 	</File>
 	<File name="src/thread_tester_hdd.hpp" open="1" top="0" tabpos="6">
-		<Cursor position="2039" topLine="41" />
+		<Cursor position="540" topLine="0" />
 	</File>
-	<File name="src/version.h" open="1" top="0" tabpos="13">
-		<Cursor position="854" topLine="6" />
+	<File name="src/version.h" open="1" top="0" tabpos="11">
+		<Cursor position="399" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
