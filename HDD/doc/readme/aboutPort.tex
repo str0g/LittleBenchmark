@@ -1,0 +1,20 @@
+\hypertarget{AboutPort}{
+\section{About Port}
+\label{AboutPort}\index{AboutPort@{About Port}}
+}
+
+There are few important differences between Linux and windows:\\
+\begin{tabular}{|c|c|c|c|}
+\hline
+  & Linux & Windows & \\ \hline
+char size & 2 & 1 & byte\\ \hline
+string size & 8 & 2 & byte\\ \hline
+\end{tabular}\\
+Linux provides by default wide characters and utf-8 support which windows does not.
+\begin{itemize}
+\item [\textbf{Windows:}]Conversion from string.find to int64 have to be done with middle conversion to int in order to not lose -1 if occurred...
+\item [\textbf{Windows:}]Console closed by x had to be handled in dedicated way.
+\item [\textbf{Windows:}]New line character had to be replaced with enter in configuration module.
+\item [\textbf{Windows:}]Lack of linkable libcryptopp.
+\item [\textbf{Windows:}]mode\_t variables are unused but present and redefined as int.
+\end{itemize}

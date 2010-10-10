@@ -1,77 +1,83 @@
 \begin{theindex}
 
   \item {$\sim $thread\_\discretionary {-}{}{}1}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{9}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{12}
+
+  \indexspace
+
+  \item {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{12}
+    \subitem {$\sim $thread\_\discretionary {-}{}{}1}, \hyperpage{12}
+    \subitem {Execute\_\discretionary {-}{}{}}, \hyperpage{12}
+    \subitem {join}, \hyperpage{12}
+    \subitem {self\_\discretionary {-}{}{}test}, \hyperpage{13}
+    \subitem {start}, \hyperpage{13}
+    \subitem {start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}, 
+		\hyperpage{13}
+    \subitem {UpdateStats}, \hyperpage{13}
 
   \indexspace
 
   \item {Execute}
     \subitem {thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}, 
-		\hyperpage{11}
+		\hyperpage{14}
   \item {Execute\_\discretionary {-}{}{}}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{9}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{12}
+
+  \indexspace
+
+  \item {handler\_\discretionary {-}{}{}Configuration}, \hyperpage{5}
+    \subitem {setUserDir}, \hyperpage{5}
+  \item {handler\_\discretionary {-}{}{}Report}, \hyperpage{7}
 
   \indexspace
 
   \item {join}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{9}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{12}
 
   \indexspace
 
-  \item {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{9}
-    \subitem {$\sim $thread\_\discretionary {-}{}{}1}, \hyperpage{9}
-    \subitem {Execute\_\discretionary {-}{}{}}, \hyperpage{9}
-    \subitem {join}, \hyperpage{9}
-    \subitem {self\_\discretionary {-}{}{}test}, \hyperpage{10}
-    \subitem {start}, \hyperpage{10}
-    \subitem {start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}, 
-		\hyperpage{10}
-    \subitem {UpdateStats}, \hyperpage{10}
-
-  \indexspace
-
-  \item {profileUpdateStore}, \hyperpage{5}
+  \item {profileNode}, \hyperpage{9}
 
   \indexspace
 
   \item {Run}
-    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
+    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{11}
 
   \indexspace
 
   \item {self\_\discretionary {-}{}{}test}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{10}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{13}
+  \item {setUserDir}
+    \subitem {handler\_\discretionary {-}{}{}Configuration}, 
+		\hyperpage{5}
   \item {start}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{10}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{13}
   \item {start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{10}
-  \item {stats\_\discretionary {-}{}{}keeper}, \hyperpage{6}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{13}
+  \item {structRow}, \hyperpage{10}
+    \subitem {structRow}, \hyperpage{10}
 
   \indexspace
 
-  \item {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
-    \subitem {Run}, \hyperpage{8}
-    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
-    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{8}
+  \item {tester\_\discretionary {-}{}{}hdd}, \hyperpage{11}
+    \subitem {Run}, \hyperpage{11}
+    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{11}
+    \subitem {tester\_\discretionary {-}{}{}hdd}, \hyperpage{11}
   \item {thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd}, 
-		\hyperpage{11}
-    \subitem {Execute}, \hyperpage{11}
+		\hyperpage{14}
+    \subitem {Execute}, \hyperpage{14}
 
   \indexspace
 
   \item {UpdateStats}
-    \subitem {myThreadTemplates::thread\_\discretionary {-}{}{}1}, 
-		\hyperpage{10}
-
-  \indexspace
-
-  \item {vector\_\discretionary {-}{}{}str}, \hyperpage{12}
+    \subitem {buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1}, 
+		\hyperpage{13}
 
 \end{theindex}

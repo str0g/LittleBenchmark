@@ -10,7 +10,19 @@ xx October 2010
 	-Add:	   Generator for xml + html
 	-Add:      Chart generator
 	-Fix:      Memory leaks in allocation test (32records)
-	Update:    Windows portability
+	-Fix:	   Libcryptopp linking erros
+
+10 October 2010
+   released version 1.1.5 of HDD
+
+     Change log:
+	Added:	   Realise package with windows binaries
+	Added:	   Handling for windows console close signal
+	Updated:   Windows portability (time is now working)
+	Removed:   Multi arguments scanning for probes and directories because of windows compatibility
+	Fixed:	   Read stream and Read char with out size descriptions
+	Fixed:	   Memory leaking when running program with -a -v parameters
+	Fixed:	   Report address bug + optimization
 
 07 October 2010
    released version 1.1.2 of HDD

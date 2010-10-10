@@ -84,8 +84,8 @@ tester_hdd::tester_hdd(int ac,char **av):
         desc.add(OutOptions);
 
         boost::program_options::positional_options_description pos_opt;
-        pos_opt.add("work-dir", -1);
-        pos_opt.add("probe-size",-1);
+        pos_opt.add("work-dir", pos_opt.max_total_count());
+        pos_opt.add("probe-size",pos_opt.max_total_count());
 
         boost::program_options::variables_map vm;
         boost::program_options::store(boost::program_options::command_line_parser(ac, av).options(desc).positional(pos_opt).run(), vm);
@@ -98,19 +98,19 @@ tester_hdd::tester_hdd(int ac,char **av):
 
         if (vm.count("help")) {
             cout << desc << "\n";
-            exit(0);
+            raise(SIGTERM);
         }
         if (vm.count("version")) {
             cout << "Version: " << AutoVersion::FULLVERSION_STRING <<endl;
             cout << "Build date: " << AutoVersion::DATE <<"."<<AutoVersion::MONTH <<"."<<AutoVersion::YEAR<<endl;
-            exit(0);
+            raise(SIGTERM);
         }
         if (vm.count("Author")){
             cout << "Author:    Łukasz Buśko"<<endl;
             cout << "Contact:   buskol.waw.pl@gmail.com"<<endl;
             cout << "Home page: http://str0g.wordpress.com"<<endl;
             cout << "License:   GNU/General Public License"<<endl;
-            exit(0);
+            raise(SIGTERM);
         }
         if((vm.count("as-log"))){
             bLog = vm["as-log"].as<bool>();
@@ -294,7 +294,7 @@ tester_hdd::tester_hdd(int ac,char **av):
     }
     catch(std::exception& e) {
         cerr << e.what() << "\n";
-        exit(0);
+        raise(SIGABRT);
     }
 }
 tester_hdd::~tester_hdd(){

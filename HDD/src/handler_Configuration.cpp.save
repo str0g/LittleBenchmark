@@ -9,7 +9,7 @@
 //Headers
 #include "handler_Configuration.hpp"
 
-profileNode::profileNode(string *var,string *val):strVar(*var),strVal(*val){
+profileNode::profileNode(string &var,string &val):strVar(var),strVal(val){
 }
 string profileNode::getData(){
     return "\n"+strVar+" = "+strVal;
@@ -27,7 +27,7 @@ handler_Configuration::~handler_Configuration(){
     delete p_strConfigs;
 }
 
-void handler_Configuration::addNodeToStored(string *var,string *val){
+void handler_Configuration::addNodeToStored(string var,string val){
     p_vec_Nodes->push_back(profileNode(var,val));
 }
 void handler_Configuration::clearNodes(){
@@ -35,7 +35,7 @@ void handler_Configuration::clearNodes(){
 }
 
 void handler_Configuration::setUserDir(){
-#ifdef __WIN32__ || __WIN64__
+#if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
   char path[ MAX_PATH ];
   if (SHGetFolderPathA( NULL, CSIDL_PROFILE, NULL, 0, path ) != S_OK)
     throw std::runtime_error( "Could not retrieve the user's home directory!");
@@ -65,11 +65,13 @@ void handler_Configuration::setUserDir(){
         myIO::createDir(pathProfile);
         pathConfig /= pathProfile.file_string()+"/config.cfg";
         if (myIO::touch(pathConfig) == true){
+#if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
             string strtmp = "\
 #\n\
 # Run program with -h or --help options to see which parameters you can set here\n\
 # Parameter should look like param = [value]\n\
 #"; // file tmp
+
             myIO::SimpleWriteToFile(pathConfig,strtmp);
         }//if touch
     }//if strRet.lenght
@@ -86,19 +88,31 @@ void handler_Configuration::parseConfigs(){
         it != p_vec_Nodes->end(); it++
         ){
             if ( it->strVar.length() > 3 and it->strVal.length() > 0 ){
-                index = (int64_t)p_strConfigs->find(it->strVar); index > -1 ? cout<<"Index:"<<Index<<endl; : cout<<"";
-                if ( index > 0){cout<<"Replaced:"<<it->getData()<<endl;
-                    index += (int64_t)it->strVar.length();  cout<<"Index+:"<<Index<<"\n"<<p_strConfigs->find("\n",index)endl;
-                    p_strConfigs->replace(index,\
-                                    ( p_strConfigs->find("\n",index) - string("\n").length() ),\
-                                    " = "+it->strVal
-                                    );
-                }else{cout<<"ADD"<<endl;
-                    p_strConfigs->append(it->getData());
-                }
+            #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+                #ifdef _MSC_VER
+                int(p_strConfigs->find(it->strVar)) != -1 ? index = (int64_t)p_strConfigs->find(it->strVar) : index = int64_t(int(p_strConfigs->find(it->strVar)));//precision fix if -1 ouccure. Microsoft developers are only suitable for straightening bananas...
+                #else
+                index = (int64_t)p_strConfigs->find(it->strVar);
+                #endif
+            #endif
+                if ( index > 0){/*
                 cout<<"------------------------------"<<endl;
                 cout<<*p_strConfigs<<endl;
                 cout<<"------------------------------"<<endl;
+                    cout<<"Replaced:"<<it->getData()<<endl;
+                    cout<<"Index:"<<index<<endl ;*/
+                    index += (int64_t)it->strVar.length();
+                    //cout<<"Index+:"<<index<<"\nend:"<<p_strConfigs->find("\n",index)-index<<endl;
+                    p_strConfigs->replace(index,\
+                                    ( p_strConfigs->find("\n",index) - index ),\
+                                    " = "+it->strVal
+                                    );/*
+                cout<<"------------------------------"<<endl;
+                cout<<*p_strConfigs<<endl;
+                cout<<"------------------------------"<<endl;*/
+                }else{
+                    p_strConfigs->append(it->getData());
+                }
             }
     }
 }

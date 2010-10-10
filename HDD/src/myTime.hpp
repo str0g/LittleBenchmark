@@ -39,8 +39,6 @@ namespace myTime{
     }
     inline std::string GetLocalTime(std::string strTimeFormatter = "[%Y/%m/%d %H:%M:%S]"){
         char buffer2 [KB]; //!< buffer do ktorego zostanie wpisany string
-        #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
-        #else
         ///Pobiera czas wedlug zdefinowanego formatowania
         time_t rawtime; //!< pobranie czasu
         struct tm * timeinfo; //!< struktura czasu, dzieki ktorej dziala formatowanie
@@ -48,7 +46,7 @@ namespace myTime{
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );
         strftime (buffer2,KB,strTimeFormatter.c_str(),timeinfo);
-        #endif
+
         return buffer2;
     }
 }

@@ -65,11 +65,27 @@ void handler_Configuration::setUserDir(){
         myIO::createDir(pathProfile);
         pathConfig /= pathProfile.file_string()+"/config.cfg";
         if (myIO::touch(pathConfig) == true){
+#if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+    #ifdef _MSC_VER
+            string strtmp = "\
+#\r\
+# Run program with -h or --help options to see which parameters you can set here\r\
+# Parameter should look like param = [value]\r\
+#"; // file tmp
+    #else
             string strtmp = "\
 #\n\
 # Run program with -h or --help options to see which parameters you can set here\n\
 # Parameter should look like param = [value]\n\
 #"; // file tmp
+    #endif
+#else
+            string strtmp = "\
+#\n\
+# Run program with -h or --help options to see which parameters you can set here\n\
+# Parameter should look like param = [value]\n\
+#"; // file tmp
+#endif
             myIO::SimpleWriteToFile(pathConfig,strtmp);
         }//if touch
     }//if strRet.lenght
@@ -86,7 +102,15 @@ void handler_Configuration::parseConfigs(){
         it != p_vec_Nodes->end(); it++
         ){
             if ( it->strVar.length() > 3 and it->strVal.length() > 0 ){
+            #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+                #ifdef _MSC_VER
+                int(p_strConfigs->find(it->strVar)) != -1 ? index = (int64_t)p_strConfigs->find(it->strVar) : index = int64_t(int(p_strConfigs->find(it->strVar)));//precision fix if -1 ouccure. Microsoft developers are only suitable for straightening bananas...
+                #else
                 index = (int64_t)p_strConfigs->find(it->strVar);
+                #endif
+            #else
+                index = (int64_t)p_strConfigs->find(it->strVar);
+            #endif
                 if ( index > 0){/*
                 cout<<"------------------------------"<<endl;
                 cout<<*p_strConfigs<<endl;

@@ -7,47 +7,49 @@
  * License:   GNU / General Public Licens
  **************************************************************/
 //Headers
-//#include <cstdlib>
-//#include <iostream>
-#include "tester_hdd.hpp"
-//#include "Globals.h"
-//export ConsoleColors[];
-//extern string ConsoleColors[];
+#include <iostream>
 #include <csignal>
-//#include <string>
-/*#include <list>
-#include <vector>
-using std::string;
-using std::vector;
-using std::cout;
-using std::endl;
-using std::list;
-*/
-//Specials
+#include "tester_hdd.hpp"
 //Globals Varuabels
-
 static tester_hdd *p_hdd = NULL;
 static bool bFl = false;
+//Port
+#if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
+#include <windows.h>
+bool CtrlHandler( DWORD fdwCtrlType ){
+    if(!bFl){
+        bFl = true;
+        cout<<"\nTerminating program...[ by X ]"<<endl;
+        if (p_hdd){
+        p_hdd->~tester_hdd();
+        }
+        return true;
+    }
+    return false;
+}
+#endif
 
 void clean (int param){
 ///Method run destructors on common signals
-if(!bFl){
-    bFl = true;
-    cout<<"\nTerminating program...["<<param<<"]"<<endl;
-    if (p_hdd){
-      p_hdd->~tester_hdd();
+    if(!bFl){
+        bFl = true;
+        std::cout<<"\nTerminating program...["<<param<<"]"<<std::endl;
+        if (p_hdd){
+        p_hdd->~tester_hdd();
+        }
+        exit(param);
     }
-    exit(param);
-  }
 }
 
 int main(int ac,char **av){
 
     signal (SIGSEGV, clean);
     #if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
+    SetConsoleCtrlHandler((PHANDLER_ROUTINE) CtrlHandler,TRUE);
     #else
     signal (SIGKILL,clean);
     #endif
+    signal (SIGTERM,clean);
     signal (SIGINT,clean);
     signal (SIGABRT,clean);
 

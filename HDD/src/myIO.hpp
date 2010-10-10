@@ -210,7 +210,7 @@ namespace myIO{
         return false;
     }
     //REMOVE OPERATIONS
-    inline void rmAll(const boost::filesystem::path & directory,bool bForced = true,int intDirScanDepth =1024){
+    inline void rmAll_inDir(const boost::filesystem::path & directory,bool bForced = true,int intDirScanDepth =1024){///Save remover for directorys, with defined folder depth and premission changing capabilities
         int intDirScanCounter = 0;
         if( boost::filesystem::exists( directory ) ){
             boost::filesystem::directory_iterator end ;
@@ -218,7 +218,7 @@ namespace myIO{
                 if ( boost::filesystem::is_directory( *iter ) ){
                     if(intDirScanCounter < intDirScanDepth){
                         ++intDirScanCounter;
-                        myIO::rmAll(*iter,bForced);
+                        myIO::rmAll_inDir(*iter,bForced);
                         boost::filesystem::remove(*iter);
                     }//deep scan
                 }else{
@@ -232,6 +232,21 @@ namespace myIO{
                 }//if dir
             }//loop
         }//if exist
+    }
+    inline void rm(const boost::filesystem::path & path,std::string strOpt="",bool bforced = false){
+        if (strOpt == "all"){///Fast remover for directory
+            boost::filesystem::remove_all(path);
+        }
+        if (strOpt == ""){///Remove file or empty folder with premissions changing capabilities
+            #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+            #else
+            if(bforced)
+                if (chmod(path.file_string().c_str(),0644) != 0)
+                    std::cerr<<"Failed to change Premission: "<<path<<std::endl;
+            #endif
+            boost::filesystem::remove(path);
+        }
+
     }
     //List
     inline void lsFiles(const boost::filesystem::path &bfsp_dir,\

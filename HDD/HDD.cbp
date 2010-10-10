@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="-x 1k -l 2k -m 10 -S 2 --ssd 1" />
+				<Option parameters="-x 1k -x 2k -l 2k -m 10 -S 2 --ssd 1 --save-configs" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>

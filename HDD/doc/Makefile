@@ -122,15 +122,15 @@ OBJEXT = o
 PACKAGE = LitttleBenchmark:HDD
 PACKAGE_BUGREPORT = str0g.wordpress.com
 PACKAGE_NAME = LittleBenchmark:HDD
-PACKAGE_STRING = LittleBenchmark:HDD 1.0.9
+PACKAGE_STRING = LittleBenchmark:HDD 1.1.2
 PACKAGE_TARNAME = littlebenchmark-hdd
 PACKAGE_URL = 
-PACKAGE_VERSION = 1.0.9
+PACKAGE_VERSION = 1.1.2
 PATH_SEPARATOR = :
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = 
-VERSION = 1.0.9
+VERSION = 1.1.2
 abs_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD/doc
 abs_srcdir = /home/lukasz/Pulpit/Little_Benchmark/HDD/doc
 abs_top_builddir = /home/lukasz/Pulpit/Little_Benchmark/HDD
@@ -187,9 +187,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu doc/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign doc/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu doc/Makefile
+	  $(AUTOMAKE) --foreign doc/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

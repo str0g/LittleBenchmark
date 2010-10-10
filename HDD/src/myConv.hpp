@@ -20,6 +20,15 @@ namespace buskol{
             ss << liczba;
             return ss.str();
         }
+        #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+            #ifdef _MSC_VER
+            inline std::wstring stringTo_wstring(const std::string& str){///Conver string to wstring usefull only for windows
+                std::wstring wstr;
+                wstr.assign(str.begin(),str.end());
+                return wstr;
+            }
+            #endif
+        #endif
         template <typename T> inline T FromString(std::string s_liczba){///Convert string to number
         T liczba;
         std::stringstream(s_liczba) >> liczba;

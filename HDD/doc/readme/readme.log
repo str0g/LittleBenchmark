@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  7 OCT 2010 20:39
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  10 OCT 2010 14:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -394,7 +394,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.43 \item T
-            est read by chunk useful for server disk drivers speciality if t...
+            est read by chunk useful for server disk drivers specially if te...
 
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -457,7 +457,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.48 \item T
-            ests designed for hybrid drives(currently not enabled)
+            ests designed for hybrid drives
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -488,7 +488,7 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [3] (./howdoesitwork.tex
-<./img/short_how_it_works_diagram.png, id=94, 744.7825pt x 638.385pt>
+<./img/short_how_it_works_diagram.png, id=114, 744.7825pt x 638.385pt>
 File: ./img/short_how_it_works_diagram.png Graphic file (type png)
 
 <use ./img/short_how_it_works_diagram.png>
@@ -515,18 +515,80 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--28
  []
 
 
-Overfull \hbox (158.9956pt too wide) in paragraph at lines 60--60
-[]\OT1/cmtt/m/n/10 bjam --tool-set=gcc --build-dir=boost-build --build-type=com
-plete stage release --without-python[] 
+Overfull \hbox (164.24556pt too wide) in paragraph at lines 60--60
+[]\OT1/cmtt/m/n/10 bjam --tool-set=msvc --build-dir=boost-build --build-type=co
+mplete stage release --without-python[] 
  []
 
 
-Overfull \hbox (6.74693pt too wide) in paragraph at lines 60--60
-[]\OT1/cmtt/m/n/10 bjam --build-dir=boost-build --toolset=gcc install --without
--python[] 
+Overfull \hbox (11.99689pt too wide) in paragraph at lines 60--60
+[]\OT1/cmtt/m/n/10 bjam --build-dir=boost-build --toolset=msvc install --withou
+t-python[] 
  []
 
-) (./configuration.tex [5]) [6] (./knownIssues.tex
+) (./configuration.tex [5])
+Overfull \hbox (47.49864pt too wide) in paragraph at lines 11--57
+\OT1/cmr/m/n/10 Windows 7 / Vista: ROOT FILE SYS-TEM/USER/APPData/Local/.little
+benchmark/hdd 
+ []
+
+
+Overfull \hbox (49.52646pt too wide) in paragraph at lines 11--57
+\OT1/cmr/m/n/10 XP: ROOT FILE SYS-TEM/USER/Local Set-tings/Application Data/.li
+ttlebenchmark/hdd 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--57
+
+ []
+
+[6] (./aboutPort.tex) (./KnownLimitation.tex
+
+! LaTeX Error: Environment descritpion undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 \begin{descritpion}
+                        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.14 \item [\textbf{Cryptopp c++}]
+                                   Until I solved Visual studio 2008 problem...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{document} ended by \end{description}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 \end{description}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+) [7] (./knownIssues.texpdfTeX warning (ext4): destination with the same identi
+fier (name{KnownIssues}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4 }
+     
 Overfull \hbox (7.82997pt too wide) in paragraph at lines 6--11
 \OT1/cmr/bx/n/10 Before ap-palling any so-lu-tion in Linux run ter-mi-nal ses-s
 ion ctrl+alt+F1
@@ -621,7 +683,7 @@ Overfull \hbox (47.49683pt too wide) in paragraph at lines 49--49
 
 )
 ! Undefined control sequence.
-l.60 \newpages
+l.63 \newpages
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -629,12 +691,12 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[7] AED: lastpage setting LastPage (./readme.aux) ) 
+[8] AED: lastpage setting LastPage (./readme.aux) ) 
 Here is how much of TeX's memory you used:
- 5538 strings out of 495026
- 78148 string characters out of 1181803
+ 5558 strings out of 495026
+ 78400 string characters out of 1181803
  159252 words of memory out of 3000000
- 8594 multiletter control sequences out of 15000+50000
+ 8602 multiletter control sequences out of 15000+50000
  9024 words of font info for 32 fonts, out of 3000000 for 9000
  48 hyphenation exceptions out of 8191
  38i,12n,43p,327b,663s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -646,9 +708,9 @@ nts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12
 hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-
 texlive/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fon
 ts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on readme.pdf (7 pages, 187386 bytes).
+Output written on readme.pdf (8 pages, 194329 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
- 27 named destinations out of 1000 (max. 500000)
- 110 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 189 PDF objects out of 1000 (max. 8388607)
+ 33 named destinations out of 1000 (max. 500000)
+ 142 words of extra memory for PDF output out of 10000 (max. 10000000)
 

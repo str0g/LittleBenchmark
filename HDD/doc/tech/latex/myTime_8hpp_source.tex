@@ -46,19 +46,17 @@
 00040     \textcolor{keyword}{inline} std::string GetLocalTime(std::string strTimeFormatter = \textcolor{stringliteral}{"[%Y/%m/%d %H:
       %M:%S]"})\{
 00041         \textcolor{keywordtype}{char} buffer2 [KB]; 
-00042 \textcolor{preprocessor}{        #if ( \_WIN32 || \_WIN64 ) || ( \_\_WIN32\_\_ || \_\_WIN64\_\_ )}
-00043 \textcolor{preprocessor}{}\textcolor{preprocessor}{        #else}
-00044 \textcolor{preprocessor}{}
-00045         time\_t rawtime; 
-00046         \textcolor{keyword}{struct }tm * timeinfo; 
-00047 
-00048         time ( &rawtime );
-00049         timeinfo = localtime ( &rawtime );
-00050         strftime (buffer2,KB,strTimeFormatter.c\_str(),timeinfo);
-00051 \textcolor{preprocessor}{        #endif}
-00052 \textcolor{preprocessor}{}        \textcolor{keywordflow}{return} buffer2;
-00053     \}
-00054 \}
-00055 
-00056 \textcolor{preprocessor}{#endif // MYTIME\_HPP\_INCLUDED}
+00042 
+00043         time\_t rawtime; 
+00044         \textcolor{keyword}{struct }tm * timeinfo; 
+00045 
+00046         time ( &rawtime );
+00047         timeinfo = localtime ( &rawtime );
+00048         strftime (buffer2,KB,strTimeFormatter.c\_str(),timeinfo);
+00049 
+00050         \textcolor{keywordflow}{return} buffer2;
+00051     \}
+00052 \}
+00053 
+00054 \textcolor{preprocessor}{#endif // MYTIME\_HPP\_INCLUDED}
 \end{alltt}\end{footnotesize}

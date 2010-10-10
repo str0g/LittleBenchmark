@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  5 OCT 2010 21:37
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  10 OCT 2010 13:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -700,9 +700,10 @@ File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 
 
 Writing index file refman.idx
-(./refman.aux (./classstats__keeper.aux) (./classtester__hdd.aux)
-(./classmyThreadTemplates_1_1thread__1.aux) (./classthread__tester__hdd.aux)
-(./structvector__str.aux))
+(./refman.aux (./classhandler__Report.aux) (./structprofileNode.aux)
+(./structstructRow.aux) (./classtester__hdd.aux)
+(./classbuskol_1_1ThreadTemplates_1_1thread__1.aux)
+(./classthread__tester__hdd.aux))
 \openout1 = `refman.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
@@ -719,7 +720,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
 LaTeX Font Info:    ... okay on input line 35.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 35.
- (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
+
+(/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 35.
@@ -780,13 +782,12 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 2.
-)
+ [1
+
+])
 \tf@toc=\write5
 \openout5 = `refman.toc'.
 
- [1
-
-]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 50.
  [2]
@@ -809,47 +810,58 @@ Chapter 2.
 
 ]
 Chapter 3.
-(./classprofileUpdateStore.tex
+(./classhandler__Configuration.tex
+<classhandler__Configuration.pdf, id=233, 501.875pt x 274.99739pt>
+File: classhandler__Configuration.pdf Graphic file (type pdf)
+
+<use classhandler__Configuration.pdf>
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 5.
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 8.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 14.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 32.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 32.
-) [5]
-\openout2 = `classstats__keeper.aux'.
+) [5 <./classhandler__Configuration.pdf>]) [6]
+\openout2 = `classhandler__Report.aux'.
+
+ (./classhandler__Report.tex
+<classhandler__Report.pdf, id=261, 501.875pt x 375.23184pt>
+File: classhandler__Report.pdf Graphic file (type pdf)
+
+<use classhandler__Report.pdf> [7
+
+ <./classhandler__Report.pdf>]) [8]
+\openout2 = `structprofileNode.aux'.
 
 
-(./classstats__keeper.tex
-<classstats__keeper.pdf, id=216, 501.875pt x 441.20834pt>
-File: classstats__keeper.pdf Graphic file (type pdf)
+(./structprofileNode.tex) [9
 
-<use classstats__keeper.pdf> [6
 
- <./classstats__keeper.pdf>]) [7]
+]
+\openout2 = `structstructRow.aux'.
+
+ (./structstructRow.tex
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 24.
+) [10
+
+
+]
 \openout2 = `classtester__hdd.aux'.
 
 
 (./classtester__hdd.tex
-<classtester__hdd.pdf, id=263, 501.875pt x 441.20834pt>
+<classtester__hdd.pdf, id=333, 501.875pt x 137.50372pt>
 File: classtester__hdd.pdf Graphic file (type pdf)
 
-<use classtester__hdd.pdf>
-LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 32.
-) [8
+<use classtester__hdd.pdf>) [11
 
 
  <./classtester__hdd.pdf>]
-\openout2 = `classmyThreadTemplates_1_1thread__1.aux'.
+\openout2 = `classbuskol_1_1ThreadTemplates_1_1thread__1.aux'.
 
 
-(./classmyThreadTemplates_1_1thread__1.tex
+(./classbuskol_1_1ThreadTemplates_1_1thread__1.tex
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <14.4> on input line 4.
 
@@ -888,10 +900,10 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
 
-[9
+[12
 
 
-]) [10]
+]) [13]
 \openout2 = `classthread__tester__hdd.aux'.
 
  (./classthread__tester__hdd.tex
@@ -911,48 +923,40 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 4.
 
-<classthread__tester__hdd.pdf, id=314, 501.875pt x 107.35106pt>
+<classthread__tester__hdd.pdf, id=382, 501.875pt x 100.375pt>
 File: classthread__tester__hdd.pdf Graphic file (type pdf)
 
-<use classthread__tester__hdd.pdf>) [11
+<use classthread__tester__hdd.pdf>) [14
 
 
  <./classthread__tester__hdd.pdf>]
-\openout2 = `structvector__str.aux'.
+(./refman.ind [15
 
 
-(./structvector__str.tex) [12
-
-
-] (./refman.ind [13
-
-
-
-]) (./refman.aux
-(./classstats__keeper.aux) (./classtester__hdd.aux)
-(./classmyThreadTemplates_1_1thread__1.aux) (./classthread__tester__hdd.aux)
-(./structvector__str.aux)) ) 
+]) (./refman.aux (./classhandler__Report.aux)
+(./structprofileNode.aux) (./structstructRow.aux) (./classtester__hdd.aux)
+(./classbuskol_1_1ThreadTemplates_1_1thread__1.aux)
+(./classthread__tester__hdd.aux)) ) 
 Here is how much of TeX's memory you used:
- 8506 strings out of 495026
- 120866 string characters out of 1181803
- 208619 words of memory out of 3000000
- 11376 multiletter control sequences out of 15000+50000
- 48027 words of font info for 57 fonts, out of 3000000 for 9000
+ 8532 strings out of 495026
+ 122410 string characters out of 1181803
+ 208621 words of memory out of 3000000
+ 11385 multiletter control sequences out of 15000+50000
+ 43482 words of font info for 49 fonts, out of 3000000 for 9000
  48 hyphenation exceptions out of 8191
- 38i,12n,58p,422b,500s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.e
-nc}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/urw/
-courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb
-></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-t
-exlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts/type1/
-urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pf
-b>
-Output written on refman.pdf (17 pages, 177926 bytes).
+ 38i,12n,58p,452b,500s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/ba
+se/8r.enc}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texli
+ve/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
+/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb>
+</usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-t
+exlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/u
+rw/times/utmri8a.pfb>
+Output written on refman.pdf (19 pages, 186666 bytes).
 PDF statistics:
- 428 PDF objects out of 1000 (max. 8388607)
- 105 named destinations out of 1000 (max. 500000)
- 240 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 492 PDF objects out of 1000 (max. 8388607)
+ 122 named destinations out of 1000 (max. 500000)
+ 285 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -70,8 +70,8 @@ template <class classT>thread_tester_hdd<classT>::~thread_tester_hdd(){
     }
     if (bCleanWorkFolder){
         cerr<<"From some reasons work folder is being cleaned in emergency way"<<endl;
-        myIO::rmAll(pathDir);
-        rmdir(pathDir.file_string().c_str());
+        myIO::rmAll_inDir(pathDir);
+        myIO::rm(pathDir);
 
         cerr<<"From some reasons cache is being cleared in emergency way"<<endl;
         for(list<string*>::iterator it = list_ReadFiles.begin();
@@ -88,8 +88,8 @@ template <class classT> void thread_tester_hdd<classT>::addStats(string desc,str
     if ( p_Parent ){
         ++uiStatsCounter;
         boost::mutex::scoped_lock lock(mutex_Stats);
-            if (p_Parent->findAndAdd(desc,val,uiStatsCounter,uiThreadNumber)!= 0)
-                --uiStatsCounter;
+            if (p_Parent->findAndAdd(desc,val,uiStatsCounter,uiThreadNumber)== 0)
+                ++uiStatsCounter;
     }
 }
 
@@ -176,26 +176,26 @@ template <class classT> void thread_tester_hdd<classT>::Read(uint16_t mode,strin
             ui64tmp += p_strtmp->length();
         }
     }
+    mode == 0 ? strtmp += "Read by char:" : strtmp += "Read by stream:";
     if(VeryfiReadFiles()){
         double dtmp = myTime::TimeDiff(dStartt);
         delete dStartt;
-        mode == 0 ? strtmp = "Read by char:" : strtmp = "Read by stream:";
-        addStats(strtmp,blC::ToString(blC::Bandwidth(dtmp,ui64tmp)));
+        addStats(desc+strtmp,blC::ToString(blC::Bandwidth(dtmp,ui64tmp)));
         if (p_list){
             list<double>::iterator it = p_list->begin();
-            addStats(strSizeTest+desc+strtmp.at(8)+"_Access Times-----","");
-            addStats(strSizeTest+desc+strtmp.at(8)+"_Min:",blC::TimeToString(*it));            ++it;
-            addStats(strSizeTest+desc+strtmp.at(8)+"_Max:",blC::TimeToString(*it));            ++it;
-            addStats(strSizeTest+desc+strtmp.at(8)+"_Avg:",blC::TimeToString(*it/ui64Loop));   ++it;
-            addStats(strSizeTest+desc+strtmp.at(8)+"_Read Times-----","");
-            addStats(strSizeTest+desc+strtmp.at(8)+"__Min:",blC::TimeToString(*it));            ++it;
-            addStats(strSizeTest+desc+strtmp.at(8)+"__Max:",blC::TimeToString(*it));            ++it;
-            addStats(strSizeTest+desc+strtmp.at(8)+"__Avg:",blC::TimeToString(*it/ui64Loop));
+            addStats(desc+strtmp.at(8)+"_Access Times-----","");
+            addStats(desc+strtmp.at(8)+"_Min:",blC::TimeToString(*it));            ++it;
+            addStats(desc+strtmp.at(8)+"_Max:",blC::TimeToString(*it));            ++it;
+            addStats(desc+strtmp.at(8)+"_Avg:",blC::TimeToString(*it/ui64Loop));   ++it;
+            addStats(desc+strtmp.at(8)+"_Read Times-----","");
+            addStats(desc+strtmp.at(8)+"__Min:",blC::TimeToString(*it));           ++it;
+            addStats(desc+strtmp.at(8)+"__Max:",blC::TimeToString(*it));           ++it;
+            addStats(desc+strtmp.at(8)+"__Avg:",blC::TimeToString(*it/ui64Loop));
         }
 
         if((list_ReadFiles.size()%ui64Loop) != 0 or list_ReadFiles.size() == 0){
-            cerr<<strtmp<<"Read wrong number of files! ["<<list_ReadFiles.size()<<"/"<<ui64Loop<<"]"<<endl;
-            addStats(strSizeTest+desc+strtmp.at(8)+"_Read wrong number of files:",blC::ToString(list_ReadFiles.size())+"/"+blC::ToString(ui64Loop));
+            cerr<<desc<<"Read wrong number of files! ["<<list_ReadFiles.size()<<"/"<<ui64Loop<<"]"<<endl;
+            addStats(desc+strtmp.at(8)+"_Read wrong number of files:",blC::ToString(list_ReadFiles.size())+"/"+blC::ToString(ui64Loop));
         }
     }
 
@@ -207,7 +207,7 @@ template <class classT> void thread_tester_hdd<classT>::Read(uint16_t mode,strin
         }
     list_ReadFiles.clear();
     if (p_list){ delete p_list; }
-    addStats(strSizeTest+desc+strtmp+" executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(desc+strtmp+" executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     delete dStart;
 }
 
@@ -226,16 +226,16 @@ template <class classT> void thread_tester_hdd<classT>::Write(const uint64_t *ui
         pathtmp /= blC::ToString(i);
         if (!myIO::SimpleWriteToFile(pathtmp,*p_strOutFileDataBuffer)){
             cerr<<"Failed to create file: "<<i<<endl;
-            addStats(strSizeTest+desc+" Failed to create file:",blC::ToString(i));
+            addStats(desc+" Failed to create file:",blC::ToString(i));
             bWriteFailed = true;
             break;
         }
     }
     double dtmp = myTime::TimeDiff(dStartt);
-    addStats(strSizeTest+desc+"Written files:",blC::ToString(ui64Loop));
-    addStats(strSizeTest+desc+"Bandwidth:",blC::Bandwidth(dtmp ,ui64tmp));
-    addStats(strSizeTest+desc+"Time:",blC::TimeToString( dtmp  ));
-    addStats(strSizeTest+desc+"Write metod executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(desc+"Written files:",blC::ToString(ui64Loop));
+    addStats(desc+"Bandwidth:",blC::Bandwidth(dtmp ,ui64tmp));
+    addStats(desc+"Time:",blC::TimeToString( dtmp  ));
+    addStats(desc+"Write metod executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     //
     delete dStart;
     delete dStartt;
@@ -254,10 +254,9 @@ template <class classT> void thread_tester_hdd<classT>::CopyTest(){
                 fTo = fTo.file_string()+"_cpy";
         myIO::CopyFileByChar(*it, fTo);
         }
-    myIO::rmAll(pathDir);
     delete list_dir;
 
-    addStats("Copy metod executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
+    addStats(strSizeTest+"Copy metod executed for:",blC::TimeToString(myTime::TimeDiff(dStart)));
     delete dStart;
 }
 
@@ -322,39 +321,41 @@ template <class classT> void thread_tester_hdd<classT>::Execute(){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     //
     pathDir /= blC::ToString(blTT::thread_1<thread_tester_hdd<classT> >::GetThreadID());
-    #if __WIN32__ || __WIN64__
-    if(mkdir(pathDir.file_string().c_str()) == 0){
-    #else
+#if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
+    if(boost::filesystem::create_directory(pathDir){
+#else
     if(mkdir(pathDir.file_string().c_str(),uiPermissions) == 0){
-    #endif
+#endif
         bCleanWorkFolder = true;
         for(vector<uint64_t>::iterator it = vui_Probes.begin();
             it != vui_Probes.end(); ++it){
-                
+                unsigned uiI = 0;
                 strSizeTest = "("+blC::Bandwidth(0,*it,"")+")";
-                Write(&*it);///Write test
+                Write(&*it,strSizeTest);///Write test
                 if ( !bWriteFailed){///Both read test
                     do{
-                        Read(0);
-                        Read(1);
-                    }while(uiNumberOfReads);
+                        Read(0,strSizeTest);
+                        Read(1,strSizeTest);
+                    }while(++uiI < uiNumberOfReads);
                 }
-                myIO::rmAll(pathDir);///Cleaning after rw tests
+                uiI = 0;
+                myIO::rmAll_inDir(pathDir);///Cleaning after rw tests
                 if (bSSD){///hybrird drive test which is normal test but with reversed order
-                    Write(&*it,"rorder:");///Write test
+                    Write(&*it,strSizeTest+"[rOrder]");///Write test
                     if ( !bWriteFailed){///Both read test
                         do{
-                            Read(1,"r:");
-                            Read(0,"r:");
-                        }while(uiNumberOfReads);
+                            Read(1,strSizeTest+"[rOrder]");
+                            Read(0,strSizeTest+"[rOrder]");
+                        }while(++uiI < uiNumberOfReads);
                     }
-                    myIO::rmAll(pathDir);///Cleaning after rw tests
+                    myIO::rmAll_inDir(pathDir);///Cleaning after rw tests
                 }
-                Write(&*it,"copy:");///Write test
+                Write(&*it,strSizeTest+"[copy]");///Write test
                 CopyTest();
-                myIO::rmAll(pathDir);///Cleaning after rw tests
+                myIO::rmAll_inDir(pathDir);///Cleaning after rw tests
         }
-        rmdir(pathDir.file_string().c_str());
+        myIO::rm(pathDir);
+
         bCleanWorkFolder = false;
         delete p_strOutFileDataBuffer;
         p_strOutFileDataBuffer = NULL;

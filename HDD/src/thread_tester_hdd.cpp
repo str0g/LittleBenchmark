@@ -70,12 +70,8 @@ template <class classT>thread_tester_hdd<classT>::~thread_tester_hdd(){
     }
     if (bCleanWorkFolder){
         cerr<<"From some reasons work folder is being cleaned in emergency way"<<endl;
-        myIO::rmAll(pathDir);
-    #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
-        RemoveDirectory(pathDir.file_string().c_str());
-    #else
-        rmdir(pathDir.file_string().c_str());
-    #endif
+        myIO::rmAll_inDir(pathDir);
+        myIO::rm(pathDir);
 
         cerr<<"From some reasons cache is being cleared in emergency way"<<endl;
         for(list<string*>::iterator it = list_ReadFiles.begin();
@@ -90,10 +86,9 @@ template <class classT>thread_tester_hdd<classT>::~thread_tester_hdd(){
 
 template <class classT> void thread_tester_hdd<classT>::addStats(string desc,string val){
     if ( p_Parent ){
-        ++uiStatsCounter;
         boost::mutex::scoped_lock lock(mutex_Stats);
-            if (p_Parent->findAndAdd(desc,val,uiStatsCounter,uiThreadNumber)!= 0)
-                --uiStatsCounter;
+            if (p_Parent->findAndAdd(desc,val,uiStatsCounter,uiThreadNumber)== 0)
+                ++uiStatsCounter;
     }
 }
 
@@ -180,11 +175,11 @@ template <class classT> void thread_tester_hdd<classT>::Read(uint16_t mode,strin
             ui64tmp += p_strtmp->length();
         }
     }
-    mode == 0 ? strtmp = "Read by char:" : strtmp = "Read by stream:";
+    mode == 0 ? strtmp += "Read by char:" : strtmp += "Read by stream:";
     if(VeryfiReadFiles()){
         double dtmp = myTime::TimeDiff(dStartt);
         delete dStartt;
-        addStats(strtmp,blC::ToString(blC::Bandwidth(dtmp,ui64tmp)));
+        addStats(desc+strtmp,blC::ToString(blC::Bandwidth(dtmp,ui64tmp)));
         if (p_list){
             list<double>::iterator it = p_list->begin();
             addStats(desc+strtmp.at(8)+"_Access Times-----","");
@@ -325,11 +320,11 @@ template <class classT> void thread_tester_hdd<classT>::Execute(){
     boost::local_time::local_date_time *dStart = myTime::GetTime();
     //
     pathDir /= blC::ToString(blTT::thread_1<thread_tester_hdd<classT> >::GetThreadID());
-    #if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
-    if(mkdir(pathDir.file_string().c_str()) == 0){
-    #else
+#if ( _WIN32 ||  _WIN64) || ( __WIN32__ || __WIN64__ )
+    if(boost::filesystem::create_directory(pathDir)){
+#else
     if(mkdir(pathDir.file_string().c_str(),uiPermissions) == 0){
-    #endif
+#endif
         bCleanWorkFolder = true;
         for(vector<uint64_t>::iterator it = vui_Probes.begin();
             it != vui_Probes.end(); ++it){
@@ -343,26 +338,23 @@ template <class classT> void thread_tester_hdd<classT>::Execute(){
                     }while(++uiI < uiNumberOfReads);
                 }
                 uiI = 0;
-                myIO::rmAll(pathDir);///Cleaning after rw tests
+                myIO::rmAll_inDir(pathDir);///Cleaning after rw tests
                 if (bSSD){///hybrird drive test which is normal test but with reversed order
                     Write(&*it,strSizeTest+"[rOrder]");///Write test
                     if ( !bWriteFailed){///Both read test
                         do{
-                            Read(1,strSizeTest+" [rOrder]");
-                            Read(0,strSizeTest+" [rOrder]");
+                            Read(1,strSizeTest+"[rOrder]");
+                            Read(0,strSizeTest+"[rOrder]");
                         }while(++uiI < uiNumberOfReads);
                     }
-                    myIO::rmAll(pathDir);///Cleaning after rw tests
+                    myIO::rmAll_inDir(pathDir);///Cleaning after rw tests
                 }
-                Write(&*it,strSizeTest+" [copy]");///Write test
+                Write(&*it,strSizeTest+"[copy]");///Write test
                 CopyTest();
-                myIO::rmAll(pathDir);///Cleaning after rw tests
+                myIO::rmAll_inDir(pathDir);///Cleaning after rw tests
         }
-    #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
-        RemoveDirectory(pathDir.file_string().c_str());
-    #else
-        rmdir(pathDir.file_string().c_str());
-    #endif
+        myIO::rm(pathDir);
+
         bCleanWorkFolder = false;
         delete p_strOutFileDataBuffer;
         p_strOutFileDataBuffer = NULL;

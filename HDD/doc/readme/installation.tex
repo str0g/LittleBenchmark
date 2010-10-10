@@ -6,7 +6,7 @@
 \subsection{Package}
 Binaries and source can be downloaded from:
 \begin{description}
-\item \href{http://github.com/str0g/LittleBenchmark/tree/master/HDD/Release}{Git Not uploaded yet}
+\item \href{http://github.com/str0g/LittleBenchmark/tree/master/HDD/Release}{Git}
 \item \href{https://subversion.assembla.com/svn/littlebenchmark-hdd/}{SVN Not uploaded yet}
 \end{description}
 
@@ -24,9 +24,9 @@ sudo apt-get install littlebenchmark-hdd
 Open terminal:\\
 \$ cd \ldots/Littel\_Benchmark/HDD\\
 \$ ./configure\\
-\$ make \&\& make test \&\& make install \&\& make clean\\
+\$ make \&\& make test \&\& sudo make install \&\& make clean\\
 \subsection{Windows}
-Windows port will be done latter.
+Can be run from any location
 
 \subsubsection{From source}
 What is needed to compile from source: (Working on it with Visual Studio 2008 which at least links boost libraries\ldots)
@@ -36,7 +36,7 @@ What is needed to compile from source: (Working on it with Visual Studio 2008 wh
 \item [ \href{http://sourceforge.net/projects/boost/files/boost/1.44.0/boost_1_44_0.7z/download}{\textbf{Boost library}} ] This Library takes care about porting issues between Linux and Windows.
 \item [ \href{http://www.cryptopp.com/}{\textbf{Crypto++}} ] Cryptographic library for file validation.
 %\item [ \href{http://qt.nokia.com/downloads/}{\textbf{Qt4 sdk}} ] To compile cryptopp.
-\item [ \href{http://notepad-plus-plus.org/}{\textbf{Notpad++}} ] For file editing with out blowing encoding.
+\item [ \href{http://notepad-plus-plus.org/}{\textbf{Notpad++}} ] To edit a file without damaging the coding.
 \item [ \textbf{Visual Studio} ] Compiling from source required MSVC.
 \end{itemize}
 %Set up Compiler:\\
@@ -53,10 +53,10 @@ ctrl + r type cmd
 cd boost_dir/
 boostrap.bat
 \end{verbatim}
-Insert to project.config.jam "using gcc ;"
+%Insert to project.config.jam "using gcc ;"
 \begin{verbatim} 
-bjam --tool-set=gcc --build-dir=boost-build --build-type=complete stage release --without-python
-bjam --build-dir=boost-build --toolset=gcc install --without-python
+bjam --tool-set=msvc --build-dir=boost-build --build-type=complete stage release --without-python
+bjam --build-dir=boost-build --toolset=msvc install --without-python
 \end{verbatim}
 
 %Set up Cryptopp:\\

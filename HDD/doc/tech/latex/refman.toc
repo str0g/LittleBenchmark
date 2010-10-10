@@ -3,26 +3,31 @@
 \contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}
 \contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}
 \contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}profileUpdateStore Class Reference}{5}{section.3.1}
-\contentsline {section}{\numberline {3.2}stats\_\discretionary {-}{}{}keeper Class Reference}{6}{section.3.2}
-\contentsline {section}{\numberline {3.3}tester\_\discretionary {-}{}{}hdd Class Reference}{8}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Constructor \& Destructor Documentation}{8}{subsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.1.1}tester\_\discretionary {-}{}{}hdd}{8}{subsubsection.3.3.1.1}
-\contentsline {subsection}{\numberline {3.3.2}Member Function Documentation}{8}{subsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.2.1}Run}{8}{subsubsection.3.3.2.1}
-\contentsline {section}{\numberline {3.4}myThreadTemplates::thread\_\discretionary {-}{}{}1$<$ ClassT $>$ Class Template Reference}{9}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{9}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Constructor \& Destructor Documentation}{9}{subsection.3.4.2}
-\contentsline {subsubsection}{\numberline {3.4.2.1}$\sim $thread\_\discretionary {-}{}{}1}{9}{subsubsection.3.4.2.1}
-\contentsline {subsection}{\numberline {3.4.3}Member Function Documentation}{9}{subsection.3.4.3}
-\contentsline {subsubsection}{\numberline {3.4.3.1}Execute\_\discretionary {-}{}{}}{9}{subsubsection.3.4.3.1}
-\contentsline {subsubsection}{\numberline {3.4.3.2}join}{9}{subsubsection.3.4.3.2}
-\contentsline {subsubsection}{\numberline {3.4.3.3}join}{10}{subsubsection.3.4.3.3}
-\contentsline {subsubsection}{\numberline {3.4.3.4}self\_\discretionary {-}{}{}test}{10}{subsubsection.3.4.3.4}
-\contentsline {subsubsection}{\numberline {3.4.3.5}start}{10}{subsubsection.3.4.3.5}
-\contentsline {subsubsection}{\numberline {3.4.3.6}start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}{10}{subsubsection.3.4.3.6}
-\contentsline {subsubsection}{\numberline {3.4.3.7}UpdateStats}{10}{subsubsection.3.4.3.7}
-\contentsline {section}{\numberline {3.5}thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd$<$ classT $>$ Class Template Reference}{11}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Member Function Documentation}{11}{subsection.3.5.1}
-\contentsline {subsubsection}{\numberline {3.5.1.1}Execute}{11}{subsubsection.3.5.1.1}
-\contentsline {section}{\numberline {3.6}vector\_\discretionary {-}{}{}str Struct Reference}{12}{section.3.6}
+\contentsline {section}{\numberline {3.1}handler\_\discretionary {-}{}{}Configuration Class Reference}{5}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Member Function Documentation}{5}{subsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.1}setUserDir}{5}{subsubsection.3.1.1.1}
+\contentsline {section}{\numberline {3.2}handler\_\discretionary {-}{}{}Report Class Reference}{7}{section.3.2}
+\contentsline {section}{\numberline {3.3}profileNode Struct Reference}{9}{section.3.3}
+\contentsline {section}{\numberline {3.4}structRow Struct Reference}{10}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Constructor \& Destructor Documentation}{10}{subsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.1.1}structRow}{10}{subsubsection.3.4.1.1}
+\contentsline {section}{\numberline {3.5}tester\_\discretionary {-}{}{}hdd Class Reference}{11}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Constructor \& Destructor Documentation}{11}{subsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.1.1}tester\_\discretionary {-}{}{}hdd}{11}{subsubsection.3.5.1.1}
+\contentsline {subsection}{\numberline {3.5.2}Member Function Documentation}{11}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}Run}{11}{subsubsection.3.5.2.1}
+\contentsline {section}{\numberline {3.6}buskol::ThreadTemplates::thread\_\discretionary {-}{}{}1$<$ ClassT $>$ Class Template Reference}{12}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{12}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Constructor \& Destructor Documentation}{12}{subsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.2.1}$\sim $thread\_\discretionary {-}{}{}1}{12}{subsubsection.3.6.2.1}
+\contentsline {subsection}{\numberline {3.6.3}Member Function Documentation}{12}{subsection.3.6.3}
+\contentsline {subsubsection}{\numberline {3.6.3.1}Execute\_\discretionary {-}{}{}}{12}{subsubsection.3.6.3.1}
+\contentsline {subsubsection}{\numberline {3.6.3.2}join}{12}{subsubsection.3.6.3.2}
+\contentsline {subsubsection}{\numberline {3.6.3.3}join}{13}{subsubsection.3.6.3.3}
+\contentsline {subsubsection}{\numberline {3.6.3.4}self\_\discretionary {-}{}{}test}{13}{subsubsection.3.6.3.4}
+\contentsline {subsubsection}{\numberline {3.6.3.5}start}{13}{subsubsection.3.6.3.5}
+\contentsline {subsubsection}{\numberline {3.6.3.6}start\_\discretionary {-}{}{}self\_\discretionary {-}{}{}test}{13}{subsubsection.3.6.3.6}
+\contentsline {subsubsection}{\numberline {3.6.3.7}UpdateStats}{13}{subsubsection.3.6.3.7}
+\contentsline {section}{\numberline {3.7}thread\_\discretionary {-}{}{}tester\_\discretionary {-}{}{}hdd$<$ classT $>$ Class Template Reference}{14}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Member Function Documentation}{14}{subsection.3.7.1}
+\contentsline {subsubsection}{\numberline {3.7.1.1}Execute}{14}{subsubsection.3.7.1.1}

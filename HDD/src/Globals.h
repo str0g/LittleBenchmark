@@ -2,16 +2,19 @@
 #define GLOBALS_H_INCLUDED
 
     #define DEBUG
-    #define COMPILE_WITH_CRYPTOPP 1
     #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+        #define COMPILE_WITH_CRYPTOPP 0
         #ifdef _MSC_VER
             #define and &&
+            #define or ||
             typedef __int64 int64_t;
             typedef int mode_t;
             typedef unsigned __int8 uint8_t;
             typedef unsigned __int16 uint16_t;
             typedef unsigned __int64 uint64_t;
         #endif
+    #else
+        #define COMPILE_WITH_CRYPTOPP 1
     #endif
     #define ASCII 128 //!< Number of ASCII used by generator
 

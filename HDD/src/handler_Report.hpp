@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <csignal>
 #include <boost/filesystem/path.hpp>
 #include "myIO.hpp"
 
@@ -49,8 +50,8 @@ class handler_Report{
     public:
         handler_Report();
         virtual ~handler_Report();
-        void addStatData(string&,string&,unsigned =1,unsigned =1);
-        uint8_t findAndAdd(string&,string&,unsigned =1,unsigned =1);
+        void addStatData(string&,string&,const unsigned &,const unsigned &);
+        uint8_t findAndAdd(string&,string&,unsigned &,unsigned &);
         void FormatDataInVector();
         void SaveToDisk(boost::filesystem::path);
         string GeneratDataFromVector();

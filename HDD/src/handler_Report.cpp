@@ -61,21 +61,20 @@ void handler_Report::setArgs(){
         strSpacer += strSpacerChar;
 }
 ///Will add data to specified buffers
-void handler_Report::addStatData(string &desc, string &val, unsigned row, unsigned col){
+void handler_Report::addStatData(string &desc, string &val,const unsigned &row,const unsigned &col){
     try{
-    row = row -1;
     if (bLog){
         p_vecstr_Log->at(col).append(desc+" "+val+"\n");
     }
     if(bFormattedTxt){
-        if ( p_vecstr_formattedTXT->size() < row +1 )
+        if ( p_vecstr_formattedTXT->size() < row + 1 )
             p_vecstr_formattedTXT->push_back(uiMaxCols);
         if ( p_vecstr_formattedTXT->at(row).data.at(0) == "")
             p_vecstr_formattedTXT->at(row).data.at(0) = desc;
         if ( p_vecstr_formattedTXT->at(row).data.at(0) == desc )
             p_vecstr_formattedTXT->at(row).data.at(col) = val;
         else{
-            cerr<<"Error dected at position ("<<col<<","<<row+1<<")\n"<<
+            cerr<<"Error dected at position ("<<col<<","<<row<<")\n"<<
             "desc["<<desc<<"]val["<<val<<"]\nMaxCols:"<<uiMaxCols<<
             "\n2D size("<<p_vecstr_formattedTXT->size()<<","<<p_vecstr_formattedTXT->at(0).data.size()<<")"<<endl;
             cerr<<"Data at error position["<<p_vecstr_formattedTXT->at(row).data.at(0)<<"][" <<p_vecstr_formattedTXT->at(row).data.at(col)<<"]"<<endl;
@@ -83,7 +82,7 @@ void handler_Report::addStatData(string &desc, string &val, unsigned row, unsign
     }
     }catch(std::exception &e){
         cerr<<"Faile to add new statistic data("<<col<<
-        ","<<row+1<<")\n"<<"desc["<<desc<<"]\nval["<<val<<"]MaxCols:"<<uiMaxCols<<
+        ","<<row<<")\n"<<"desc["<<desc<<"]\nval["<<val<<"]MaxCols:"<<uiMaxCols<<
         "\n2D size("<<p_vecstr_formattedTXT->size()<<","<<p_vecstr_formattedTXT->at(0).data.size()<<")"<<endl;
         if(p_vecstr_formattedTXT->size() <= row ){
             cerr<<"Vector Rows gone out of range"<<endl;
@@ -92,11 +91,11 @@ void handler_Report::addStatData(string &desc, string &val, unsigned row, unsign
             cerr<<"Vector Columns gone out of range"<<endl;
         }
         cerr<<e.what()<<endl;
-        exit(EXIT_FAILURE);//z modyfikowac pozniej
+        raise(SIGABRT);
     }
 }
 
-uint8_t handler_Report::findAndAdd (string &desc,string &val,unsigned row,unsigned col){
+uint8_t handler_Report::findAndAdd (string &desc,string &val,unsigned &row,unsigned &col){
     /*if (!desc or !val){
         cerr<<"handler_Report recived NULL data"<<endl;
         return 2;
@@ -106,14 +105,13 @@ uint8_t handler_Report::findAndAdd (string &desc,string &val,unsigned row,unsign
         return 3;
     }
     if ( p_vecstr_formattedTXT->size() < 1){
-        addStatData(desc,val);
+        addStatData(desc,val,row,col);
         return 0;
     }
     unsigned i=0;
     for (vector<structRow>::iterator it = p_vecstr_formattedTXT->begin();
         it != p_vecstr_formattedTXT->end();
             it++){
-                i++;
                 if ( it->data.at(0) == desc ){
                     string strtmp;
                     if (it->data.at(col).length() > 0)
@@ -125,7 +123,9 @@ uint8_t handler_Report::findAndAdd (string &desc,string &val,unsigned row,unsign
                                 i,col);
                     return 1;
                 }
+                i++;
     }
+    i > row ? row = i: row;
     addStatData(desc,val,row,col);
     return 0;
 }
@@ -184,6 +184,8 @@ string handler_Report::GeneratDataFromVector(){
 }
 
 string handler_Report::GenerateXMLFromVector(){
+    string str ="Not Implemented yet";
+    return str;
 }
 
 void handler_Report::SaveToDisk(boost::filesystem::path path){
