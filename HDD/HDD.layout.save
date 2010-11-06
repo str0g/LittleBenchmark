@@ -7,7 +7,7 @@
 	<File name="src/Globals.h" open="1" top="0" tabpos="10">
 		<Cursor position="79" topLine="0" />
 	</File>
-	<File name="src/handler_Configuration.cpp" open="1" top="0" tabpos="16">
+	<File name="src/handler_Configuration.cpp" open="1" top="1" tabpos="16">
 		<Cursor position="5009" topLine="92" />
 	</File>
 	<File name="src/handler_Configuration.hpp" open="1" top="0" tabpos="17">
@@ -19,8 +19,8 @@
 	<File name="src/handler_Report.hpp" open="1" top="0" tabpos="14">
 		<Cursor position="566" topLine="0" />
 	</File>
-	<File name="src/main.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="788" topLine="2" />
+	<File name="src/main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1292" topLine="11" />
 	</File>
 	<File name="src/myConv.hpp" open="1" top="0" tabpos="8">
 		<Cursor position="1125" topLine="0" />

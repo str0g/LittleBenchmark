@@ -20,9 +20,16 @@
 #include "boost/date_time/local_time/local_time.hpp"
 //my
 #include "myTime.hpp"
-
-namespace myIO{
+namespace buskol{
+    namespace IO{
     //READ OPERATIONS
+    /*! \addtogroup libbuskol
+   *  Additional documentation for group libbuskol
+   *  @{
+   */
+  /*!
+   *  Function read file by character and feel statistics if defined
+   */
     inline bool simpleReadToStringByChar(const boost::filesystem::path &strFile,\
                                          std::string *strBuf,\
                                          std::list<double> *p_listStats = NULL){
@@ -33,24 +40,24 @@ namespace myIO{
         }
 
 //        size_t filesize;
-        double eTime = 0;
+        double eTime = 0;//!< keep result of time subtraction
         std::list<double>::iterator it;
         if(p_listStats){
             it = p_listStats->begin();
         }
 
-        boost::local_time::local_date_time *dTime = myTime::GetTime();
+        boost::local_time::local_date_time *dTime = Time::GetTime(); //!< Keep start time
         std::ifstream file (strFile.file_string().c_str());
         if (file.is_open()){
             if (p_listStats){
-                eTime = myTime::TimeDiff( dTime );
+                eTime = Time::TimeDiff( *dTime );
                 *it > eTime ? *it = eTime : 0;
                 ++it;
                 *it < eTime ? *it = eTime : 0;
                 ++it;
                 *it += eTime;
                 ++it;
-                //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<<"]"<<std::endl;
+                //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<Time::GetTime()<<"]"<<std::endl;
             }
             /*file.seekg(std::ios::end);
             filesize=file.tellg();
@@ -58,8 +65,8 @@ namespace myIO{
             strBuf->reserve(filesize);
 
             file.seekg(std::ios::beg);*/
-            unsigned i = 0;
-            while (!file.eof()){///Bug from unknow reason read 1 character more, maybe its fault of special characters. seekp(std::ios::end) returns bad file legnth probably special characters...
+            unsigned i = 0; //!< counter for temporary fix
+            while (!file.eof()){///Bug from unknow reason read 1 character more, maybe its special character fault, seekp(std::ios::end) return bad file legnth probably special character...
                 *strBuf  += file.get();
                 if (file.fail()){/*
                     std::cerr<<"[simpleReadToStringByChar]->Lost intergrity of the stream for file: "<<strFile<<std::endl;
@@ -77,13 +84,13 @@ namespace myIO{
             //if (!file.eof()){ std::cerr<<"[simpleReadToStringByChar]->Read error: "<<strFile.file_string()<<std::endl; }
             file.close();
             if (p_listStats){
-                eTime = myTime::TimeDiff( dTime );
+                eTime = Time::TimeDiff( *dTime );
                 *it > eTime ? *it = eTime : 0;
                 ++it;
                 *it < eTime ? *it = eTime : 0;
                 ++it;
                 *it += eTime;
-                //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<myTime::GetTime()<<"]"<<std::endl;
+                //std::cout<<"eTime:"<<eTime<<"["<<dTime<<"/"<<Time::GetTime()<<"]"<<std::endl;
             }
             delete dTime;
             return true;
@@ -92,21 +99,24 @@ namespace myIO{
         delete dTime;
         return false;
     }
+  /*!
+   *  Function read file by stream and feel statistics if defined
+   */
     inline bool simpleReadToStringByStream(const boost::filesystem::path &pathFile, std::string *strBuf,\
                                            std::list<double> *p_listStats = NULL,\
                                            std::ios_base::openmode mode = std::ios::in|std::ios::binary){
-        std::stringstream ss;
-        double eTime = 0;
+        std::stringstream ss;//!< Stream for read from file to string
+        double eTime = 0;//!< keep result of time subtraction
         std::list<double>::iterator it;
         if(p_listStats){
             it = p_listStats->begin();
         }
 
-        boost::local_time::local_date_time *dTime = myTime::GetTime();
+        boost::local_time::local_date_time *dTime = Time::GetTime();//!< Keep start time
         std::ifstream file(pathFile.file_string().c_str(),mode);
         if (file.is_open()){
             if (p_listStats){
-                eTime = myTime::TimeDiff( dTime );
+                eTime = Time::TimeDiff( *dTime );
                 *it > eTime ? *it = eTime : 0;      ++it;
                 *it < eTime ? *it = eTime : 0;      ++it;
                 *it += eTime;                       ++it;
@@ -119,7 +129,7 @@ namespace myIO{
             file.close();
 
             if (p_listStats){
-                eTime = myTime::TimeDiff( dTime );
+                eTime = Time::TimeDiff( *dTime );
                 *it > eTime ? *it = eTime : 0;      ++it;
                 *it < eTime ? *it = eTime : 0;      ++it;
                 *it += eTime;
@@ -131,12 +141,11 @@ namespace myIO{
         return false;
     }
     //WRITE OPERATIONS
-#if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
-    inline bool touch(const boost::filesystem::path &pathTo){
-#else
+   /*!
+   *  Function touch but can also set permission.
+   */
     inline bool touch(const boost::filesystem::path &pathTo,\
-                      mode_t mode =0644){
-#endif
+                      const mode_t &mode =0644){
         if ( boost::filesystem::is_regular_file(pathTo) ){
             std::cerr<<pathTo<<"::Already exist nothing to be done"<<std::endl;
             return false;
@@ -156,14 +165,23 @@ namespace myIO{
         std::cerr<<pathTo<<"::Failed to open"<<std::endl;
         return false;
     }
-    inline void createDir(const boost::filesystem::path &Path){
+  /*!
+   *  Function is equal to mkdir
+   */
+    inline void createDir(const boost::filesystem::path &Path,const mode_t &mode=0644){
         if (!  boost::filesystem::is_directory(Path) ){
             boost::filesystem::create_directory(Path);
+        #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
+        #else
+            if (chmod(Path.file_string().c_str(),mode)!= 0){
+                    std::cerr<<Path<<"::Failed to set permisions"<<std::endl;
+            }
+        #endif
         }
     }
-    inline void delDir(const std::string *strPath){
-        std::cout<<"Removed: "<< boost::filesystem::remove(*strPath) << std::endl;
-    }
+  /*!
+   *  Function write data to file by stream
+   */
     inline bool SimpleWriteToFile(const boost::filesystem::path &pathTo,\
                                   const std::string &data,\
                                   std::ios_base::openmode mode = std::ios::app|std::ios::binary){
@@ -180,45 +198,52 @@ namespace myIO{
         }
         return false;
     }
-#if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
-    inline bool appToFile(const std::string *strFileName,const std::string *data){
-#else
-    inline bool appToFile(const std::string *strFileName,const std::string *data,mode_t pmode =0644,mode_t emode = 0444){
-#endif
+
+  /*!
+   *  Function append data to file, support permission change.
+   */
+    inline bool appToFile(const boost::filesystem::path &path,
+                          const std::string &data,
+                          const mode_t &pmode =0644,const mode_t &emode = 0444){
     #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
         if(true){
     #else
-        if (chmod(strFileName->c_str(),pmode)==0){
+        if (chmod(path.file_string().c_str(),pmode)==0){
     #endif
-            std::ofstream o(strFileName->c_str(),std::ios::app);
+            std::ofstream o(path.file_string().c_str(),std::ios::app);
             if(o){
-                o << *data;
+                o << data;
                 o.close();
             #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
                 return true;
             #else
-                if (chmod(strFileName->c_str(),emode)!=0){
-                    std::cerr<<"[appToFile]: "<<*strFileName<<" Premission error(after write)"<<std::endl;
+                if (chmod(path.file_string().c_str(),emode)!=0){
+                    std::cerr<<"[appToFile]: "<<path<<" Premission error(after write)"<<std::endl;
                 }
                 return true;
             #endif
             }
-            std::cerr<<"[appToFile]: "<<*strFileName<<" Failed to open"<<std::endl;
+            std::cerr<<"[appToFile]: "<<path<<" Failed to open"<<std::endl;
         }else{
-            std::cerr<<"[appToFile]: "<<*strFileName<<" Premission error (before Open)"<<std::endl;
+            std::cerr<<"[appToFile]: "<<path<<" Premission error (before Open)"<<std::endl;
         }
         return false;
     }
     //REMOVE OPERATIONS
-    inline void rmAll_inDir(const boost::filesystem::path & directory,bool bForced = true,int intDirScanDepth =1024){///Save remover for directorys, with defined folder depth and premission changing capabilities
-        int intDirScanCounter = 0;
+  /*!
+   *  Function delete all childerens in give directory by recurense
+   *  Algoritm is fail proof by depth counter
+   *  Support forced remove by permission change
+   */
+    inline void rmAll_inDir(const boost::filesystem::path & directory,bool bForced = true,const unsigned &intDirScanDepth =1024){
+        unsigned intDirScanCounter = 0;
         if( boost::filesystem::exists( directory ) ){
             boost::filesystem::directory_iterator end ;
             for( boost::filesystem::directory_iterator iter(directory) ; iter != end ; ++iter ){
                 if ( boost::filesystem::is_directory( *iter ) ){
                     if(intDirScanCounter < intDirScanDepth){
                         ++intDirScanCounter;
-                        myIO::rmAll_inDir(*iter,bForced);
+                        rmAll_inDir(*iter,bForced);
                         boost::filesystem::remove(*iter);
                     }//deep scan
                 }else{
@@ -233,7 +258,11 @@ namespace myIO{
             }//loop
         }//if exist
     }
-    inline void rm(const boost::filesystem::path & path,std::string strOpt="",bool bforced = false){
+  /*!
+   *  Function delete every thing in and give folder or empty file or folder depends on on string option
+   *  Support forced remove by permission change (only for file or empty folder)
+   */
+    inline void rm(const boost::filesystem::path & path,const std::string &strOpt="",bool bforced = false){
         if (strOpt == "all"){///Fast remover for directory
             boost::filesystem::remove_all(path);
         }
@@ -249,6 +278,9 @@ namespace myIO{
 
     }
     //List
+  /*!
+   *  Function list files in directory
+   */
     inline void lsFiles(const boost::filesystem::path &bfsp_dir,\
                         std::list<boost::filesystem::path> *list_dir){
         if( boost::filesystem::exists( bfsp_dir ) ){
@@ -263,6 +295,9 @@ namespace myIO{
         }
     }
     //COPY
+  /*!
+   *  Function copy file by character
+   */
     inline bool CopyFileByChar(const boost::filesystem::path &pathFrom,\
                                const boost::filesystem::path &pathTo){
         if ( boost::filesystem::is_directory(pathFrom) ){std::cerr<<pathFrom<<" is a directory file requered"<<std::endl; return false; }
@@ -286,9 +321,15 @@ namespace myIO{
         return false;
 
     }
-    inline bool ReadByChunk(){
+  /*!
+   *  Function read from file defined data size (Not implemented yet)
+   */
+    inline bool ReadByChunk(const boost::filesystem::path &path,
+                            const unsigned &chunk){
         return false;
     }
+/*! @} */
+   }
 }
 
 #endif // MYIO_HPP_INCLUDED

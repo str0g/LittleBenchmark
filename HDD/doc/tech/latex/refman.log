@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  10 OCT 2010 13:36
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.9.2)  12 OCT 2010 00:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -796,7 +796,7 @@ Package hyperref Info: Option `pageanchor' set `true' on input line 52.
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 53.
-(./hierarchy.tex
+(./modules.tex
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 ) [1
@@ -806,44 +806,112 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 
 ]
 Chapter 2.
-(./annotated.tex) [3] [4
+(./hierarchy.tex) [3] [4
 
 ]
 Chapter 3.
+(./annotated.tex) [5] [6
+
+]
+Chapter 4.
+(./group__libbuskol.tex
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 5.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 8.
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 13.
+
+Underfull \hbox (badness 1286) in paragraph at lines 17--19
+\T1/ptm/m/n/10 std::string [][]buskol::Conv::Bandwidth[][] (dou-ble dTime, cons
+t T &ui64Counter, const std::string
+ []
+
+
+Underfull \hbox (badness 1062) in paragraph at lines 25--27
+[]\T1/ptm/m/n/10 bool [][]buskol::IO::simpleReadToStringByChar[][] (const boost
+::filesystem::path &str-File, std::string
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--29
+[]\T1/ptm/m/n/10 bool [][]buskol::IO::simpleReadToStringByStream[][] (const boo
+st::filesystem::path &path-File,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 27--29
+\T1/ptm/m/n/10 std::string $\OMS/cmsy/m/n/10 ^^C$\T1/ptm/m/n/10 strBuf, std::li
+st$\OML/cmm/m/it/10 <$ \T1/ptm/m/n/10 dou-ble $\OML/cmm/m/it/10 >$ $\OMS/cmsy/m
+/n/10 ^^C$\T1/ptm/m/n/10 p_-listStats=NULL, std::ios_-base::openmode
+ []
+
+
+Underfull \hbox (badness 1635) in paragraph at lines 39--41
+[]\T1/ptm/m/n/10 void [][]buskol::IO::rm[][] (const boost::filesystem::path &pa
+th, const std::string &strOpt="", bool
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 43--45
+[]\T1/ptm/m/n/10 bool [][]buskol::IO::CopyFileByChar[][] (const boost::filesyst
+em::path &path-From, const
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--51
+[]\T1/ptm/m/n/10 double [][]buskol::Time::TimeDiff[][] (const boost::local_-tim
+e::local_-date_-time &Higher, const
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 53--54
+[]\T1/ptm/m/n/10 std::string [][]buskol::Time::GetLocalTime[][] (const std::str
+ing &strTimeFormatter="[]%Y/%m/%d
+ []
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `T1/ptm/b/it' tried instead on input line 64.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 64.
+(/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 64.
+ [8] [9]) [10] [11]
+[12
+
+]
+Chapter 5.
 (./classhandler__Configuration.tex
-<classhandler__Configuration.pdf, id=233, 501.875pt x 274.99739pt>
+<classhandler__Configuration.pdf, id=452, 501.875pt x 274.99739pt>
 File: classhandler__Configuration.pdf Graphic file (type pdf)
 
-<use classhandler__Configuration.pdf>
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 11.
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 14.
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [5 <./classhandler__Configuration.pdf>]) [6]
+<use classhandler__Configuration.pdf> [13 <./classhandler__Configuration.pdf>])
+[14]
 \openout2 = `classhandler__Report.aux'.
 
  (./classhandler__Report.tex
-<classhandler__Report.pdf, id=261, 501.875pt x 375.23184pt>
+<classhandler__Report.pdf, id=479, 501.875pt x 375.23184pt>
 File: classhandler__Report.pdf Graphic file (type pdf)
 
-<use classhandler__Report.pdf> [7
+<use classhandler__Report.pdf> [15
 
- <./classhandler__Report.pdf>]) [8]
+ <./classhandler__Report.pdf>]) [16]
 \openout2 = `structprofileNode.aux'.
 
 
-(./structprofileNode.tex) [9
+(./structprofileNode.tex) [17
 
 
 ]
 \openout2 = `structstructRow.aux'.
 
- (./structstructRow.tex
-LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 24.
-) [10
+ (./structstructRow.tex) [18
 
 
 ]
@@ -851,10 +919,10 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
 
 
 (./classtester__hdd.tex
-<classtester__hdd.pdf, id=333, 501.875pt x 137.50372pt>
+<classtester__hdd.pdf, id=550, 501.875pt x 137.50372pt>
 File: classtester__hdd.pdf Graphic file (type pdf)
 
-<use classtester__hdd.pdf>) [11
+<use classtester__hdd.pdf>) [19
 
 
  <./classtester__hdd.pdf>]
@@ -881,13 +949,6 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 4.
 
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 12.
-(/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-)
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 57.
-
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
@@ -900,10 +961,10 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 57.
 
-[12
+[20
 
 
-]) [13]
+]) [21]
 \openout2 = `classthread__tester__hdd.aux'.
 
  (./classthread__tester__hdd.tex
@@ -923,40 +984,43 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 4.
 
-<classthread__tester__hdd.pdf, id=382, 501.875pt x 100.375pt>
+<classthread__tester__hdd.pdf, id=599, 501.875pt x 100.375pt>
 File: classthread__tester__hdd.pdf Graphic file (type pdf)
 
-<use classthread__tester__hdd.pdf>) [14
+<use classthread__tester__hdd.pdf>) [22
 
 
  <./classthread__tester__hdd.pdf>]
-(./refman.ind [15
+(./refman.ind [23
 
+
+] [24
 
 ]) (./refman.aux (./classhandler__Report.aux)
 (./structprofileNode.aux) (./structstructRow.aux) (./classtester__hdd.aux)
 (./classbuskol_1_1ThreadTemplates_1_1thread__1.aux)
 (./classthread__tester__hdd.aux)) ) 
 Here is how much of TeX's memory you used:
- 8532 strings out of 495026
- 122410 string characters out of 1181803
- 208621 words of memory out of 3000000
- 11385 multiletter control sequences out of 15000+50000
- 43482 words of font info for 49 fonts, out of 3000000 for 9000
+ 8663 strings out of 495026
+ 126062 string characters out of 1181803
+ 210621 words of memory out of 3000000
+ 11443 multiletter control sequences out of 15000+50000
+ 48027 words of font info for 57 fonts, out of 3000000 for 9000
  48 hyphenation exceptions out of 8191
- 38i,12n,58p,452b,500s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,12n,58p,488b,500s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/ba
 se/8r.enc}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
 /usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/
-texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texli
-ve/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw
-/courier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb>
-</usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-t
-exlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/u
-rw/times/utmri8a.pfb>
-Output written on refman.pdf (19 pages, 186666 bytes).
+texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texliv
+e/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/typ
+e1/urw/courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucr
+r8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/
+texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-texlive/fonts
+/type1/urw/times/utmr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utm
+ri8a.pfb>
+Output written on refman.pdf (28 pages, 254228 bytes).
 PDF statistics:
- 492 PDF objects out of 1000 (max. 8388607)
- 122 named destinations out of 1000 (max. 500000)
- 285 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 768 PDF objects out of 1000 (max. 8388607)
+ 182 named destinations out of 1000 (max. 500000)
+ 501 words of extra memory for PDF output out of 10000 (max. 10000000)
 

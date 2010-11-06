@@ -54,47 +54,48 @@
 00048 \textcolor{keyword}{using} std::cin;
 00049 \textcolor{keyword}{using} std::endl;
 00050 \textcolor{keyword}{namespace }blC = buskol::Conv;
-00051 \textcolor{comment}{//Globals Varuabels}
-00052 
-\hypertarget{tester__hdd_8hpp_source_l00053}{}\hyperlink{classtester__hdd}{00053} \textcolor{keyword}{class }\hyperlink{classtester__hdd}{tester_hdd}: \textcolor{keyword}{public} \hyperlink{classhandler__Configuration}{handler_Configuration}, \textcolor{keyword}{public} \hyperlink{classhandler__Report}{handler_Report}\{
-00054     \textcolor{keyword}{private}:
-00055         \textcolor{keywordtype}{string} strDataLimit; 
-00056         \textcolor{keywordtype}{string} MaxCharSize; 
-00057         \textcolor{keywordtype}{string} MaxStringSize; 
-00058         \textcolor{keywordtype}{bool} bThreadingPerDir; 
-00059         \textcolor{keywordtype}{bool} bDebugging; 
-00060         \textcolor{keywordtype}{bool} bSelfTest;
-00061         \textcolor{keywordtype}{bool} bBufferingTest;
-00062         \textcolor{keywordtype}{bool} bVerifyCache;
-00063         \textcolor{keywordtype}{bool} bInsufficientMemory;
-00064         \textcolor{keywordtype}{bool} bSSD;
-00065         \textcolor{keywordtype}{int} iTextColor;
-00066         \textcolor{keywordtype}{unsigned} uiThreadsPerDir; 
-00067         \textcolor{keywordtype}{unsigned} uiSelfTestScenerio; 
-00068         \textcolor{keywordtype}{unsigned} uiDataLimit; 
-00069         \textcolor{keywordtype}{unsigned} uiMaxLoops;
-00070         \textcolor{keywordtype}{unsigned} uiNumberOfReads;
-00071         uint64\_t ui64MaxCharSize;
-00072         uint64\_t ui64MaxStringSize;
-00073         uint16\_t ui8Precision;
-00074         mode\_t uiPermissions; 
-00075         vector<boost::filesystem::path> vstr\_WorkDirs; 
-00076         vector<boost::filesystem::path>::iterator vitstr\_WorkDirs; 
-00077         vector<uint64\_t> vui\_Probes;
-00078         boost::ptr\_list<thread\_tester\_hdd<tester\_hdd> > bst\_ptrlist\_tester\_hdd; 
-00079         boost::ptr\_list<thread\_tester\_hdd<tester\_hdd> >::iterator bst\_ptrlist\_it\_
+00051 \textcolor{keyword}{namespace }blIO = buskol::IO;
+00052 \textcolor{comment}{//Globals Varuabels}
+00053 
+\hypertarget{tester__hdd_8hpp_source_l00054}{}\hyperlink{classtester__hdd}{00054} \textcolor{keyword}{class }\hyperlink{classtester__hdd}{tester_hdd}: \textcolor{keyword}{public} \hyperlink{classhandler__Configuration}{handler_Configuration}, \textcolor{keyword}{public} \hyperlink{classhandler__Report}{handler_Report}\{
+00055     \textcolor{keyword}{private}:
+00056         \textcolor{keywordtype}{string} strDataLimit; 
+00057         \textcolor{keywordtype}{string} MaxCharSize; 
+00058         \textcolor{keywordtype}{string} MaxStringSize; 
+00059         \textcolor{keywordtype}{bool} bThreadingPerDir; 
+00060         \textcolor{keywordtype}{bool} bDebugging; 
+00061         \textcolor{keywordtype}{bool} bSelfTest;
+00062         \textcolor{keywordtype}{bool} bBufferingTest;
+00063         \textcolor{keywordtype}{bool} bVerifyCache;
+00064         \textcolor{keywordtype}{bool} bInsufficientMemory;
+00065         \textcolor{keywordtype}{bool} bSSD;
+00066         \textcolor{keywordtype}{int} iTextColor;
+00067         \textcolor{keywordtype}{unsigned} uiThreadsPerDir; 
+00068         \textcolor{keywordtype}{unsigned} uiSelfTestScenerio; 
+00069         \textcolor{keywordtype}{unsigned} uiDataLimit; 
+00070         \textcolor{keywordtype}{unsigned} uiMaxLoops;
+00071         \textcolor{keywordtype}{unsigned} uiNumberOfReads;
+00072         uint64\_t ui64MaxCharSize;
+00073         uint64\_t ui64MaxStringSize;
+00074         uint16\_t ui8Precision;
+00075         mode\_t uiPermissions; 
+00076         vector<boost::filesystem::path> vstr\_WorkDirs; 
+00077         vector<boost::filesystem::path>::iterator vitstr\_WorkDirs; 
+00078         vector<uint64\_t> vui\_Probes;
+00079         boost::ptr\_list<thread\_tester\_hdd<tester\_hdd> > bst\_ptrlist\_tester\_hdd; 
+00080         boost::ptr\_list<thread\_tester\_hdd<tester\_hdd> >::iterator bst\_ptrlist\_it\_
       tester\_hdd; 
-00080         \textcolor{comment}{//}
-00081         \textcolor{keywordtype}{void} BufferingTest();
-00082         \textcolor{keywordtype}{void} GetUserDir();
-00083         \textcolor{keywordtype}{void} SelfTest();
-00084         \textcolor{keywordtype}{void} UpdateProfile();
-00085     \textcolor{keyword}{public}:
-00086         \textcolor{keywordtype}{bool} bRun;
-00087         \hyperlink{classtester__hdd_af43b8ca9595ed8ebf14b2c7cffe561c2}{tester_hdd}(\textcolor{keywordtype}{int},\textcolor{keywordtype}{char} **);
-00088         ~\hyperlink{classtester__hdd}{tester_hdd}();
-00089         \textcolor{keywordtype}{void} \hyperlink{classtester__hdd_abfdcc395e8be504dfd0ea686da790375}{Run}();
-00090 \};
-00091 
-00092 \textcolor{preprocessor}{#endif // TESTER\_HDD\_HPP\_INCLUDED}
+00081         \textcolor{comment}{//}
+00082         \textcolor{keywordtype}{void} BufferingTest();
+00083         \textcolor{keywordtype}{void} GetUserDir();
+00084         \textcolor{keywordtype}{void} SelfTest();
+00085         \textcolor{keywordtype}{void} UpdateProfile();
+00086     \textcolor{keyword}{public}:
+00087         \textcolor{keywordtype}{bool} bRun;
+00088         \hyperlink{classtester__hdd_af43b8ca9595ed8ebf14b2c7cffe561c2}{tester_hdd}(\textcolor{keywordtype}{int},\textcolor{keywordtype}{char} **);
+00089         ~\hyperlink{classtester__hdd}{tester_hdd}();
+00090         \textcolor{keywordtype}{void} \hyperlink{classtester__hdd_abfdcc395e8be504dfd0ea686da790375}{Run}();
+00091 \};
+00092 
+00093 \textcolor{preprocessor}{#endif // TESTER\_HDD\_HPP\_INCLUDED}
 \end{alltt}\end{footnotesize}

@@ -49,56 +49,58 @@
 00043 \textcolor{keyword}{using} std::endl;
 00044 \textcolor{keyword}{namespace }blC = buskol::Conv;
 00045 \textcolor{keyword}{namespace }blTT = buskol::ThreadTemplates;
-00046 \textcolor{comment}{//Globals Varuabels}
-\hypertarget{thread__tester__hdd_8hpp_source_l00047}{}\hyperlink{classthread__tester__hdd}{00047} \textcolor{keyword}{template} <\textcolor{keyword}{class} \textcolor{keyword}{class}T> \textcolor{keyword}{class }\hyperlink{classthread__tester__hdd}{thread_tester_hdd}: \textcolor{keyword}{public} blTT::thread\_1<thread\_tes
+00046 \textcolor{keyword}{namespace }blT = buskol::Time;
+00047 \textcolor{keyword}{namespace }blIO = buskol::IO;
+00048 \textcolor{comment}{//Globals Varuabels}
+\hypertarget{thread__tester__hdd_8hpp_source_l00049}{}\hyperlink{classthread__tester__hdd}{00049} \textcolor{keyword}{template} <\textcolor{keyword}{class} \textcolor{keyword}{class}T> \textcolor{keyword}{class }\hyperlink{classthread__tester__hdd}{thread_tester_hdd}: \textcolor{keyword}{public} blTT::thread\_1<thread\_tes
       ter\_hdd<classT> >\{
-00048     \textcolor{keyword}{private}:
-00049         boost::filesystem::path pathDir; 
-00050         \textcolor{keywordtype}{string} *p\_strOutFileDataBuffer; 
-00051         \textcolor{keywordtype}{string} *p\_strHashSum; 
-00052         \textcolor{keywordtype}{string} strSizeTest; 
-00053         \textcolor{keywordtype}{unsigned} uiDataLimit; 
-00054         uint64\_t ui64Loop;
-00055         \textcolor{keywordtype}{unsigned} uiMaxLoops; 
-00056         \textcolor{keywordtype}{unsigned} uiThreadNumber; 
-00057         \textcolor{keywordtype}{unsigned} uiStatsCounter; 
-00058         \textcolor{keywordtype}{unsigned} uiNumberOfReads;
-00059         uint16\_t ui8Precision;
-00060         mode\_t uiPermissions; 
-00061         \textcolor{keywordtype}{bool} bWriteFailed;
-00062         \textcolor{keywordtype}{bool} bVerifyCache;
-00063         \textcolor{keywordtype}{bool} bCleanWorkFolder;
-00064         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} bFailer; 
-00065         \textcolor{keywordtype}{bool} bSSD;
-00066         vector<uint64\_t> vui\_Probes; 
-00067         list<string*> list\_ReadFiles; 
-00068         list<string> it\_list\_RF; 
-00069         classT *p\_Parent;
-00070         \textcolor{keyword}{static} boost::mutex mutex\_Stats; 
-00071         \textcolor{keywordtype}{void} CopyTest();
-00072         \textcolor{keywordtype}{void} Read(uint16\_t,\textcolor{keywordtype}{string} =\textcolor{stringliteral}{""});
-00073         \textcolor{keywordtype}{void} Write(\textcolor{keyword}{const} uint64\_t *,\textcolor{keywordtype}{string} =\textcolor{stringliteral}{""});
-00074         \textcolor{keywordtype}{bool} VeryfiReadFiles();
-00075         \textcolor{keywordtype}{void} addStats(\textcolor{keywordtype}{string},\textcolor{keywordtype}{string});
-00076         \textcolor{keywordtype}{void} setBuffer(\textcolor{keyword}{const} uint64\_t *);
-00077     \textcolor{keyword}{public}:
-00078         \hyperlink{classthread__tester__hdd}{thread_tester_hdd}(vector<uint64\_t>&,
-00079                           boost::filesystem::path &,
-00080                           \textcolor{keywordtype}{unsigned}&,
-00081                           \textcolor{keywordtype}{unsigned}&,
+00050     \textcolor{keyword}{private}:
+00051         boost::filesystem::path pathDir; 
+00052         \textcolor{keywordtype}{string} *p\_strOutFileDataBuffer; 
+00053         \textcolor{keywordtype}{string} *p\_strHashSum; 
+00054         \textcolor{keywordtype}{string} strSizeTest; 
+00055         \textcolor{keywordtype}{unsigned} uiDataLimit; 
+00056         uint64\_t ui64Loop;
+00057         \textcolor{keywordtype}{unsigned} uiMaxLoops; 
+00058         \textcolor{keywordtype}{unsigned} uiThreadNumber; 
+00059         \textcolor{keywordtype}{unsigned} uiStatsCounter; 
+00060         \textcolor{keywordtype}{unsigned} uiNumberOfReads;
+00061         uint16\_t ui8Precision;
+00062         mode\_t uiPermissions; 
+00063         \textcolor{keywordtype}{bool} bWriteFailed;
+00064         \textcolor{keywordtype}{bool} bVerifyCache;
+00065         \textcolor{keywordtype}{bool} bCleanWorkFolder;
+00066         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} bFailer; 
+00067         \textcolor{keywordtype}{bool} bSSD;
+00068         vector<uint64\_t> vui\_Probes; 
+00069         list<string*> list\_ReadFiles; 
+00070         list<string> it\_list\_RF; 
+00071         classT *p\_Parent;
+00072         \textcolor{keyword}{static} boost::mutex mutex\_Stats; 
+00073         \textcolor{keywordtype}{void} CopyTest();
+00074         \textcolor{keywordtype}{void} Read(uint16\_t,\textcolor{keywordtype}{string} =\textcolor{stringliteral}{""});
+00075         \textcolor{keywordtype}{void} Write(\textcolor{keyword}{const} uint64\_t *,\textcolor{keywordtype}{string} =\textcolor{stringliteral}{""});
+00076         \textcolor{keywordtype}{bool} VeryfiReadFiles();
+00077         \textcolor{keywordtype}{void} addStats(\textcolor{keywordtype}{string},\textcolor{keywordtype}{string});
+00078         \textcolor{keywordtype}{void} setBuffer(\textcolor{keyword}{const} uint64\_t *);
+00079     \textcolor{keyword}{public}:
+00080         \hyperlink{classthread__tester__hdd}{thread_tester_hdd}(vector<uint64\_t>&,
+00081                           boost::filesystem::path &,
 00082                           \textcolor{keywordtype}{unsigned}&,
 00083                           \textcolor{keywordtype}{unsigned}&,
-00084                           uint16\_t&,
-00085                           mode\_t&,
-00086                           \textcolor{keywordtype}{bool},\textcolor{keywordtype}{bool},\textcolor{keywordtype}{bool},
-00087                           classT*
-00088                           );
-00089         \hyperlink{classthread__tester__hdd}{thread_tester_hdd}(classT*);
-00090         ~\hyperlink{classthread__tester__hdd}{thread_tester_hdd}();
-00091         \textcolor{keywordtype}{void} setNewData(vector<unsigned>&,boost::filesystem::path&);
-00092         \textcolor{keywordtype}{void} \hyperlink{classthread__tester__hdd_aad16d6b6f1be66d5e851fa2b0408cf06}{Execute}();
-00093 \};
-00094 \textcolor{keyword}{template} <\textcolor{keyword}{class} \textcolor{keyword}{class}T>
-00095 boost::mutex \hyperlink{classthread__tester__hdd}{thread_tester_hdd<classT>::mutex_Stats};
-00096 \textcolor{preprocessor}{#endif // THREAD\_TESTER\_HDD\_HPP\_INCLUDED}
+00084                           \textcolor{keywordtype}{unsigned}&,
+00085                           \textcolor{keywordtype}{unsigned}&,
+00086                           uint16\_t&,
+00087                           mode\_t&,
+00088                           \textcolor{keywordtype}{bool},\textcolor{keywordtype}{bool},\textcolor{keywordtype}{bool},
+00089                           classT*
+00090                           );
+00091         \hyperlink{classthread__tester__hdd}{thread_tester_hdd}(classT*);
+00092         ~\hyperlink{classthread__tester__hdd}{thread_tester_hdd}();
+00093         \textcolor{keywordtype}{void} setNewData(vector<unsigned>&,boost::filesystem::path&);
+00094         \textcolor{keywordtype}{void} \hyperlink{classthread__tester__hdd_aad16d6b6f1be66d5e851fa2b0408cf06}{Execute}();
+00095 \};
+00096 \textcolor{keyword}{template} <\textcolor{keyword}{class} \textcolor{keyword}{class}T>
+00097 boost::mutex \hyperlink{classthread__tester__hdd}{thread_tester_hdd<classT>::mutex_Stats};
+00098 \textcolor{preprocessor}{#endif // THREAD\_TESTER\_HDD\_HPP\_INCLUDED}
 \end{alltt}\end{footnotesize}

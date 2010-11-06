@@ -40,11 +40,13 @@ using std::cin;*/
 using std::cerr;
 using std::endl;
 //Globals Varuabels
-namespace blC = buskol::Conv;
 
 namespace buskol{
     namespace ThreadTemplates{
-
+    /*! \addtogroup libbuskol
+   *  Additional documentation for group libbuskol
+   *  @{
+   */
     ///Thread_1 is very simple thread template which constainst few controle methods and entry for statistics
     template <class ClassT> class thread_1{
         private:
@@ -57,16 +59,16 @@ namespace buskol{
             bool bShowOverExecution; //!< Show execution time
         public:
             thread_1(ClassT *parent, list<string*> *list = NULL,bool show = false): parent(parent),\
-                blt_ldt_Creation(myTime::GetTime()),\
+                blt_ldt_Creation(Time::GetTime()),\
                 blt_ldt_Start(NULL),\
                 dExTimes(list),\
                 bShowOverExecution(show){}
             void start(){///Creates Thread and links it dynamic using static method
-                blt_ldt_Start = myTime::GetTime();
+                blt_ldt_Start = Time::GetTime();
                 m_Thread = boost::thread (boost::bind(this->Execute_,parent));
             }
             void start_self_test(){///This method is only for test purpose!
-                blt_ldt_Start(myTime::GetTime());
+                blt_ldt_Start(Time::GetTime());
                 m_Thread = boost::thread (self_test);
             }
             static void self_test(){///This method is only for test purpose!
@@ -77,14 +79,14 @@ namespace buskol{
             }
             void join(){///Join thread
                 m_Thread.join();
-                UpdateStats(new string("Thread has been doing something for: "+ blC::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
+                UpdateStats(new string("Thread has been doing something for: "+ Conv::TimeToString(Time::TimeDiff(*blt_ldt_Start))));
             }
             void join(unsigned val){///Join thread after specified time in seconds
                 m_Thread.timed_join(( boost::posix_time::time_duration(0,0,val,int(boost::posix_time::time_duration::ticks_per_second() / 10))));
-                UpdateStats(new string("Thread has been doing something for: "+ blC::TimeToString(myTime::TimeDiff(blt_ldt_Start))));
+                UpdateStats(new string("Thread has been doing something for: "+ Conv::TimeToString(Time::TimeDiff(*blt_ldt_Start))));
             }
             string GetThreadID(){
-                return blC::ToString(m_Thread.get_id());
+                return Conv::ToString(m_Thread.get_id());
             }
             void UpdateStats(string *str){///Push statistic information
                 boost::mutex::scoped_lock(mutex_listIO);
@@ -95,11 +97,12 @@ namespace buskol{
             }
             virtual ~thread_1(){///Virtual destructor which can show time of execution
                 if (bShowOverExecution)
-                    cerr<<("Thread has been executed for: "+ blC::TimeToString(myTime::TimeDiff(blt_ldt_Creation)))<<endl;
+                    cerr<<("Thread has been executed for: "+ Conv::TimeToString(Time::TimeDiff(*blt_ldt_Creation)))<<endl;
                 if ( blt_ldt_Creation ) { delete blt_ldt_Creation; }
                 if ( blt_ldt_Start ) { delete blt_ldt_Start; }
             }
         };
+/*! @} */
     }
 
 }

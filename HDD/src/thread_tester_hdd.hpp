@@ -43,6 +43,8 @@ using std::cin;
 using std::endl;
 namespace blC = buskol::Conv;
 namespace blTT = buskol::ThreadTemplates;
+namespace blT = buskol::Time;
+namespace blIO = buskol::IO;
 //Globals Varuabels
 template <class classT> class thread_tester_hdd: public blTT::thread_1<thread_tester_hdd<classT> >{
     private:

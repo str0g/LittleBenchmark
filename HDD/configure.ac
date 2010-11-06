@@ -27,6 +27,9 @@ AC_TYPE_UINT16_T
 AC_TYPE_UINT64_T
 AC_TYPE_UINT8_T
 
+#tex
+AM_GNU_GETTEXT_INTL_SUBDIR([doc/readme],[doc/tech/latex])
+
 # Checks for library functions.
 AC_CHECK_FUNCS([mkdir rmdir])
 

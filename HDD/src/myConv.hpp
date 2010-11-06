@@ -13,28 +13,46 @@
 #include <string>
 #include <sstream>
 #include "Globals.h"
+
 namespace buskol{
     namespace Conv{
-        template <typename T> inline std::string ToString(const T& liczba){///Conver number to string
+/*! \addtogroup libbuskol
+   *  Additional documentation for group libbuskol
+   *  @{
+   */
+  /*!
+   *  Function convert number to string
+   */
+        template <typename T> inline std::string ToString(const T& liczba){
             std::stringstream ss;
             ss << liczba;
             return ss.str();
         }
         #if ( _WIN32 || _WIN64 ) || ( __WIN32__ || __WIN64__ )
             #ifdef _MSC_VER
-            inline std::wstring stringTo_wstring(const std::string& str){///Conver string to wstring usefull only for windows
+    /*!
+    *  Conver string to wstring usefull only for windows
+    */
+            inline std::wstring stringTo_wstring(const std::string& str){
                 std::wstring wstr;
                 wstr.assign(str.begin(),str.end());
                 return wstr;
             }
             #endif
         #endif
-        template <typename T> inline T FromString(std::string s_liczba){///Convert string to number
+    /*!
+    *  Convert string to number
+    */
+        template <typename T> inline T FromString(const std::string &s_liczba){
         T liczba;
         std::stringstream(s_liczba) >> liczba;
         return liczba;
         }
-        template <typename T> inline std::string Bandwidth(double dTime ,const T &ui64Counter,const std::string &strAppEnd = "/s"){///Count bandwidth or scale size
+    /*!
+    * Count bandwidth or scale size.
+    * Output is human readable
+    */
+        template <typename T> inline std::string Bandwidth(double dTime ,const T &ui64Counter,const std::string &strAppEnd = "/s"){
             dTime == 0 ? dTime = 1 : dTime;// /= 1000000;
             double dRet = 0;
             if ( ui64Counter == 0){
@@ -52,7 +70,10 @@ namespace buskol{
             }
             return Conv::ToString(dRet/GB)+"GB"+strAppEnd;
         }
-        template <typename T> inline T SizeFromString(std::string str){///Generate size from string with auto scaling
+    /*!
+    * Generate size from string
+    */
+        template <typename T> inline T SizeFromString(std::string str){
             for (unsigned it = str.length()-2; it < str.length(); it++){ //std::cout<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;
                 if(str.at(it) == 'B' or str.at(it) == 'b'){
                     str.erase(it);
@@ -74,8 +95,10 @@ namespace buskol{
             std::cerr<<"Cannot convert unsported size unit"<<std::endl;
             return 0;
         }
-
-        inline std::string TimeToString(const double &dTime){///From time generates string with auto scaling
+    /*!
+    * From time generates human readable string
+    */
+        inline std::string TimeToString(const double &dTime){
             if ( dTime <= 0){
                 return "[Failed to measure: time diffrence to small]";
             }
@@ -90,7 +113,10 @@ namespace buskol{
             }
             return Conv::ToString(dTime)+"s";
         }
-        template <typename T> inline T TimeFromString(std::string str, double dMulti){///Convert string which contains time to number, can also do scaling
+    /*!
+    * Convert time string to time as number, can also do scaling if multiplicand is defined
+    */
+        template <typename T> inline T TimeFromString(std::string str,const double &dMulti =1){
             for (unsigned it = str.length()-2; it < str.length(); it++){ //std::cout<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;
                 if(str.at(it) == 'N' or str.at(it) == 'n' or str.at(it) == 'U' or str.at(it) == 'u' or str.at(it) == 'M' or str.at(it) == 'm' or str.at(it) == 'S' or str.at(it) == 's'){
                     str.erase(it);
@@ -100,6 +126,7 @@ namespace buskol{
             std::cerr<<"Cannot convert unsported time unit"<<std::endl;
             return 0;
         }
+/*! @} */
     }
 }
 #endif // MYCONV_HPP_INCLUDED

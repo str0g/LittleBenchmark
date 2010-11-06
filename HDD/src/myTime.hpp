@@ -15,39 +15,57 @@
 
 //#include "myConv.hpp"
 #include "Globals.h"
-
-namespace myTime{
+namespace buskol{
+    namespace Time{
+    /*! \addtogroup libbuskol
+   *  Additional documentation for group libbuskol
+   *  @{
+   */
+  /*!
+   *  Function returns pointer to local_data_time struct
+   *  Time and data format can be specified
+   */
     //std::string strTimeFormatter = "[%Y/%m/%d %H:%M:%S]";
     inline boost::local_time::local_date_time *GetTime(const std::string &tzone = "MST-07"){
-        ///Return struct with time date in specified format
         boost::local_time::time_zone_ptr zone(new boost::local_time::posix_time_zone(tzone));
         boost::local_time::local_date_time *ldt = new boost::local_time::local_date_time( boost::local_time::local_microsec_clock::local_time(zone) );
         return ldt;
     }
-    inline double TimeDiff( boost::local_time::local_date_time *Higher,\
-                            boost::local_time::local_date_time *Lower){
-        ///Returns time diffrence in nanoseconds for given local_time struct
-         boost::posix_time::time_duration ret = *Higher-*Lower;
+  /*!
+   *  Function return time diffrence for 2 give local_data_time structers
+   * Time is being scaled to seconds!
+   */
+    inline double TimeDiff(const boost::local_time::local_date_time &Higher,\
+                           const boost::local_time::local_date_time &Lower){
+         boost::posix_time::time_duration ret = Higher-Lower;
          return ret.total_nanoseconds()/(double)m_NS;
     }
-    inline double TimeDiff( boost::local_time::local_date_time *Lower){
+  /*!
+   *  Function return time diffrence for give local_data_time structer and curren time
+   * Time is being scaled to seconds!
+   */
+    inline double TimeDiff(const boost::local_time::local_date_time &Lower){
         ///Returns time diffrence
         boost::local_time::local_date_time *Higher = GetTime();
-        boost::posix_time::time_duration ret = *Higher-*Lower;
+        boost::posix_time::time_duration ret = *Higher - Lower;
         delete Higher;
         return ret.total_nanoseconds()/(double)m_NS;
     }
-    inline std::string GetLocalTime(std::string strTimeFormatter = "[%Y/%m/%d %H:%M:%S]"){
-        char buffer2 [KB]; //!< buffer do ktorego zostanie wpisany string
-        ///Pobiera czas wedlug zdefinowanego formatowania
-        time_t rawtime; //!< pobranie czasu
-        struct tm * timeinfo; //!< struktura czasu, dzieki ktorej dziala formatowanie
+  /*!
+   *  Function return time with defined formatting
+   */
+    inline std::string GetLocalTime(const std::string &strTimeFormatter = "[%Y/%m/%d %H:%M:%S]"){
+        char buffer2 [KB]; //!< string buffer
+        time_t rawtime;
+        struct tm * timeinfo; //!< time structure for formatter
 
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );
         strftime (buffer2,KB,strTimeFormatter.c_str(),timeinfo);
 
         return buffer2;
+    }
+/*! @} */
     }
 }
 

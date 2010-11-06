@@ -1,0 +1,200 @@
+\hypertarget{group__libbuskol}{
+\section{Libbuskol}
+\label{group__libbuskol}\index{Libbuskol@{Libbuskol}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classbuskol_1_1ThreadTemplates_1_1thread__1}{buskol::ThreadTemplates::thread\_\-1$<$ ClassT $>$}
+\begin{DoxyCompactList}\small\item\em Thread\_\-1 is very simple thread template which constainst few controle methods and entry for statistics. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\std::string \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{buskol::Conv::ToString} (const T \&liczba)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \hyperlink{group__libbuskol_ga6a7a5f3c569284e39dbfea446ffa7037}{buskol::Conv::FromString} (const std::string \&s\_\-liczba)
+\item 
+{\footnotesize template$<$typename T $>$ }\\std::string \hyperlink{group__libbuskol_gadfc1b8134cb22f8251e3e104a9d82f18}{buskol::Conv::Bandwidth} (double dTime, const T \&ui64Counter, const std::string \&strAppEnd=\char`\"{}/s\char`\"{})
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \hyperlink{group__libbuskol_gaed62db74cfcb8c4767ed9f8ddd19cbcb}{buskol::Conv::SizeFromString} (std::string str)
+\item 
+std::string \hyperlink{group__libbuskol_ga6c72f99eb28381403eb06abee5ea7c44}{buskol::Conv::TimeToString} (const double \&dTime)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T \hyperlink{group__libbuskol_gad76da3426fefe4b30feba7c0e170dccd}{buskol::Conv::TimeFromString} (std::string str, const double \&dMulti=1)
+\item 
+bool \hyperlink{group__libbuskol_gaa00dee734dcb4383da401abcaa508c70}{buskol::IO::simpleReadToStringByChar} (const boost::filesystem::path \&strFile, std::string $\ast$strBuf, std::list$<$ double $>$ $\ast$p\_\-listStats=NULL)
+\item 
+bool \hyperlink{group__libbuskol_gac962eb969ccaa2b77a024a28c3c2b702}{buskol::IO::simpleReadToStringByStream} (const boost::filesystem::path \&pathFile, std::string $\ast$strBuf, std::list$<$ double $>$ $\ast$p\_\-listStats=NULL, std::ios\_\-base::openmode mode=std::ios::in$|$std::ios::binary)
+\item 
+bool \hyperlink{group__libbuskol_ga5fb8ee7fb3a7ecec3502af64538cfc3c}{buskol::IO::touch} (const boost::filesystem::path \&pathTo, const mode\_\-t \&mode=0644)
+\item 
+void \hyperlink{group__libbuskol_ga7dbaadfa6e4b5ba4a815651e5cfadde9}{buskol::IO::createDir} (const boost::filesystem::path \&Path, const mode\_\-t \&mode=0644)
+\item 
+bool \hyperlink{group__libbuskol_ga5ac0350b87e4d108b9e975916ee0e7f5}{buskol::IO::SimpleWriteToFile} (const boost::filesystem::path \&pathTo, const std::string \&data, std::ios\_\-base::openmode mode=std::ios::app$|$std::ios::binary)
+\item 
+bool \hyperlink{group__libbuskol_gaada29d4b7a4c47579e1b25ea63c47e15}{buskol::IO::appToFile} (const boost::filesystem::path \&path, const std::string \&data, const mode\_\-t \&pmode=0644, const mode\_\-t \&emode=0444)
+\item 
+void \hyperlink{group__libbuskol_gab3ce3dff1ea5fedde1eff01ae94297ae}{buskol::IO::rmAll\_\-inDir} (const boost::filesystem::path \&directory, bool bForced=true, const unsigned \&intDirScanDepth=1024)
+\item 
+void \hyperlink{group__libbuskol_ga38a9328ed6fbfed356b401e209204da2}{buskol::IO::rm} (const boost::filesystem::path \&path, const std::string \&strOpt=\char`\"{}\char`\"{}, bool bforced=false)
+\item 
+void \hyperlink{group__libbuskol_ga172cf5b6503f899737f413d631a4d6ca}{buskol::IO::lsFiles} (const boost::filesystem::path \&bfsp\_\-dir, std::list$<$ boost::filesystem::path $>$ $\ast$list\_\-dir)
+\item 
+bool \hyperlink{group__libbuskol_gafbb450f6ce225235ad7ccab77883aa18}{buskol::IO::CopyFileByChar} (const boost::filesystem::path \&pathFrom, const boost::filesystem::path \&pathTo)
+\item 
+bool \hyperlink{group__libbuskol_gac93438593df503ce260ed0a9ec1e5249}{buskol::IO::ReadByChunk} (const boost::filesystem::path \&path, const unsigned \&chunk)
+\item 
+boost::local\_\-time::local\_\-date\_\-time $\ast$ \hyperlink{group__libbuskol_ga6302b620351164dda28cc6d9d1b81aa5}{buskol::Time::GetTime} (const std::string \&tzone=\char`\"{}MST-\/07\char`\"{})
+\item 
+double \hyperlink{group__libbuskol_gac6d1980cc97a5c78f36a3fd96ceaa573}{buskol::Time::TimeDiff} (const boost::local\_\-time::local\_\-date\_\-time \&Higher, const boost::local\_\-time::local\_\-date\_\-time \&Lower)
+\item 
+double \hyperlink{group__libbuskol_ga4fe6f31191f95b9231ac7c44629ef203}{buskol::Time::TimeDiff} (const boost::local\_\-time::local\_\-date\_\-time \&Lower)
+\item 
+std::string \hyperlink{group__libbuskol_ga87e1c767f9a8af7b2d13eb977d60d872}{buskol::Time::GetLocalTime} (const std::string \&strTimeFormatter=\char`\"{}\mbox{[}\%Y/\%m/\%d \%H:\%M:\%S\mbox{]}\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Additional documentation for group libbuskol 
+
+\subsection{Function Documentation}
+\hypertarget{group__libbuskol_gaada29d4b7a4c47579e1b25ea63c47e15}{
+\index{libbuskol@{libbuskol}!appToFile@{appToFile}}
+\index{appToFile@{appToFile}!libbuskol@{libbuskol}}
+\subsubsection[{appToFile}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::appToFile (const boost::filesystem::path \& {\em path}, \/  const std::string \& {\em data}, \/  const mode\_\-t \& {\em pmode} = {\ttfamily 0644}, \/  const mode\_\-t \& {\em emode} = {\ttfamily 0444})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gaada29d4b7a4c47579e1b25ea63c47e15}
+Function append data to file, support permission change. \hypertarget{group__libbuskol_gadfc1b8134cb22f8251e3e104a9d82f18}{
+\index{libbuskol@{libbuskol}!Bandwidth@{Bandwidth}}
+\index{Bandwidth@{Bandwidth}!libbuskol@{libbuskol}}
+\subsubsection[{Bandwidth}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std::string buskol::Conv::Bandwidth (double {\em dTime}, \/  const T \& {\em ui64Counter}, \/  const std::string \& {\em strAppEnd} = {\ttfamily \char`\"{}/s\char`\"{}})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gadfc1b8134cb22f8251e3e104a9d82f18}
+Count bandwidth or scale size. Output is human readable \hypertarget{group__libbuskol_gafbb450f6ce225235ad7ccab77883aa18}{
+\index{libbuskol@{libbuskol}!CopyFileByChar@{CopyFileByChar}}
+\index{CopyFileByChar@{CopyFileByChar}!libbuskol@{libbuskol}}
+\subsubsection[{CopyFileByChar}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::CopyFileByChar (const boost::filesystem::path \& {\em pathFrom}, \/  const boost::filesystem::path \& {\em pathTo})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gafbb450f6ce225235ad7ccab77883aa18}
+Function copy file by character \hypertarget{group__libbuskol_ga7dbaadfa6e4b5ba4a815651e5cfadde9}{
+\index{libbuskol@{libbuskol}!createDir@{createDir}}
+\index{createDir@{createDir}!libbuskol@{libbuskol}}
+\subsubsection[{createDir}]{\setlength{\rightskip}{0pt plus 5cm}void buskol::IO::createDir (const boost::filesystem::path \& {\em Path}, \/  const mode\_\-t \& {\em mode} = {\ttfamily 0644})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga7dbaadfa6e4b5ba4a815651e5cfadde9}
+Function is equal to mkdir \hypertarget{group__libbuskol_ga6a7a5f3c569284e39dbfea446ffa7037}{
+\index{libbuskol@{libbuskol}!FromString@{FromString}}
+\index{FromString@{FromString}!libbuskol@{libbuskol}}
+\subsubsection[{FromString}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ T buskol::Conv::FromString (const std::string \& {\em s\_\-liczba})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga6a7a5f3c569284e39dbfea446ffa7037}
+Convert string to number \hypertarget{group__libbuskol_ga87e1c767f9a8af7b2d13eb977d60d872}{
+\index{libbuskol@{libbuskol}!GetLocalTime@{GetLocalTime}}
+\index{GetLocalTime@{GetLocalTime}!libbuskol@{libbuskol}}
+\subsubsection[{GetLocalTime}]{\setlength{\rightskip}{0pt plus 5cm}std::string buskol::Time::GetLocalTime (const std::string \& {\em strTimeFormatter} = {\ttfamily \char`\"{}\mbox{[}\%Y/\%m/\%d~\%H:\%M:\%S\mbox{]}\char`\"{}})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga87e1c767f9a8af7b2d13eb977d60d872}
+Function return time with defined formatting 
+
+$<$ string buffer
+
+$<$ time structure for formatter 
+
+\hypertarget{group__libbuskol_ga6302b620351164dda28cc6d9d1b81aa5}{
+\index{libbuskol@{libbuskol}!GetTime@{GetTime}}
+\index{GetTime@{GetTime}!libbuskol@{libbuskol}}
+\subsubsection[{GetTime}]{\setlength{\rightskip}{0pt plus 5cm}boost::local\_\-time::local\_\-date\_\-time$\ast$ buskol::Time::GetTime (const std::string \& {\em tzone} = {\ttfamily \char`\"{}MST-\/07\char`\"{}})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga6302b620351164dda28cc6d9d1b81aa5}
+Function returns pointer to local\_\-data\_\-time struct Time and data format can be specified \hypertarget{group__libbuskol_ga172cf5b6503f899737f413d631a4d6ca}{
+\index{libbuskol@{libbuskol}!lsFiles@{lsFiles}}
+\index{lsFiles@{lsFiles}!libbuskol@{libbuskol}}
+\subsubsection[{lsFiles}]{\setlength{\rightskip}{0pt plus 5cm}void buskol::IO::lsFiles (const boost::filesystem::path \& {\em bfsp\_\-dir}, \/  std::list$<$ boost::filesystem::path $>$ $\ast$ {\em list\_\-dir})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga172cf5b6503f899737f413d631a4d6ca}
+Function list files in directory \hypertarget{group__libbuskol_gac93438593df503ce260ed0a9ec1e5249}{
+\index{libbuskol@{libbuskol}!ReadByChunk@{ReadByChunk}}
+\index{ReadByChunk@{ReadByChunk}!libbuskol@{libbuskol}}
+\subsubsection[{ReadByChunk}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::ReadByChunk (const boost::filesystem::path \& {\em path}, \/  const unsigned \& {\em chunk})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gac93438593df503ce260ed0a9ec1e5249}
+Function read from file defined data size (Not implemented yet) \hypertarget{group__libbuskol_ga38a9328ed6fbfed356b401e209204da2}{
+\index{libbuskol@{libbuskol}!rm@{rm}}
+\index{rm@{rm}!libbuskol@{libbuskol}}
+\subsubsection[{rm}]{\setlength{\rightskip}{0pt plus 5cm}void buskol::IO::rm (const boost::filesystem::path \& {\em path}, \/  const std::string \& {\em strOpt} = {\ttfamily \char`\"{}\char`\"{}}, \/  bool {\em bforced} = {\ttfamily false})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga38a9328ed6fbfed356b401e209204da2}
+Function delete every thing in and give folder or empty file or folder depends on on string option Support forced remove by permission change (only for file or empty folder) 
+
+Fast remover for directory
+
+Remove file or empty folder with premissions changing capabilities 
+
+\hypertarget{group__libbuskol_gab3ce3dff1ea5fedde1eff01ae94297ae}{
+\index{libbuskol@{libbuskol}!rmAll\_\-inDir@{rmAll\_\-inDir}}
+\index{rmAll\_\-inDir@{rmAll\_\-inDir}!libbuskol@{libbuskol}}
+\subsubsection[{rmAll\_\-inDir}]{\setlength{\rightskip}{0pt plus 5cm}void buskol::IO::rmAll\_\-inDir (const boost::filesystem::path \& {\em directory}, \/  bool {\em bForced} = {\ttfamily true}, \/  const unsigned \& {\em intDirScanDepth} = {\ttfamily 1024})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gab3ce3dff1ea5fedde1eff01ae94297ae}
+Function delete all childerens in give directory by recurense Algoritm is fail proof by depth counter Support forced remove by permission change \hypertarget{group__libbuskol_gaa00dee734dcb4383da401abcaa508c70}{
+\index{libbuskol@{libbuskol}!simpleReadToStringByChar@{simpleReadToStringByChar}}
+\index{simpleReadToStringByChar@{simpleReadToStringByChar}!libbuskol@{libbuskol}}
+\subsubsection[{simpleReadToStringByChar}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::simpleReadToStringByChar (const boost::filesystem::path \& {\em strFile}, \/  std::string $\ast$ {\em strBuf}, \/  std::list$<$ double $>$ $\ast$ {\em p\_\-listStats} = {\ttfamily NULL})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gaa00dee734dcb4383da401abcaa508c70}
+Function read file by character and feel statistics if defined 
+
+$<$ keep result of time subtraction
+
+$<$ Keep start time
+
+$<$ counter for temporary fix
+
+Bug from unknow reason read 1 character more, maybe its special character fault, seekp(std::ios::end) return bad file legnth probably special character... 
+
+\hypertarget{group__libbuskol_gac962eb969ccaa2b77a024a28c3c2b702}{
+\index{libbuskol@{libbuskol}!simpleReadToStringByStream@{simpleReadToStringByStream}}
+\index{simpleReadToStringByStream@{simpleReadToStringByStream}!libbuskol@{libbuskol}}
+\subsubsection[{simpleReadToStringByStream}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::simpleReadToStringByStream (const boost::filesystem::path \& {\em pathFile}, \/  std::string $\ast$ {\em strBuf}, \/  std::list$<$ double $>$ $\ast$ {\em p\_\-listStats} = {\ttfamily NULL}, \/  std::ios\_\-base::openmode {\em mode} = {\ttfamily std::ios::in$|$std::ios::binary})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gac962eb969ccaa2b77a024a28c3c2b702}
+Function read file by stream and feel statistics if defined 
+
+$<$ Stream for read from file to string
+
+$<$ keep result of time subtraction
+
+$<$ Keep start time 
+
+\hypertarget{group__libbuskol_ga5ac0350b87e4d108b9e975916ee0e7f5}{
+\index{libbuskol@{libbuskol}!SimpleWriteToFile@{SimpleWriteToFile}}
+\index{SimpleWriteToFile@{SimpleWriteToFile}!libbuskol@{libbuskol}}
+\subsubsection[{SimpleWriteToFile}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::SimpleWriteToFile (const boost::filesystem::path \& {\em pathTo}, \/  const std::string \& {\em data}, \/  std::ios\_\-base::openmode {\em mode} = {\ttfamily std::ios::app$|$std::ios::binary})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga5ac0350b87e4d108b9e975916ee0e7f5}
+Function write data to file by stream \hypertarget{group__libbuskol_gaed62db74cfcb8c4767ed9f8ddd19cbcb}{
+\index{libbuskol@{libbuskol}!SizeFromString@{SizeFromString}}
+\index{SizeFromString@{SizeFromString}!libbuskol@{libbuskol}}
+\subsubsection[{SizeFromString}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ T buskol::Conv::SizeFromString (std::string {\em str})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gaed62db74cfcb8c4767ed9f8ddd19cbcb}
+Generate size from string \hypertarget{group__libbuskol_ga4fe6f31191f95b9231ac7c44629ef203}{
+\index{libbuskol@{libbuskol}!TimeDiff@{TimeDiff}}
+\index{TimeDiff@{TimeDiff}!libbuskol@{libbuskol}}
+\subsubsection[{TimeDiff}]{\setlength{\rightskip}{0pt plus 5cm}double buskol::Time::TimeDiff (const boost::local\_\-time::local\_\-date\_\-time \& {\em Lower})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga4fe6f31191f95b9231ac7c44629ef203}
+Function return time diffrence for give local\_\-data\_\-time structer and curren time Time is being scaled to seconds! 
+
+Returns time diffrence 
+
+\hypertarget{group__libbuskol_gac6d1980cc97a5c78f36a3fd96ceaa573}{
+\index{libbuskol@{libbuskol}!TimeDiff@{TimeDiff}}
+\index{TimeDiff@{TimeDiff}!libbuskol@{libbuskol}}
+\subsubsection[{TimeDiff}]{\setlength{\rightskip}{0pt plus 5cm}double buskol::Time::TimeDiff (const boost::local\_\-time::local\_\-date\_\-time \& {\em Higher}, \/  const boost::local\_\-time::local\_\-date\_\-time \& {\em Lower})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gac6d1980cc97a5c78f36a3fd96ceaa573}
+Function return time diffrence for 2 give local\_\-data\_\-time structers Time is being scaled to seconds! \hypertarget{group__libbuskol_gad76da3426fefe4b30feba7c0e170dccd}{
+\index{libbuskol@{libbuskol}!TimeFromString@{TimeFromString}}
+\index{TimeFromString@{TimeFromString}!libbuskol@{libbuskol}}
+\subsubsection[{TimeFromString}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ T buskol::Conv::TimeFromString (std::string {\em str}, \/  const double \& {\em dMulti} = {\ttfamily 1})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_gad76da3426fefe4b30feba7c0e170dccd}
+Convert time string to time as number, can also do scaling if multiplicand is defined \hypertarget{group__libbuskol_ga6c72f99eb28381403eb06abee5ea7c44}{
+\index{libbuskol@{libbuskol}!TimeToString@{TimeToString}}
+\index{TimeToString@{TimeToString}!libbuskol@{libbuskol}}
+\subsubsection[{TimeToString}]{\setlength{\rightskip}{0pt plus 5cm}std::string buskol::Conv::TimeToString (const double \& {\em dTime})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga6c72f99eb28381403eb06abee5ea7c44}
+From time generates human readable string \hypertarget{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{
+\index{libbuskol@{libbuskol}!ToString@{ToString}}
+\index{ToString@{ToString}!libbuskol@{libbuskol}}
+\subsubsection[{ToString}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ std::string buskol::Conv::ToString (const T \& {\em liczba})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}
+Function convert number to string \hypertarget{group__libbuskol_ga5fb8ee7fb3a7ecec3502af64538cfc3c}{
+\index{libbuskol@{libbuskol}!touch@{touch}}
+\index{touch@{touch}!libbuskol@{libbuskol}}
+\subsubsection[{touch}]{\setlength{\rightskip}{0pt plus 5cm}bool buskol::IO::touch (const boost::filesystem::path \& {\em pathTo}, \/  const mode\_\-t \& {\em mode} = {\ttfamily 0644})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{group__libbuskol_ga5fb8ee7fb3a7ecec3502af64538cfc3c}
+Function touch but can also set permission. 

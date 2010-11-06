@@ -32,11 +32,12 @@ using std::cout;
 using std::cerr;
 using std::cin;
 using std::endl;
+namespace blIO = buskol::IO;
 
 struct profileNode{
     string strVar;
     string strVal;
-    profileNode(string&,string&);
+    profileNode(const string&,const string&);
     string getData();
 };
 
@@ -52,7 +53,7 @@ class handler_Configuration{
         handler_Configuration();
         virtual ~handler_Configuration();
         void setUserDir();
-        void addNodeToStored(string,string);
+        void addNodeToStored(const string&,const string&);
         void clearNodes();
         void parseConfigs();
         void saveConfigs();

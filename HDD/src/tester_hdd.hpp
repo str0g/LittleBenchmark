@@ -48,6 +48,7 @@ using std::cerr;
 using std::cin;
 using std::endl;
 namespace blC = buskol::Conv;
+namespace blIO = buskol::IO;
 //Globals Varuabels
 
 class tester_hdd: public handler_Configuration, public handler_Report{

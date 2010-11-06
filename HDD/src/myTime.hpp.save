@@ -13,10 +13,17 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include "boost/date_time/local_time/local_time.hpp"
 
-#include "myConv.hpp"
+//#include "myConv.hpp"
 #include "Globals.h"
 
 namespace myTime{
+    /*! \addtogroup libbuskol
+   *  Additional documentation for group libbuskol
+   *  @{
+   */
+  /*!
+   *  Function returns pointer to local_data_time struct
+   */
     //std::string strTimeFormatter = "[%Y/%m/%d %H:%M:%S]";
     inline boost::local_time::local_date_time *GetTime(const std::string &tzone = "MST-07"){
         ///Return struct with time date in specified format
@@ -24,12 +31,19 @@ namespace myTime{
         boost::local_time::local_date_time *ldt = new boost::local_time::local_date_time( boost::local_time::local_microsec_clock::local_time(zone) );
         return ldt;
     }
+  /*!
+   *  Function returns time diffrence for 2 give local_data_time structers
+   * Time is being scaled to seconds!
+   */
     inline double TimeDiff( boost::local_time::local_date_time *Higher,\
                             boost::local_time::local_date_time *Lower){
         ///Returns time diffrence in nanoseconds for given local_time struct
          boost::posix_time::time_duration ret = *Higher-*Lower;
          return ret.total_nanoseconds()/(double)m_NS;
     }
+  /*!
+   *  Function returns time diffrence for give local_data_time structer and curren time
+   */
     inline double TimeDiff( boost::local_time::local_date_time *Lower){
         ///Returns time diffrence
         boost::local_time::local_date_time *Higher = GetTime();
@@ -38,10 +52,10 @@ namespace myTime{
         return ret.total_nanoseconds()/(double)m_NS;
     }
     inline std::string GetLocalTime(std::string strTimeFormatter = "[%Y/%m/%d %H:%M:%S]"){
+        char buffer2 [KB]; //!< buffer do ktorego zostanie wpisany string
         ///Pobiera czas wedlug zdefinowanego formatowania
         time_t rawtime; //!< pobranie czasu
         struct tm * timeinfo; //!< struktura czasu, dzieki ktorej dziala formatowanie
-        char buffer2 [KB]; //!< buffer do ktorego zostanie wpisany string
 
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );
@@ -49,6 +63,7 @@ namespace myTime{
 
         return buffer2;
     }
+/*! @} */
 }
 
 #endif // MYTIME_HPP_INCLUDED

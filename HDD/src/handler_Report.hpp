@@ -25,6 +25,7 @@ using std::cout;
 using std::cerr;
 using std::cin;
 using std::endl;
+namespace blIO = buskol::IO;
 //Globals Varuabels
 
 struct structRow{

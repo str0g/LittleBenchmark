@@ -19,102 +19,104 @@
 00013 \textcolor{preprocessor}{#include <string>}
 00014 \textcolor{preprocessor}{#include <sstream>}
 00015 \textcolor{preprocessor}{#include "Globals.h"}
-00016 \textcolor{keyword}{namespace }buskol\{
-00017     \textcolor{keyword}{namespace }Conv\{
-00018         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} std::string ToString(\textcolor{keyword}{const} T& liczba)\{
-00019             std::stringstream ss;
-00020             ss << liczba;
-00021             \textcolor{keywordflow}{return} ss.str();
-00022         \}
-00023 \textcolor{preprocessor}{        #if ( \_WIN32 || \_WIN64 ) || ( \_\_WIN32\_\_ || \_\_WIN64\_\_ )}
-00024 \textcolor{preprocessor}{}\textcolor{preprocessor}{            #ifdef \_MSC\_VER}
-00025 \textcolor{preprocessor}{}            \textcolor{keyword}{inline} std::wstring stringTo\_wstring(\textcolor{keyword}{const} std::string& str)\{
-00026                 std::wstring wstr;
-00027                 wstr.assign(str.begin(),str.end());
-00028                 \textcolor{keywordflow}{return} wstr;
-00029             \}
-00030 \textcolor{preprocessor}{            #endif}
-00031 \textcolor{preprocessor}{}\textcolor{preprocessor}{        #endif}
-00032 \textcolor{preprocessor}{}        \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} T FromString(std::string s\_liczba)\{
-00033         T liczba;
-00034         std::stringstream(s\_liczba) >> liczba;
-00035         \textcolor{keywordflow}{return} liczba;
-00036         \}
-00037         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} std::string Bandwidth(\textcolor{keywordtype}{double} dTime ,\textcolor{keyword}{const} T 
+00016 
+00017 \textcolor{keyword}{namespace }buskol\{
+00018     \textcolor{keyword}{namespace }Conv\{
+\hypertarget{myConv_8hpp_source_l00026}{}\hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{00026}         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} std::string \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{ToString}(\textcolor{keyword}{const} T& liczba)\{
+00027             std::stringstream ss;
+00028             ss << liczba;
+00029             \textcolor{keywordflow}{return} ss.str();
+00030         \}
+00031 \textcolor{preprocessor}{        #if ( \_WIN32 || \_WIN64 ) || ( \_\_WIN32\_\_ || \_\_WIN64\_\_ )}
+00032 \textcolor{preprocessor}{}\textcolor{preprocessor}{            #ifdef \_MSC\_VER}
+00033 \textcolor{preprocessor}{}
+00036             \textcolor{keyword}{inline} std::wstring stringTo\_wstring(\textcolor{keyword}{const} std::string& str)\{
+00037                 std::wstring wstr;
+00038                 wstr.assign(str.begin(),str.end());
+00039                 \textcolor{keywordflow}{return} wstr;
+00040             \}
+00041 \textcolor{preprocessor}{            #endif}
+00042 \textcolor{preprocessor}{}\textcolor{preprocessor}{        #endif}
+00043 \textcolor{preprocessor}{}
+\hypertarget{myConv_8hpp_source_l00046}{}\hyperlink{group__libbuskol_ga6a7a5f3c569284e39dbfea446ffa7037}{00046}         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} T \hyperlink{group__libbuskol_ga6a7a5f3c569284e39dbfea446ffa7037}{FromString}(\textcolor{keyword}{const} std::string &s\_liczba)\{
+00047         T liczba;
+00048         std::stringstream(s\_liczba) >> liczba;
+00049         \textcolor{keywordflow}{return} liczba;
+00050         \}
+\hypertarget{myConv_8hpp_source_l00055}{}\hyperlink{group__libbuskol_gadfc1b8134cb22f8251e3e104a9d82f18}{00055}         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} std::string \hyperlink{group__libbuskol_gadfc1b8134cb22f8251e3e104a9d82f18}{Bandwidth}(\textcolor{keywordtype}{double} dTime ,\textcolor{keyword}{const} T 
       &ui64Counter,\textcolor{keyword}{const} std::string &strAppEnd = \textcolor{stringliteral}{"/s"})\{
-00038             dTime == 0 ? dTime = 1 : dTime;\textcolor{comment}{// /= 1000000;}
-00039             \textcolor{keywordtype}{double} dRet = 0;
-00040             \textcolor{keywordflow}{if} ( ui64Counter == 0)\{
-00041                 std::cerr<<myColors::ConsoleColors\_[1]<<\textcolor{stringliteral}{"Can not count bandwidth 
+00056             dTime == 0 ? dTime = 1 : dTime;\textcolor{comment}{// /= 1000000;}
+00057             \textcolor{keywordtype}{double} dRet = 0;
+00058             \textcolor{keywordflow}{if} ( ui64Counter == 0)\{
+00059                 std::cerr<<myColors::ConsoleColors\_[1]<<\textcolor{stringliteral}{"Can not count bandwidth 
       from counter = 0"}<<myColors::ConsoleColors\_[*myColors::TextColor]<<std::endl;
-00042                 std::cerr<<\textcolor{stringliteral}{"dTime:"}<<dTime<<\textcolor{stringliteral}{" Exp end sqc["}<<strAppEnd<<\textcolor{stringliteral}{"]"}<<std:
+00060                 std::cerr<<\textcolor{stringliteral}{"dTime:"}<<dTime<<\textcolor{stringliteral}{" Exp end sqc["}<<strAppEnd<<\textcolor{stringliteral}{"]"}<<std:
       :endl;
-00043             \}\textcolor{keywordflow}{else}\{ dRet = ui64Counter / dTime ;\}
-00044             \textcolor{keywordflow}{if} (dRet < KB )\{ \textcolor{comment}{//B}
-00045                 \textcolor{keywordflow}{return} Conv::ToString(dRet)+\textcolor{stringliteral}{"B"}+strAppEnd;
-00046             \}
-00047             \textcolor{keywordflow}{if} ( dRet < MB )\{\textcolor{comment}{//KB}
-00048                 \textcolor{keywordflow}{return} Conv::ToString(dRet/KB)+\textcolor{stringliteral}{"KB"}+strAppEnd;
-00049             \}
-00050             \textcolor{keywordflow}{if}( dRet < GB )\{\textcolor{comment}{//MB}
-00051                 \textcolor{keywordflow}{return} Conv::ToString(dRet/MB)+\textcolor{stringliteral}{"MB"}+strAppEnd;
-00052             \}
-00053             \textcolor{keywordflow}{return} Conv::ToString(dRet/GB)+\textcolor{stringliteral}{"GB"}+strAppEnd;
-00054         \}
-00055         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} T SizeFromString(std::string str)\{
-00056             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} it = str.length()-2; it < str.length(); it++)\{ \textcolor{comment}{//std::c
+00061             \}\textcolor{keywordflow}{else}\{ dRet = ui64Counter / dTime ;\}
+00062             \textcolor{keywordflow}{if} (dRet < KB )\{ \textcolor{comment}{//B}
+00063                 \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(dRet)+\textcolor{stringliteral}{"B"}+strAppEnd;
+00064             \}
+00065             \textcolor{keywordflow}{if} ( dRet < MB )\{\textcolor{comment}{//KB}
+00066                 \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(dRet/KB)+\textcolor{stringliteral}{"KB"}+strAppEnd;
+00067             \}
+00068             \textcolor{keywordflow}{if}( dRet < GB )\{\textcolor{comment}{//MB}
+00069                 \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(dRet/MB)+\textcolor{stringliteral}{"MB"}+strAppEnd;
+00070             \}
+00071             \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(dRet/GB)+\textcolor{stringliteral}{"GB"}+strAppEnd;
+00072         \}
+\hypertarget{myConv_8hpp_source_l00076}{}\hyperlink{group__libbuskol_gaed62db74cfcb8c4767ed9f8ddd19cbcb}{00076}         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} T \hyperlink{group__libbuskol_gaed62db74cfcb8c4767ed9f8ddd19cbcb}{SizeFromString}(std::string str)\{
+00077             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} it = str.length()-2; it < str.length(); it++)\{ \textcolor{comment}{//std::c
       out<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;}
-00057                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'B'} or str.at(it) == \textcolor{charliteral}{'b'})\{
-00058                     str.erase(it);
-00059                     \textcolor{keywordflow}{return} Conv::FromString<T>(str);
-00060                 \}
-00061                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'K'} or str.at(it) == \textcolor{charliteral}{'k'})\{
-00062                     str.erase(it);
-00063                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * KB;
-00064                 \}
-00065                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'M'} or str.at(it) == \textcolor{charliteral}{'m'})\{
-00066                     str.erase(it);
-00067                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * MB;
-00068                 \}
-00069                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'G'} or str.at(it) == \textcolor{charliteral}{'g'})\{
-00070                     str.erase(it);
-00071                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * GB;
-00072                 \}
-00073             \}
-00074             std::cerr<<\textcolor{stringliteral}{"Cannot convert unsported size unit"}<<std::endl;
-00075             \textcolor{keywordflow}{return} 0;
-00076         \}
-00077 
-00078         \textcolor{keyword}{inline} std::string TimeToString(\textcolor{keyword}{const} \textcolor{keywordtype}{double} &dTime)\{
-00079             \textcolor{keywordflow}{if} ( dTime <= 0)\{
-00080                 \textcolor{keywordflow}{return} \textcolor{stringliteral}{"[Failed to measure: time diffrence to small]"};
-00081             \}
-00082             \textcolor{keywordflow}{if} (dTime < US)\{
-00083                 \textcolor{keywordflow}{return} Conv::ToString(m\_NS * dTime)+\textcolor{stringliteral}{"ns"};
-00084             \}
-00085             \textcolor{keywordflow}{if}(dTime < MS)\{
-00086                 \textcolor{keywordflow}{return} Conv::ToString(m\_US * dTime)+\textcolor{stringliteral}{"us"};
-00087             \}
-00088             \textcolor{keywordflow}{if}(dTime < 1)\{
-00089                 \textcolor{keywordflow}{return} Conv::ToString(m\_MS * dTime)+\textcolor{stringliteral}{"ms"};
-00090             \}
-00091             \textcolor{keywordflow}{return} Conv::ToString(dTime)+\textcolor{stringliteral}{"s"};
-00092         \}
-00093         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} T TimeFromString(std::string str, \textcolor{keywordtype}{double} dMu
-      lti)\{
-00094             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} it = str.length()-2; it < str.length(); it++)\{ \textcolor{comment}{//std::c
+00078                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'B'} or str.at(it) == \textcolor{charliteral}{'b'})\{
+00079                     str.erase(it);
+00080                     \textcolor{keywordflow}{return} Conv::FromString<T>(str);
+00081                 \}
+00082                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'K'} or str.at(it) == \textcolor{charliteral}{'k'})\{
+00083                     str.erase(it);
+00084                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * KB;
+00085                 \}
+00086                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'M'} or str.at(it) == \textcolor{charliteral}{'m'})\{
+00087                     str.erase(it);
+00088                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * MB;
+00089                 \}
+00090                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'G'} or str.at(it) == \textcolor{charliteral}{'g'})\{
+00091                     str.erase(it);
+00092                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * GB;
+00093                 \}
+00094             \}
+00095             std::cerr<<\textcolor{stringliteral}{"Cannot convert unsported size unit"}<<std::endl;
+00096             \textcolor{keywordflow}{return} 0;
+00097         \}
+\hypertarget{myConv_8hpp_source_l00101}{}\hyperlink{group__libbuskol_ga6c72f99eb28381403eb06abee5ea7c44}{00101}         \textcolor{keyword}{inline} std::string \hyperlink{group__libbuskol_ga6c72f99eb28381403eb06abee5ea7c44}{TimeToString}(\textcolor{keyword}{const} \textcolor{keywordtype}{double} &dTime)\{
+00102             \textcolor{keywordflow}{if} ( dTime <= 0)\{
+00103                 \textcolor{keywordflow}{return} \textcolor{stringliteral}{"[Failed to measure: time diffrence to small]"};
+00104             \}
+00105             \textcolor{keywordflow}{if} (dTime < US)\{
+00106                 \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(m\_NS * dTime)+\textcolor{stringliteral}{"ns"};
+00107             \}
+00108             \textcolor{keywordflow}{if}(dTime < MS)\{
+00109                 \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(m\_US * dTime)+\textcolor{stringliteral}{"us"};
+00110             \}
+00111             \textcolor{keywordflow}{if}(dTime < 1)\{
+00112                 \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(m\_MS * dTime)+\textcolor{stringliteral}{"ms"};
+00113             \}
+00114             \textcolor{keywordflow}{return} \hyperlink{group__libbuskol_ga0b261d6de4c26434d56ba40d00daa68a}{Conv::ToString}(dTime)+\textcolor{stringliteral}{"s"};
+00115         \}
+\hypertarget{myConv_8hpp_source_l00119}{}\hyperlink{group__libbuskol_gad76da3426fefe4b30feba7c0e170dccd}{00119}         \textcolor{keyword}{template} <\textcolor{keyword}{typename} T> \textcolor{keyword}{inline} T \hyperlink{group__libbuskol_gad76da3426fefe4b30feba7c0e170dccd}{TimeFromString}(std::string str,\textcolor{keyword}{const} \textcolor{keywordtype}{doubl
+      e} &dMulti =1)\{
+00120             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} it = str.length()-2; it < str.length(); it++)\{ \textcolor{comment}{//std::c
       out<<"FromString: "<<str<<"::"<<str.at(it)<<"::"<<std::endl;}
-00095                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'N'} or str.at(it) == \textcolor{charliteral}{'n'} or str.at(it) == \textcolor{charliteral}{'U'} or
+00121                 \textcolor{keywordflow}{if}(str.at(it) == \textcolor{charliteral}{'N'} or str.at(it) == \textcolor{charliteral}{'n'} or str.at(it) == \textcolor{charliteral}{'U'} or
        str.at(it) == \textcolor{charliteral}{'u'} or str.at(it) == \textcolor{charliteral}{'M'} or str.at(it) == \textcolor{charliteral}{'m'} or str.at(it) == \textcolor{charliteral}{'S'
       } or str.at(it) == \textcolor{charliteral}{'s'})\{
-00096                     str.erase(it);
-00097                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * dMulti;
-00098                 \}
-00099             \}
-00100             std::cerr<<\textcolor{stringliteral}{"Cannot convert unsported time unit"}<<std::endl;
-00101             \textcolor{keywordflow}{return} 0;
-00102         \}
-00103     \}
-00104 \}
-00105 \textcolor{preprocessor}{#endif // MYCONV\_HPP\_INCLUDED}
+00122                     str.erase(it);
+00123                     \textcolor{keywordflow}{return} Conv::FromString<T>(str) * dMulti;
+00124                 \}
+00125             \}
+00126             std::cerr<<\textcolor{stringliteral}{"Cannot convert unsported time unit"}<<std::endl;
+00127             \textcolor{keywordflow}{return} 0;
+00128         \}
+00130     \}
+00131 \}
+00132 \textcolor{preprocessor}{#endif // MYCONV\_HPP\_INCLUDED}
 \end{alltt}\end{footnotesize}

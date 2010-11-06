@@ -192,18 +192,18 @@ void handler_Report::SaveToDisk(boost::filesystem::path path){
     if ( bFormattedTxt ){
         path.replace_extension(".txt");
         FormatDataInVector();
-        myIO::SimpleWriteToFile(path, GeneratDataFromVector() );
-        myIO::SimpleWriteToFile(path, string("\n") );
+        blIO::SimpleWriteToFile(path, GeneratDataFromVector() );
+        blIO::SimpleWriteToFile(path, string("\n") );
     }
     if (bLog){
         path.replace_extension(".log");
         for(unsigned i =0; i< uiMaxCols; i++){
-            myIO::SimpleWriteToFile(path, p_vecstr_Log->at(i) );
-            myIO::SimpleWriteToFile(path, string("\n") );
+            blIO::SimpleWriteToFile(path, p_vecstr_Log->at(i) );
+            blIO::SimpleWriteToFile(path, string("\n") );
         }
     }
     if (bGenXML){
         path.replace_extension(".xml");
-        myIO::SimpleWriteToFile(path, GenerateXMLFromVector() );
+        blIO::SimpleWriteToFile(path, GenerateXMLFromVector() );
     }
 }
