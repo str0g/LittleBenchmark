@@ -1,8 +1,7 @@
 \documentclass[a4paper]{article}
-\usepackage[MeX]{english}
+\usepackage[utf8]{inputenc}
 \usepackage{hyperref}
- \hypersetup{pdfborder={0 0 0}}
-\usepackage[utf8x]{inputenc}
+\hypersetup{pdfborder={0 0 0}}
 \usepackage{lastpage}
 \usepackage{fancyhdr}
 \usepackage{rotating}
@@ -17,7 +16,7 @@
 
 \lhead{Little Benchmark: HDD}
 \rhead{Read Me}
-\cfoot{page \thepage/\pageref{LastPage}}
+\cfoot{page \thepage / \pageref{LastPage}}
 
 \begin{document}
 \title{Little Benchmark: HDD  \LaTeX2}
@@ -36,7 +35,7 @@
 Operating system: Linux, Windows XP or newer\\
 Library.:libboost 1.40 , libcrypto++ 5.6.0-5
 \section{Features}
-\begin{itemized}
+\begin{itemize}
 \item Portability (not tested yet)
 \item Multi threading for controllers and NCQ tests
 \item Test read by 1 character and stream
@@ -47,7 +46,7 @@ Library.:libboost 1.40 , libcrypto++ 5.6.0-5
 \item Easy and fully customizable by command line or configuration file
 \item Tests designed for hybrid drives
 \item Free of charge but don't forget to appreciate my job by \href{http://str0g.wordpress.com/about/}{\underline{donation}}
-\end{itemized}
+\end{itemize}
 
 \newpage
 \input{howdoesitwork.tex}
@@ -59,6 +58,6 @@ Library.:libboost 1.40 , libcrypto++ 5.6.0-5
 \input{KnownLimitation.tex}
 \newpage
 \input{knownIssues.tex}
-
-\newpages
+%\newpages
+%\printindex
 \end{document}

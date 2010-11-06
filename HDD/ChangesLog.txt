@@ -15,6 +15,7 @@ xx October 2010
    released version 1.1.5 of HDD
 
      Change log:
+	Fixed:	  Some errors in readme latex document
 	Replaced: Automake with customized Makefiles
 	Updated:  Clean ups + optimizations
 	Updated:  Huge technical documentation updated

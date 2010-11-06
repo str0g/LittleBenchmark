@@ -15,8 +15,7 @@ After applying solution check if you can login in other terminal session and unl
 Min:1e+09s
 Max:[Failed to measure: time difference to small]
 Avg:-nans
-\end{verbatim}\\
-Memory allocation failed or your hard drive for given data is immeasurable fast :-)
+\end{verbatim} Memory allocation failed or your hard drive for given data is immeasurable fast :-)
 
 \item [{\bf Linux}] Memory leak caused by bug in {\itshape pwd.h} library
 \marginpar{12 records in worst case scenario can take max 8192 bytes, libc-freeres won't do the job so please apply solution}
@@ -24,7 +23,7 @@ Memory allocation failed or your hard drive for given data is immeasurable fast 
 #include <pwd.h> /*12 records lost*/
 struct passwd *pw;
 \end{verbatim}
-\\{\bf Solution:} line 7-9 word ``{\itshape compat}'' have to be replaced with ``{\itshape files}''
+{\bf Solution:} line 7-9 word ``{\itshape compat}'' have to be replaced with ``{\itshape files}''
 \begin{verbatim}
 lukasz@lukasz-compal:~$ cat -n /etc/nsswitch.conf 
      1	# /etc/nsswitch.conf
