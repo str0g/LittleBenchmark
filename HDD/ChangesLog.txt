@@ -11,7 +11,7 @@ xx October 2010
 	-Add:      Chart generator
 	-Fix:      Memory leaks in allocation test (32records)
 	-Fix:	   Libcryptopp linking erros
-06 September 2010
+06 November 2010
    released version 1.1.5 of HDD
 
      Change log:
