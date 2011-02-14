@@ -1,0 +1,11 @@
+#FILES
+*.[oa]
+*.aux
+*.out
+*.toc
+*.pdf
+*~
+HDD/doc/readme/readme.log
+HDD/src/LittleBenchmarkHDD
+#TODO
+HDD/doc/refman/
