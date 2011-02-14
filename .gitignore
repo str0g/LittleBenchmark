@@ -5,6 +5,8 @@
 *.toc
 *.pdf
 *~
+*.cbTemp
+*.save
 HDD/doc/readme/readme.log
 HDD/src/LittleBenchmarkHDD
 #TODO
