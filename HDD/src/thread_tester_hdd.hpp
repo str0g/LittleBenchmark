@@ -49,8 +49,8 @@ namespace blIO = buskol::IO;
 template <class classT> class thread_tester_hdd: public blTT::thread_1<thread_tester_hdd<classT> >{
     private:
         boost::filesystem::path pathDir; //!<Keep work directory
-        string *p_strOutFileDataBuffer; //!<buffer which keeps charactes of specified size.
-        string *p_strHashSum; //!<Keeps sha512 hash sum for comparization
+        string *p_strOutFileDataBuffer; //!<buffer which Keep's charactes of specified size.
+        string *p_strHashSum; //!<Keep's sha512 hash sum for comparization
         string strSizeTest; //!<
         unsigned uiDataLimit; //!<Data limit to count how much loop read/writes will be done for specified probes
         uint64_t ui64Loop;//!<

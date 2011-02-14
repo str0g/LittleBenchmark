@@ -10,12 +10,12 @@ After applying solution check if you can login in other terminal session and unl
 }
 
 \begin{description}
-\item [\bf{Memory leak}] 32 records lost when running with -M\\ Solution unknown: Lost is in static allocated memory.
+\item [\bf{Memory leak}] 32 records lost when running with -M\\ Solution unknown: Lost occurred in memory allocated by linked libraries.
 \item [\bf{Strange Log Output}] Example: \begin{verbatim}
 Min:1e+09s
 Max:[Failed to measure: time difference to small]
 Avg:-nans
-\end{verbatim} Memory allocation failed or your hard drive for given data is immeasurable fast :-)
+\end{verbatim} Memory allocation failed or your hard driver is immeasurable fast for given data :-)
 
 \item [{\bf Linux}] Memory leak caused by bug in {\itshape pwd.h} library
 \marginpar{12 records in worst case scenario can take max 8192 bytes, libc-freeres won't do the job so please apply solution}

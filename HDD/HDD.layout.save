@@ -7,47 +7,47 @@
 	<File name="src/Globals.h" open="1" top="0" tabpos="10">
 		<Cursor position="79" topLine="0" />
 	</File>
-	<File name="src/handler_Configuration.cpp" open="1" top="1" tabpos="16">
-		<Cursor position="5009" topLine="92" />
+	<File name="src/handler_Configuration.cpp" open="1" top="0" tabpos="16">
+		<Cursor position="1359" topLine="32" />
 	</File>
 	<File name="src/handler_Configuration.hpp" open="1" top="0" tabpos="17">
-		<Cursor position="893" topLine="0" />
+		<Cursor position="1376" topLine="18" />
 	</File>
 	<File name="src/handler_Report.cpp" open="1" top="0" tabpos="15">
-		<Cursor position="3754" topLine="69" />
+		<Cursor position="7156" topLine="161" />
 	</File>
 	<File name="src/handler_Report.hpp" open="1" top="0" tabpos="14">
-		<Cursor position="566" topLine="0" />
+		<Cursor position="769" topLine="0" />
 	</File>
 	<File name="src/main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="1292" topLine="11" />
+		<Cursor position="796" topLine="11" />
 	</File>
 	<File name="src/myConv.hpp" open="1" top="0" tabpos="8">
-		<Cursor position="1125" topLine="0" />
+		<Cursor position="569" topLine="84" />
 	</File>
 	<File name="src/myHash.hpp" open="1" top="0" tabpos="9">
-		<Cursor position="718" topLine="22" />
+		<Cursor position="1070" topLine="24" />
 	</File>
 	<File name="src/myIO.hpp" open="1" top="0" tabpos="5">
-		<Cursor position="10017" topLine="219" />
+		<Cursor position="708" topLine="20" />
 	</File>
-	<File name="src/myThreadTemplates.hpp" open="1" top="0" tabpos="13">
-		<Cursor position="1120" topLine="18" />
+	<File name="src/myThreadTemplates.hpp" open="1" top="1" tabpos="13">
+		<Cursor position="4238" topLine="31" />
 	</File>
 	<File name="src/myTime.hpp" open="1" top="0" tabpos="4">
-		<Cursor position="2272" topLine="5" />
+		<Cursor position="651" topLine="24" />
 	</File>
 	<File name="src/tester_hdd.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="6733" topLine="33" />
+		<Cursor position="4607" topLine="42" />
 	</File>
 	<File name="src/tester_hdd.hpp" open="1" top="0" tabpos="3">
-		<Cursor position="1082" topLine="36" />
+		<Cursor position="1349" topLine="30" />
 	</File>
 	<File name="src/thread_tester_hdd.cpp" open="1" top="0" tabpos="7">
-		<Cursor position="14326" topLine="309" />
+		<Cursor position="6938" topLine="119" />
 	</File>
 	<File name="src/thread_tester_hdd.hpp" open="1" top="0" tabpos="6">
-		<Cursor position="540" topLine="0" />
+		<Cursor position="1394" topLine="17" />
 	</File>
 	<File name="src/version.h" open="1" top="0" tabpos="11">
 		<Cursor position="399" topLine="0" />

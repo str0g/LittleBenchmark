@@ -35,8 +35,8 @@ using std::endl;
 namespace blIO = buskol::IO;
 
 struct profileNode{
-    string strVar;
-    string strVal;
+    string strVar;//!Keep's variable name
+    string strVal;//!Keep's variable value
     profileNode(const string&,const string&);
     string getData();
 };
@@ -46,8 +46,8 @@ class handler_Configuration{
         vector<profileNode> *p_vec_Nodes;
         string *p_strConfigs;
     protected:
-        boost::filesystem::path pathProfile;//!<Keeps path to config file
-        boost::filesystem::path pathConfig;//!<Keeps path to config file
+        boost::filesystem::path pathProfile;//!<Keep's path to config file
+        boost::filesystem::path pathConfig;//!<Keep's path to config file
         bool bLetUpdate;//!<
     public:
         handler_Configuration();

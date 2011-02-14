@@ -39,7 +39,7 @@ class handler_Report{
     protected:
         vector<string> *p_vecstr_Log; //!< keep log output in vector
         vector<structRow> *p_vecstr_formattedTXT; //!< keep data in vector
-        boost::filesystem::path pathReport;//!<Keeps path to report file
+        boost::filesystem::path pathReport;//!<Keep's path to report file
         string strReportFile; //!<File to report will be written
         bool bLog; //!<To log
         bool bFormattedTxt; //!< Generate formatted txt
