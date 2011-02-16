@@ -1,12 +1,12 @@
 \hypertarget{Installation}{
 \section{Installation}
-\label{Installation}\index{Installation@{Installation}}
+\label{Installation}\index{Installation{Installation}}
 }
 
 \subsection{Package}
 Binaries and source can be downloaded from:
 \begin{description}
-\item \href{http://github.com/str0g/LittleBenchmark/tree/master/HDD/Release}{Git}
+\item \href{http://github.com/str0g/LittleBenchmark/tree/master/HDD/Release}{GIT}
 \item \href{https://subversion.assembla.com/svn/littlebenchmark-hdd/}{SVN Not uploaded yet}
 \end{description}
 
@@ -20,16 +20,17 @@ sudo apt-get update
 sudo apt-get install littlebenchmark-hdd
 \end{verbatim}
 
-\subsubsection{From source}
-Open terminal:\\
-\$ cd \ldots/Littel\_Benchmark/HDD\\
-\$ ./configure\\
-\$ make \&\& make test \&\& sudo make install \&\& make clean\\
+\subsubsection{Compilation from source}
+Open terminal:
+\begin{verbatim}
+$ cd .../Littel_Benchmark/HDD
+$ make && make test && sudo make install && make clean
+\end{verbatim}
 \subsection{Windows}
 Can be run from any location
 
-\subsubsection{From source}
-What is needed to compile from source: (Working on it with Visual Studio 2008 which at least links boost libraries\ldots)
+\subsubsection{Requirements to compile source}
+What is needed to compile from source: (Working with Visual Studio 2008)
 \begin{itemize}
 %\item [ \href{http://sourceforge.net/projects/mingw/files/Automated\%20MinGW\%20Installer/mingw-get-inst/mingw-get-inst-20100909/mingw-get-inst-20100909.exe/download/}{\textbf{MiniGw gcc}} ] Compiler to make things possible.
 %\item [ \href{http://www.codeblocks.org/}{\textbf{CodeBlocks}} ] IDE.
@@ -46,46 +47,24 @@ What is needed to compile from source: (Working on it with Visual Studio 2008 wh
 %Edit Path, add \begin{verbatim}  ";C:\MiniGw\bin;C:\MinGW\msys\1.0\bin" 
 %\end{verbatim}
 
-Set up boost:\\
-open command line\\
-ctrl + r type cmd
-\begin{verbatim} 
+\subsubsection{How to set up boost}
+open command line ( ctrl + r than type ``cmd'' into text box)
+\begin{verbatim}
 cd boost_dir/
 boostrap.bat
 \end{verbatim}
 %Insert to project.config.jam "using gcc ;"
+
 \begin{verbatim} 
-bjam --tool-set=msvc --build-dir=boost-build --build-type=complete stage release --without-python
-bjam --build-dir=boost-build --toolset=msvc install --without-python
+> bjam --tool-set=msvc --build-dir=boost-build 
+ --build-type=complete stage release --without-python
+> bjam --build-dir=boost-build --toolset=msvc install 
+ --without-python
 \end{verbatim}
 
-%Set up Cryptopp:\\
-%Unpack to C:\\
-%With make only: (does not work)\\
-%\begin{verbatim} 
-%cd C:/cryptopp561
-%make
-%\end{verbatim}
-%With qt4: (does not work)\\
-%start\rightarrow All Programs\rightarrow Qt sdk\ldots \rightarrow Qt Command prompt
-%\begin{verbatim} 
-%cd C:/cryptopp561
-%qmake -project
-%\end{verbatim}
-%Edit the cryptopp561.pro with notpad++\\
-%change TEMPLATE = app to TEMPLATE = lib\\
-%add a lines\\ 
-%LIBS += -lws2\_32 \\
-%CONFIG += console.\\
-%
-%type the following commands at the Qt command line:
-%\begin{verbatim}
-%qmake
-%mingw32-make all
-%\end{verbatim}
-%%now we should have files named libcryptopp552.a and cryptopp552.dll in directories C:\cryptopp552\release and C:\cryptopp552\debug
-%
-%
+\subsubsection{How to set up Cryptopp}
+TODO
+
 %Compile Project with make:\\
 %Compile Project with Codeblocks:
 %Settings->Global Variables->New\\

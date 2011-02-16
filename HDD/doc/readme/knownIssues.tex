@@ -3,10 +3,13 @@
 \label{KnownIssues}\index{KnownIssues@{Known issues}}
 }
 
-{\bf Before appalling any solution in Linux run terminal session ctrl+alt+F1 and login with root privilege, in order to avoid any sort of problems!\\
-After applying solution check if you can login in other terminal session and unlock lock screen.\\ \\
+{\bf 
+Before applying any solution on Linux make sure that you will be able to reverse changes.
+Run terminal session (by default ctrl+alt+F1) and login with root privilege\\[12pt]
+After applying solution check if you can login in other terminal session and unlock lock screen.\\[12pt]
 }
-{\bf Before applying any solution on WinCrap pray and backup important data.
+{\bf 
+Before applying any solution on WinCrap pray and backup important data.
 }
 
 \begin{description}
@@ -17,34 +20,15 @@ Max:[Failed to measure: time difference to small]
 Avg:-nans
 \end{verbatim} Memory allocation failed or your hard driver is immeasurable fast for given data :-)
 
-\item [{\bf Linux}] Memory leak caused by bug in {\itshape pwd.h} library
-\marginpar{12 records in worst case scenario can take max 8192 bytes, libc-freeres won't do the job so please apply solution}
+\item [{\bf Linux}] Memory leak caused by bug in {\itshape pwd.h} library\\
+12 records in worst case scenario can take max 49152 bytes, libc-freeres won't do the job so please apply solution if \href{http://valgrind.org/}{\underline{Valgrind}}  detect a leak.
 \begin{verbatim}
 #include <pwd.h> /*12 records lost*/
 struct passwd *pw;
 \end{verbatim}
-{\bf Solution:} line 7-9 word ``{\itshape compat}'' have to be replaced with ``{\itshape files}''
+{\bf Solution:} Word ``{\itshape compat}'' have to be replaced with ``{\itshape files}''
 \begin{verbatim}
-lukasz@lukasz-compal:~$ cat -n /etc/nsswitch.conf 
-     1	# /etc/nsswitch.conf
-     2	#
-     3	# Example configuration of GNU Name Service Switch functionality.
-     4	# If you have the `glibc-doc-reference' and `info' packages installed, try:
-     5	# `info libc "Name Service Switch"' for information about this file.
-     6	
-     7	passwd:         compat
-     8	group:          compat
-     9	shadow:         compat
-    10	
-    11	hosts:          files mdns4_minimal [NOTFOUND=return] dns mdns4
-    12	networks:       files
-    13	
-    14	protocols:      db files
-    15	services:       db files
-    16	ethers:         db files
-    17	rpc:            db files
-    18	
-    19	netgroup:       nis
+# sed -i 's/compat/file/g' /etc/nsswitch.conf
 \end{verbatim}
 
 \end{description}
