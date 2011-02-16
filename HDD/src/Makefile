@@ -15,8 +15,7 @@ $(OBJS): %.o: %.cpp
 $(OBJSHPP): %.o: %.hpp
 	$(CXX) $(CPPFLAGS) $(LDXFLAGS) -c $< -o $@
 makedoc:
-	doxygen LittleBenchmarkHDD.dox
-	make -C ../doc/
+	doxygen LittleBenchmarkHDD.dox && make -C ../doc/
 clean:
 	@if [ -e LittleBenchmarkHDD ]; then rm LittleBenchmarkHDD; echo "rm LittleBenchmarkHDD"; fi
 	rm *.o

@@ -6,13 +6,11 @@ MANPATH=/usr/local/man/man1
 build:
 	make -C src
 	make -C src makedoc
-	make -C doc
 clean:
 	make -C src clean
 	make -C doc clean
 makedoc:
 	make -C src makedoc
-	make -C doc
 install:
 	cp src/littlebenchmark $(BIN)
 	mkdir -p $(UPATH)/doc
