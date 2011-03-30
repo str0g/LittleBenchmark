@@ -4,7 +4,7 @@
  * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
  * Created:   <Input date>
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
- * License:   GNU / General Public Licens
+ * License:   GNU / General Public License
  **************************************************************/
  /**
  * Important notes for Linux:
@@ -106,10 +106,13 @@ tester_hdd::tester_hdd(int ac,char **av):
             raise(SIGTERM);
         }
         if (vm.count("Author")){
-            cout << "Author:    Łukasz Buśko"<<endl;
-            cout << "Contact:   buskol.waw.pl@gmail.com"<<endl;
-            cout << "Home page: http://str0g.wordpress.com"<<endl;
-            cout << "License:   GNU/General Public License"<<endl;
+            printf("Author:    Łukasz Buśko\n\
+            		Contact:   buskol.waw.pl@gmail.com\n\
+            		Home page: http://str0g.wordpress.com\n\
+            		License:   GNU/General Public License\n\
+            		Special thanks to:\n\
+            		Robert Piszczatowski\
+            		");
             raise(SIGTERM);
         }
         if((vm.count("as-log"))){

@@ -4,7 +4,7 @@
  * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
  * Created:   <Input date>
  * Copyright: Łukasz Buśko (https://str0g.wordpress.com)
- * License:   GNU / General Public Licens
+ * License:   GNU / General Public License
  **************************************************************/
 //Headers
 #include "thread_tester_hdd.hpp"

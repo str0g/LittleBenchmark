@@ -2,22 +2,31 @@ CXX=g++
 ARCH=core2
 LDFLAGS= -O2 --mach=$(ARCH)
 CPPFLAGS=-Wall -Werror
-LDXFLAGS=-lboost_thread-mt -lboost_program_options-mt -lboost_filesystem-mt -L /usr/lib/libcrypto++ -L /usr/lib64/libcrypto++ -lcrypto++
-OBJS=Globals.o main.o handler_Configuration.o handler_Report.o tester_hdd.o thread_tester_hdd.o
+LDCRYPTO=-L /usr/lib/libcrypto++ -L /usr/lib64/libcrypto++ $(shell pkg-config libcrypto++ --libs)
+LDBOOST=-lboost_thread-mt -lboost_program_options-mt -lboost_filesystem-mt
+LDXFLAGS=$(LDCRYPTO) $(LDBOOST)
+
+TARGET := LittleBenchmarkHDD
+
+SRCS := $(wildcard *.cpp)
+OBJS := $(SRCS:%.cpp=%.o)
+#HPPS := $(wildcard *.hpp)
+#OBJSHPP := $(HPPS:%.hpp=%.o)
 OBJSHPP=myConv.o myHash.o myIO.o myThreadTemplates.o myTime.o
 
-#all: LittleBenchmarkHDD,refman
 
-LittleBenchmarkHDD: $(OBJS)
+#all: $(TARGET),refman
+
+$(TARGET): $(OBJS)
 	$(CXX) $(LDFLAGS) $(LDXFLAGS) $^ -o $@
 $(OBJS): %.o: %.cpp
 	$(CXX) $(CPPFLAGS) -c $< -o $@
 $(OBJSHPP): %.o: %.hpp
 	$(CXX) $(CPPFLAGS) $(LDXFLAGS) -c $< -o $@
 makedoc:
-	doxygen LittleBenchmarkHDD.dox && make -C ../doc/
+	doxygen $(TARGET).dox && make -C ../doc/
 clean:
-	@if [ -e LittleBenchmarkHDD ]; then rm LittleBenchmarkHDD; echo "rm LittleBenchmarkHDD"; fi
+	@if [ -e $(TARGET) ]; then rm $(TARGET); echo "rm $(TARGET)"; fi
 	rm *.o
 
-.PHONY: makedoc clean
+.PHONY: makedoc clean $(TARGET)

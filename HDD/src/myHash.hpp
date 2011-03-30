@@ -7,7 +7,7 @@
  * Author:    Łukasz Buśko (buskol.waw.pl@gmail.com)
  * Created:   <Input date>
  * Copyright: Łukasz Buśko (http://str0g.wordpress.com)
- * License:   GNU / General Public Licens
+ * License:   GNU / General Public License
  **************************************************************/
 //Headers
 #define SHA512LEN 128
